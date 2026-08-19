@@ -1,0 +1,1180 @@
+{
+  "language": "Telugu",
+  "d_model": 384,
+  "results": [
+    {
+      "model": "C:\\lma_work\\telugu\\tokenizer\\sweep\\telugu_sweep_6000.model",
+      "vocab_size": 6000,
+      "per_source": {
+        "archive": {
+          "characters": 495586,
+          "non_space_characters": 412641,
+          "words": 63833,
+          "tokens": 185281,
+          "chars_per_token": 2.2271090937548914,
+          "fertility_tokens_per_word": 2.902589569658327,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 756,
+          "byte_fallback_rate": 0.004080288858544589
+        },
+        "sangraha": {
+          "characters": 5002411,
+          "non_space_characters": 4375388,
+          "words": 620673,
+          "tokens": 1454321,
+          "chars_per_token": 3.0085435058697496,
+          "fertility_tokens_per_word": 2.3431355963607245,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 4425,
+          "byte_fallback_rate": 0.0030426570200114003
+        },
+        "textbook": {
+          "characters": 121880,
+          "non_space_characters": 104424,
+          "words": 16398,
+          "tokens": 43879,
+          "chars_per_token": 2.3798172246404885,
+          "fertility_tokens_per_word": 2.6758751067203317,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 1135,
+          "byte_fallback_rate": 0.025866587661523735
+        },
+        "wikipedia": {
+          "characters": 1039870,
+          "non_space_characters": 903045,
+          "words": 134257,
+          "tokens": 297867,
+          "chars_per_token": 3.0317054255758444,
+          "fertility_tokens_per_word": 2.2186329204436266,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 1293,
+          "byte_fallback_rate": 0.004340863539767749
+        },
+        "wikisource": {
+          "characters": 152534,
+          "non_space_characters": 130294,
+          "words": 20534,
+          "tokens": 69501,
+          "chars_per_token": 1.8747068387505215,
+          "fertility_tokens_per_word": 3.384679068861401,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 598,
+          "byte_fallback_rate": 0.008604192745428124
+        }
+      },
+      "combined": {
+        "non_space_characters": 5925792,
+        "words": 855695,
+        "tokens": 2050849,
+        "unknown_tokens": 0,
+        "byte_fallback_tokens": 8207,
+        "chars_per_token": 2.8894335955499404,
+        "fertility_tokens_per_word": 2.3967056018791744,
+        "unknown_rate": 0.0,
+        "byte_fallback_rate": 0.004001757320992428
+      },
+      "frequency": {
+        "total_tokens": 2050849,
+        "distinct_pieces_used": 5838,
+        "vocabulary_utilisation": 0.973,
+        "singleton_pieces": 6,
+        "coverage": {
+          "top_100_coverage": 0.37109704322453774,
+          "top_500_coverage": 0.6005347053829901,
+          "top_1000_coverage": 0.710644713482075,
+          "top_5000_coverage": 0.9836121528206123
+        },
+        "top_30": [
+          [
+            "▁",
+            90593
+          ],
+          [
+            ".",
+            87261
+          ],
+          [
+            ",",
+            44679
+          ],
+          [
+            "ం",
+            21646
+          ],
+          [
+            "లో",
+            15937
+          ],
+          [
+            "లు",
+            15755
+          ],
+          [
+            "1",
+            15542
+          ],
+          [
+            "ను",
+            14789
+          ],
+          [
+            "0",
+            13889
+          ],
+          [
+            "ని",
+            11418
+          ],
+          [
+            "ల",
+            11303
+          ],
+          [
+            "న",
+            11266
+          ],
+          [
+            "కు",
+            10645
+          ],
+          [
+            "2",
+            10526
+          ],
+          [
+            "▁ఈ",
+            9714
+          ],
+          [
+            "క",
+            9652
+          ],
+          [
+            "గా",
+            9042
+          ],
+          [
+            "స్",
+            8636
+          ],
+          [
+            "వ",
+            8560
+          ],
+          [
+            "▁ఆ",
+            8060
+          ],
+          [
+            "న్",
+            7700
+          ],
+          [
+            "ము",
+            7074
+          ],
+          [
+            "ర",
+            6940
+          ],
+          [
+            "▁అ",
+            6813
+          ],
+          [
+            "ర్",
+            6798
+          ],
+          [
+            "ా",
+            6692
+          ],
+          [
+            "ి",
+            6686
+          ],
+          [
+            "త",
+            6628
+          ],
+          [
+            "కి",
+            6578
+          ],
+          [
+            "మ",
+            6523
+          ]
+        ]
+      },
+      "embedding_parameters": 2304000,
+      "examples": [
+        {
+          "origin": "hand-written",
+          "text": "తెలుగు భారతదేశంలో అత్యధికంగా మాట్లాడే భాషలలో ఒకటి.",
+          "pieces": [
+            "▁తెలుగు",
+            "▁భారతదేశంలో",
+            "▁అత్యధిక",
+            "ంగా",
+            "▁మాట్లాడ",
+            "ే",
+            "▁భాష",
+            "లలో",
+            "▁ఒకటి",
+            "."
+          ],
+          "token_count": 10,
+          "characters": 50,
+          "chars_per_token": 4.5
+        },
+        {
+          "origin": "hand-written",
+          "text": "విద్యార్థులందరూ పాఠశాలకు వెళ్ళి చదువుకుంటున్నారు.",
+          "pieces": [
+            "▁విద్యార్థుల",
+            "ందరూ",
+            "▁పాఠశాల",
+            "కు",
+            "▁వెళ్ళి",
+            "▁చదువ",
+            "ుకుంటున్నారు",
+            "."
+          ],
+          "token_count": 8,
+          "characters": 49,
+          "chars_per_token": 5.75
+        },
+        {
+          "origin": "hand-written",
+          "text": "దేశభాషలందు తెలుగు లెస్స.",
+          "pieces": [
+            "▁దేశ",
+            "భాష",
+            "ల",
+            "ందు",
+            "▁తెలుగు",
+            "▁",
+            "లెస్",
+            "స",
+            "."
+          ],
+          "token_count": 9,
+          "characters": 24,
+          "chars_per_token": 2.4444444444444446
+        },
+        {
+          "origin": "hand-written",
+          "text": "భౌతిక శాస్త్రంలో 25 డిగ్రీల ఉష్ణోగ్రత వద్ద density అనేది ముఖ్యం.",
+          "pieces": [
+            "▁భౌతిక",
+            "▁శాస్త్ర",
+            "ంలో",
+            "▁",
+            "2",
+            "5",
+            "▁డిగ్రీ",
+            "ల",
+            "▁ఉష్ణోగ్రత",
+            "▁వద్ద",
+            "▁",
+            "d",
+            "en",
+            "s",
+            "ity",
+            "▁అనేది",
+            "▁ముఖ్య",
+            "ం",
+            "."
+          ],
+          "token_count": 19,
+          "characters": 64,
+          "chars_per_token": 2.9473684210526314
+        }
+      ]
+    },
+    {
+      "model": "C:\\lma_work\\telugu\\tokenizer\\sweep\\telugu_sweep_8000.model",
+      "vocab_size": 8000,
+      "per_source": {
+        "archive": {
+          "characters": 495586,
+          "non_space_characters": 412641,
+          "words": 63833,
+          "tokens": 178526,
+          "chars_per_token": 2.31137761446512,
+          "fertility_tokens_per_word": 2.7967665627496747,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 756,
+          "byte_fallback_rate": 0.004234677301905605
+        },
+        "sangraha": {
+          "characters": 5002411,
+          "non_space_characters": 4375388,
+          "words": 620673,
+          "tokens": 1371080,
+          "chars_per_token": 3.1911981795372992,
+          "fertility_tokens_per_word": 2.2090214976324085,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 4425,
+          "byte_fallback_rate": 0.0032273827931265865
+        },
+        "textbook": {
+          "characters": 121880,
+          "non_space_characters": 104424,
+          "words": 16398,
+          "tokens": 42152,
+          "chars_per_token": 2.477320174606187,
+          "fertility_tokens_per_word": 2.570557385046957,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 1135,
+          "byte_fallback_rate": 0.026926361738470298
+        },
+        "wikipedia": {
+          "characters": 1039870,
+          "non_space_characters": 903045,
+          "words": 134257,
+          "tokens": 282836,
+          "chars_per_token": 3.192821988714308,
+          "fertility_tokens_per_word": 2.1066760019961714,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 1293,
+          "byte_fallback_rate": 0.004571553833316834
+        },
+        "wikisource": {
+          "characters": 152534,
+          "non_space_characters": 130294,
+          "words": 20534,
+          "tokens": 66412,
+          "chars_per_token": 1.9619044750948624,
+          "fertility_tokens_per_word": 3.23424564137528,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 598,
+          "byte_fallback_rate": 0.009004396795759803
+        }
+      },
+      "combined": {
+        "non_space_characters": 5925792,
+        "words": 855695,
+        "tokens": 1941006,
+        "unknown_tokens": 0,
+        "byte_fallback_tokens": 8207,
+        "chars_per_token": 3.05294883168831,
+        "fertility_tokens_per_word": 2.268338601955136,
+        "unknown_rate": 0.0,
+        "byte_fallback_rate": 0.004228219799423598
+      },
+      "frequency": {
+        "total_tokens": 1941006,
+        "distinct_pieces_used": 7838,
+        "vocabulary_utilisation": 0.97975,
+        "singleton_pieces": 6,
+        "coverage": {
+          "top_100_coverage": 0.357501213288367,
+          "top_500_coverage": 0.5668184436318074,
+          "top_1000_coverage": 0.6699087998697583,
+          "top_5000_coverage": 0.9412691150877431
+        },
+        "top_30": [
+          [
+            ".",
+            87283
+          ],
+          [
+            "▁",
+            85356
+          ],
+          [
+            ",",
+            44679
+          ],
+          [
+            "ం",
+            18428
+          ],
+          [
+            "1",
+            15542
+          ],
+          [
+            "లో",
+            14617
+          ],
+          [
+            "ను",
+            14091
+          ],
+          [
+            "0",
+            13889
+          ],
+          [
+            "లు",
+            13188
+          ],
+          [
+            "2",
+            10526
+          ],
+          [
+            "కు",
+            10514
+          ],
+          [
+            "ని",
+            9895
+          ],
+          [
+            "▁ఈ",
+            9619
+          ],
+          [
+            "న",
+            9524
+          ],
+          [
+            "ల",
+            8942
+          ],
+          [
+            "గా",
+            8498
+          ],
+          [
+            "క",
+            8190
+          ],
+          [
+            "స్",
+            7511
+          ],
+          [
+            "▁ఆ",
+            7044
+          ],
+          [
+            "వ",
+            6613
+          ],
+          [
+            "ము",
+            6339
+          ],
+          [
+            "ా",
+            6333
+          ],
+          [
+            "ి",
+            6110
+          ],
+          [
+            "న్",
+            5980
+          ],
+          [
+            "5",
+            5980
+          ],
+          [
+            "కి",
+            5834
+          ],
+          [
+            "తో",
+            5660
+          ],
+          [
+            "త",
+            5484
+          ],
+          [
+            "▁అ",
+            5326
+          ],
+          [
+            "ర్",
+            5268
+          ]
+        ]
+      },
+      "embedding_parameters": 3072000,
+      "examples": [
+        {
+          "origin": "hand-written",
+          "text": "తెలుగు భారతదేశంలో అత్యధికంగా మాట్లాడే భాషలలో ఒకటి.",
+          "pieces": [
+            "▁తెలుగు",
+            "▁భారతదేశంలో",
+            "▁అత్యధిక",
+            "ంగా",
+            "▁మాట్లాడ",
+            "ే",
+            "▁భాష",
+            "లలో",
+            "▁ఒకటి",
+            "."
+          ],
+          "token_count": 10,
+          "characters": 50,
+          "chars_per_token": 4.5
+        },
+        {
+          "origin": "hand-written",
+          "text": "విద్యార్థులందరూ పాఠశాలకు వెళ్ళి చదువుకుంటున్నారు.",
+          "pieces": [
+            "▁విద్యార్థుల",
+            "ందరూ",
+            "▁పాఠశాల",
+            "కు",
+            "▁వెళ్ళి",
+            "▁చదువ",
+            "ుకుంటున్నారు",
+            "."
+          ],
+          "token_count": 8,
+          "characters": 49,
+          "chars_per_token": 5.75
+        },
+        {
+          "origin": "hand-written",
+          "text": "దేశభాషలందు తెలుగు లెస్స.",
+          "pieces": [
+            "▁దేశ",
+            "భాష",
+            "ల",
+            "ందు",
+            "▁తెలుగు",
+            "▁",
+            "లెస్",
+            "స",
+            "."
+          ],
+          "token_count": 9,
+          "characters": 24,
+          "chars_per_token": 2.4444444444444446
+        },
+        {
+          "origin": "hand-written",
+          "text": "భౌతిక శాస్త్రంలో 25 డిగ్రీల ఉష్ణోగ్రత వద్ద density అనేది ముఖ్యం.",
+          "pieces": [
+            "▁భౌతిక",
+            "▁శాస్త్ర",
+            "ంలో",
+            "▁",
+            "2",
+            "5",
+            "▁డిగ్రీ",
+            "ల",
+            "▁ఉష్ణోగ్రత",
+            "▁వద్ద",
+            "▁de",
+            "n",
+            "s",
+            "ity",
+            "▁అనేది",
+            "▁ముఖ్య",
+            "ం",
+            "."
+          ],
+          "token_count": 18,
+          "characters": 64,
+          "chars_per_token": 3.111111111111111
+        }
+      ]
+    },
+    {
+      "model": "C:\\lma_work\\telugu\\tokenizer\\sweep\\telugu_sweep_10000.model",
+      "vocab_size": 10000,
+      "per_source": {
+        "archive": {
+          "characters": 495586,
+          "non_space_characters": 412641,
+          "words": 63833,
+          "tokens": 173677,
+          "chars_per_token": 2.375910454464322,
+          "fertility_tokens_per_word": 2.720802719596447,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 756,
+          "byte_fallback_rate": 0.004352907984361775
+        },
+        "sangraha": {
+          "characters": 5002411,
+          "non_space_characters": 4375388,
+          "words": 620673,
+          "tokens": 1311684,
+          "chars_per_token": 3.3357028064686314,
+          "fertility_tokens_per_word": 2.1133253742308753,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 4425,
+          "byte_fallback_rate": 0.003373525940699132
+        },
+        "textbook": {
+          "characters": 121880,
+          "non_space_characters": 104424,
+          "words": 16398,
+          "tokens": 40957,
+          "chars_per_token": 2.5496008008399054,
+          "fertility_tokens_per_word": 2.4976826442249056,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 1135,
+          "byte_fallback_rate": 0.027711990624313305
+        },
+        "wikipedia": {
+          "characters": 1039870,
+          "non_space_characters": 903045,
+          "words": 134257,
+          "tokens": 273398,
+          "chars_per_token": 3.3030417193980934,
+          "fertility_tokens_per_word": 2.036377991464132,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 1293,
+          "byte_fallback_rate": 0.004729368905405307
+        },
+        "wikisource": {
+          "characters": 152534,
+          "non_space_characters": 130294,
+          "words": 20534,
+          "tokens": 64373,
+          "chars_per_token": 2.0240473490438537,
+          "fertility_tokens_per_word": 3.1349469173078797,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 598,
+          "byte_fallback_rate": 0.009289608997561089
+        }
+      },
+      "combined": {
+        "non_space_characters": 5925792,
+        "words": 855695,
+        "tokens": 1864089,
+        "unknown_tokens": 0,
+        "byte_fallback_tokens": 8207,
+        "chars_per_token": 3.1789211781197144,
+        "fertility_tokens_per_word": 2.178450265573598,
+        "unknown_rate": 0.0,
+        "byte_fallback_rate": 0.004402686781586072
+      },
+      "frequency": {
+        "total_tokens": 1864089,
+        "distinct_pieces_used": 9838,
+        "vocabulary_utilisation": 0.9838,
+        "singleton_pieces": 6,
+        "coverage": {
+          "top_100_coverage": 0.34895436859506174,
+          "top_500_coverage": 0.5458290886325706,
+          "top_1000_coverage": 0.6434687399582316,
+          "top_5000_coverage": 0.9067877123892689,
+          "top_10000_coverage": 1.0
+        },
+        "top_30": [
+          [
+            ".",
+            87283
+          ],
+          [
+            "▁",
+            81712
+          ],
+          [
+            ",",
+            44679
+          ],
+          [
+            "ం",
+            16100
+          ],
+          [
+            "1",
+            15542
+          ],
+          [
+            "0",
+            13889
+          ],
+          [
+            "లో",
+            13663
+          ],
+          [
+            "ను",
+            13571
+          ],
+          [
+            "లు",
+            11638
+          ],
+          [
+            "2",
+            10526
+          ],
+          [
+            "కు",
+            9665
+          ],
+          [
+            "▁ఈ",
+            9578
+          ],
+          [
+            "ని",
+            8767
+          ],
+          [
+            "న",
+            8519
+          ],
+          [
+            "గా",
+            8254
+          ],
+          [
+            "ల",
+            8192
+          ],
+          [
+            "క",
+            7085
+          ],
+          [
+            "▁ఆ",
+            6557
+          ],
+          [
+            "స్",
+            6428
+          ],
+          [
+            "5",
+            5980
+          ],
+          [
+            "ము",
+            5929
+          ],
+          [
+            "తో",
+            5701
+          ],
+          [
+            "ి",
+            5670
+          ],
+          [
+            "వ",
+            5619
+          ],
+          [
+            "కి",
+            5344
+          ],
+          [
+            "ా",
+            5240
+          ],
+          [
+            "▁(",
+            5138
+          ],
+          [
+            "న్",
+            4911
+          ],
+          [
+            "3",
+            4902
+          ],
+          [
+            "-",
+            4890
+          ]
+        ]
+      },
+      "embedding_parameters": 3840000,
+      "examples": [
+        {
+          "origin": "hand-written",
+          "text": "తెలుగు భారతదేశంలో అత్యధికంగా మాట్లాడే భాషలలో ఒకటి.",
+          "pieces": [
+            "▁తెలుగు",
+            "▁భారతదేశంలో",
+            "▁అత్యధికంగా",
+            "▁మాట్లాడే",
+            "▁భాష",
+            "లలో",
+            "▁ఒకటి",
+            "."
+          ],
+          "token_count": 8,
+          "characters": 50,
+          "chars_per_token": 5.625
+        },
+        {
+          "origin": "hand-written",
+          "text": "విద్యార్థులందరూ పాఠశాలకు వెళ్ళి చదువుకుంటున్నారు.",
+          "pieces": [
+            "▁విద్యార్థుల",
+            "ందరూ",
+            "▁పాఠశాల",
+            "కు",
+            "▁వెళ్ళి",
+            "▁చదువ",
+            "ుకుంటున్నారు",
+            "."
+          ],
+          "token_count": 8,
+          "characters": 49,
+          "chars_per_token": 5.75
+        },
+        {
+          "origin": "hand-written",
+          "text": "దేశభాషలందు తెలుగు లెస్స.",
+          "pieces": [
+            "▁దేశ",
+            "భాష",
+            "ల",
+            "ందు",
+            "▁తెలుగు",
+            "▁లె",
+            "స్స",
+            "."
+          ],
+          "token_count": 8,
+          "characters": 24,
+          "chars_per_token": 2.75
+        },
+        {
+          "origin": "hand-written",
+          "text": "భౌతిక శాస్త్రంలో 25 డిగ్రీల ఉష్ణోగ్రత వద్ద density అనేది ముఖ్యం.",
+          "pieces": [
+            "▁భౌతిక",
+            "▁శాస్త్ర",
+            "ంలో",
+            "▁",
+            "2",
+            "5",
+            "▁డిగ్రీ",
+            "ల",
+            "▁ఉష్ణోగ్రత",
+            "▁వద్ద",
+            "▁de",
+            "n",
+            "s",
+            "ity",
+            "▁అనేది",
+            "▁ముఖ్యం",
+            "."
+          ],
+          "token_count": 17,
+          "characters": 64,
+          "chars_per_token": 3.2941176470588234
+        }
+      ]
+    },
+    {
+      "model": "C:\\lma_work\\telugu\\tokenizer\\sweep\\telugu_sweep_12000.model",
+      "vocab_size": 12000,
+      "per_source": {
+        "archive": {
+          "characters": 495586,
+          "non_space_characters": 412641,
+          "words": 63833,
+          "tokens": 169829,
+          "chars_per_token": 2.429744036648629,
+          "fertility_tokens_per_word": 2.6605204204721695,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 756,
+          "byte_fallback_rate": 0.004451536545584087
+        },
+        "sangraha": {
+          "characters": 5002411,
+          "non_space_characters": 4375388,
+          "words": 620673,
+          "tokens": 1268770,
+          "chars_per_token": 3.448527313855151,
+          "fertility_tokens_per_word": 2.0441842967230732,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 4425,
+          "byte_fallback_rate": 0.003487629751649235
+        },
+        "textbook": {
+          "characters": 121880,
+          "non_space_characters": 104424,
+          "words": 16398,
+          "tokens": 40058,
+          "chars_per_token": 2.606820110839283,
+          "fertility_tokens_per_word": 2.442858885229906,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 1135,
+          "byte_fallback_rate": 0.028333915822058017
+        },
+        "wikipedia": {
+          "characters": 1039870,
+          "non_space_characters": 903045,
+          "words": 134257,
+          "tokens": 267043,
+          "chars_per_token": 3.381646401515861,
+          "fertility_tokens_per_word": 1.9890434018337964,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 1293,
+          "byte_fallback_rate": 0.004841916844852702
+        },
+        "wikisource": {
+          "characters": 152534,
+          "non_space_characters": 130294,
+          "words": 20534,
+          "tokens": 62320,
+          "chars_per_token": 2.0907252888318357,
+          "fertility_tokens_per_word": 3.0349663971948964,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 598,
+          "byte_fallback_rate": 0.009595635430038512
+        }
+      },
+      "combined": {
+        "non_space_characters": 5925792,
+        "words": 855695,
+        "tokens": 1808020,
+        "unknown_tokens": 0,
+        "byte_fallback_tokens": 8207,
+        "chars_per_token": 3.2775035674384134,
+        "fertility_tokens_per_word": 2.1129257504134067,
+        "unknown_rate": 0.0,
+        "byte_fallback_rate": 0.004539219698897136
+      },
+      "frequency": {
+        "total_tokens": 1808020,
+        "distinct_pieces_used": 11836,
+        "vocabulary_utilisation": 0.9863333333333333,
+        "singleton_pieces": 7,
+        "coverage": {
+          "top_100_coverage": 0.34284134025066093,
+          "top_500_coverage": 0.5301672547870045,
+          "top_1000_coverage": 0.6232785035563766,
+          "top_5000_coverage": 0.8786097498921472,
+          "top_10000_coverage": 0.9845062554617758
+        },
+        "top_30": [
+          [
+            ".",
+            87245
+          ],
+          [
+            "▁",
+            79761
+          ],
+          [
+            ",",
+            44679
+          ],
+          [
+            "1",
+            15542
+          ],
+          [
+            "ం",
+            14184
+          ],
+          [
+            "0",
+            13889
+          ],
+          [
+            "ను",
+            12950
+          ],
+          [
+            "లో",
+            12783
+          ],
+          [
+            "లు",
+            10745
+          ],
+          [
+            "2",
+            10526
+          ],
+          [
+            "▁ఈ",
+            9487
+          ],
+          [
+            "కు",
+            8942
+          ],
+          [
+            "ని",
+            7993
+          ],
+          [
+            "గా",
+            7681
+          ],
+          [
+            "న",
+            7586
+          ],
+          [
+            "ల",
+            7432
+          ],
+          [
+            "▁ఆ",
+            6292
+          ],
+          [
+            "క",
+            6152
+          ],
+          [
+            "5",
+            5980
+          ],
+          [
+            "స్",
+            5831
+          ],
+          [
+            "తో",
+            5647
+          ],
+          [
+            "ము",
+            5553
+          ],
+          [
+            "ా",
+            5274
+          ],
+          [
+            "▁(",
+            5138
+          ],
+          [
+            "కి",
+            5066
+          ],
+          [
+            "వ",
+            4935
+          ],
+          [
+            "3",
+            4902
+          ],
+          [
+            "-",
+            4798
+          ],
+          [
+            ")",
+            4760
+          ],
+          [
+            "ి",
+            4554
+          ]
+        ]
+      },
+      "embedding_parameters": 4608000,
+      "examples": [
+        {
+          "origin": "hand-written",
+          "text": "తెలుగు భారతదేశంలో అత్యధికంగా మాట్లాడే భాషలలో ఒకటి.",
+          "pieces": [
+            "▁తెలుగు",
+            "▁భారతదేశంలో",
+            "▁అత్యధికంగా",
+            "▁మాట్లాడే",
+            "▁భాష",
+            "లలో",
+            "▁ఒకటి",
+            "."
+          ],
+          "token_count": 8,
+          "characters": 50,
+          "chars_per_token": 5.625
+        },
+        {
+          "origin": "hand-written",
+          "text": "విద్యార్థులందరూ పాఠశాలకు వెళ్ళి చదువుకుంటున్నారు.",
+          "pieces": [
+            "▁విద్యార్థుల",
+            "ందరూ",
+            "▁పాఠశాల",
+            "కు",
+            "▁వెళ్ళి",
+            "▁చదువ",
+            "ుకుంటున్నారు",
+            "."
+          ],
+          "token_count": 8,
+          "characters": 49,
+          "chars_per_token": 5.75
+        },
+        {
+          "origin": "hand-written",
+          "text": "దేశభాషలందు తెలుగు లెస్స.",
+          "pieces": [
+            "▁దేశ",
+            "భాష",
+            "లందు",
+            "▁తెలుగు",
+            "▁లె",
+            "స్స",
+            "."
+          ],
+          "token_count": 7,
+          "characters": 24,
+          "chars_per_token": 3.142857142857143
+        },
+        {
+          "origin": "hand-written",
+          "text": "భౌతిక శాస్త్రంలో 25 డిగ్రీల ఉష్ణోగ్రత వద్ద density అనేది ముఖ్యం.",
+          "pieces": [
+            "▁భౌతిక",
+            "▁శాస్త్రం",
+            "లో",
+            "▁",
+            "2",
+            "5",
+            "▁డిగ్రీ",
+            "ల",
+            "▁ఉష్ణోగ్రత",
+            "▁వద్ద",
+            "▁de",
+            "n",
+            "s",
+            "ity",
+            "▁అనేది",
+            "▁ముఖ్యం",
+            "."
+          ],
+          "token_count": 17,
+          "characters": 64,
+          "chars_per_token": 3.2941176470588234
+        }
+      ]
+    }
+  ]
+}

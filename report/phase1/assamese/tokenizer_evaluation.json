@@ -1,0 +1,1827 @@
+{
+  "language": "Assamese",
+  "d_model": 384,
+  "results": [
+    {
+      "model": "C:\\lma_work\\assamese\\tokenizer\\sweep\\assamese_sweep_6000.model",
+      "vocab_size": 6000,
+      "per_source": {
+        "archive": {
+          "characters": 2386065,
+          "non_space_characters": 1924596,
+          "words": 386713,
+          "tokens": 981687,
+          "chars_per_token": 1.9604986110644227,
+          "fertility_tokens_per_word": 2.5385415023544593,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 2514,
+          "byte_fallback_rate": 0.0025608977199453593
+        },
+        "sangraha": {
+          "characters": 4556529,
+          "non_space_characters": 3838511,
+          "words": 713595,
+          "tokens": 1341216,
+          "chars_per_token": 2.8619633228353973,
+          "fertility_tokens_per_word": 1.8795198957391799,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 5051,
+          "byte_fallback_rate": 0.003765985493760886
+        },
+        "wikipedia": {
+          "characters": 285076,
+          "non_space_characters": 241967,
+          "words": 42291,
+          "tokens": 84962,
+          "chars_per_token": 2.8479437866340245,
+          "fertility_tokens_per_word": 2.008985363316072,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 325,
+          "byte_fallback_rate": 0.0038252395188437182
+        },
+        "wikisource": {
+          "characters": 291838,
+          "non_space_characters": 242682,
+          "words": 48462,
+          "tokens": 97386,
+          "chars_per_token": 2.4919598299550243,
+          "fertility_tokens_per_word": 2.0095332425405474,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 209,
+          "byte_fallback_rate": 0.0021460990286078082
+        }
+      },
+      "combined": {
+        "non_space_characters": 6247756,
+        "words": 1191061,
+        "tokens": 2505251,
+        "unknown_tokens": 0,
+        "byte_fallback_tokens": 8099,
+        "chars_per_token": 2.4938642874506387,
+        "fertility_tokens_per_word": 2.1033775767991734,
+        "unknown_rate": 0.0,
+        "byte_fallback_rate": 0.0032328098062828835
+      },
+      "frequency": {
+        "total_tokens": 2505251,
+        "distinct_pieces_used": 5821,
+        "vocabulary_utilisation": 0.9701666666666666,
+        "singleton_pieces": 6,
+        "coverage": {
+          "top_100_coverage": 0.40308416202608044,
+          "top_500_coverage": 0.6348278076727641,
+          "top_1000_coverage": 0.7449493084724844,
+          "top_5000_coverage": 0.9886262893418664
+        },
+        "top_30": [
+          [
+            "▁",
+            115154
+          ],
+          [
+            "ৰ",
+            91046
+          ],
+          [
+            "।",
+            73600
+          ],
+          [
+            ",",
+            46063
+          ],
+          [
+            "ত",
+            38894
+          ],
+          [
+            "ক",
+            28007
+          ],
+          [
+            "1",
+            25880
+          ],
+          [
+            "0",
+            23507
+          ],
+          [
+            "ে",
+            20416
+          ],
+          [
+            "ল",
+            19580
+          ],
+          [
+            "▁আৰু",
+            17558
+          ],
+          [
+            "'",
+            17444
+          ],
+          [
+            "-",
+            16810
+          ],
+          [
+            "ব",
+            15278
+          ],
+          [
+            "▁।",
+            14769
+          ],
+          [
+            "ই",
+            13172
+          ],
+          [
+            "ন",
+            11860
+          ],
+          [
+            "|",
+            10049
+          ],
+          [
+            "▁এই",
+            9431
+          ],
+          [
+            "ম",
+            9192
+          ],
+          [
+            "▁কৰি",
+            8800
+          ],
+          [
+            "6",
+            8571
+          ],
+          [
+            "ী",
+            8185
+          ],
+          [
+            ")",
+            8164
+          ],
+          [
+            "▁ক",
+            8019
+          ],
+          [
+            "▁হ",
+            7870
+          ],
+          [
+            "য়",
+            7450
+          ],
+          [
+            "৷",
+            7440
+          ],
+          [
+            ".",
+            7344
+          ],
+          [
+            "▁বা",
+            6803
+          ]
+        ]
+      },
+      "embedding_parameters": 2304000,
+      "examples": [
+        {
+          "origin": "archive",
+          "text": "Ill = | No 5 THE 7TH SEPTEMBER, 1983 PRINTED AT R.D.",
+          "pieces": [
+            "▁I",
+            "l",
+            "l",
+            "▁=",
+            "▁|",
+            "▁No",
+            "▁",
+            "5",
+            "▁T",
+            "H",
+            "E",
+            "▁",
+            "7",
+            "T",
+            "H",
+            "▁S",
+            "E",
+            "P",
+            "T",
+            "E",
+            "M",
+            "B",
+            "ER",
+            ",",
+            "▁",
+            "1",
+            "9",
+            "8",
+            "3",
+            "▁P",
+            "R",
+            "IN",
+            "T",
+            "E",
+            "D",
+            "▁",
+            "AT",
+            "▁R",
+            ".",
+            "D",
+            "."
+          ],
+          "token_count": 41,
+          "characters": 52,
+          "chars_per_token": 1.0
+        },
+        {
+          "origin": "sangraha",
+          "text": "অক্লান্ত আলি হাইদৰ ২৭৩ নাট সন্ধালনিকৈ যোৱা শতিকাৰ সত্তৰ দশকৰ পৰা প্ৰসাৰ হ'বলৈ ধৰে।",
+          "pieces": [
+            "▁অ",
+            "ক্",
+            "ল",
+            "ান্ত",
+            "▁আলি",
+            "▁হাই",
+            "দৰ",
+            "▁২",
+            "৭৩",
+            "▁নাট",
+            "▁স",
+            "ন্ধা",
+            "ল",
+            "নি",
+            "কৈ",
+            "▁যোৱা",
+            "▁শতিকাৰ",
+            "▁স",
+            "ত্ত",
+            "ৰ",
+            "▁দশক",
+            "ৰ",
+            "▁পৰা",
+            "▁প্ৰসাৰ",
+            "▁হ",
+            "'",
+            "বলৈ",
+            "▁ধৰে",
+            "।"
+          ],
+          "token_count": 29,
+          "characters": 82,
+          "chars_per_token": 2.3793103448275863
+        },
+        {
+          "origin": "wikipedia",
+          "text": "300px|thumb|right|ভাওনাত দুজন ভাৱৰীয়া আৰু নামঘৰৰ দৰ্শক অসমৰ সৰ্বতোকালৰ সৰ্বোত্তম মহাপুৰুষ শ্ৰীমন্ত শংকৰদেৱৰ অনুপম সৃষ্টি অংকীয়া নাট ভাওনা।",
+          "pieces": [
+            "▁",
+            "3",
+            "0",
+            "0",
+            "p",
+            "x",
+            "|",
+            "th",
+            "um",
+            "b",
+            "|",
+            "right",
+            "|",
+            "ভা",
+            "ও",
+            "না",
+            "ত",
+            "▁দুজন",
+            "▁ভাৱ",
+            "ৰীয়া",
+            "▁আৰু",
+            "▁নামঘৰ",
+            "ৰ",
+            "▁দৰ্শক",
+            "▁অসমৰ",
+            "▁সৰ্ব",
+            "তো",
+            "কাল",
+            "ৰ",
+            "▁সৰ্ব",
+            "োত্তম",
+            "▁মহাপুৰুষ",
+            "▁শ্ৰীমন্ত",
+            "▁শংকৰদেৱ",
+            "ৰ",
+            "▁অনুপম",
+            "▁সৃষ্টি",
+            "▁অংক",
+            "ীয়া",
+            "▁নাট",
+            "▁ভাওনা",
+            "।"
+          ],
+          "token_count": 42,
+          "characters": 140,
+          "chars_per_token": 2.9523809523809526
+        },
+        {
+          "origin": "wikisource",
+          "text": "অষ্টম আধ্যা তোলনীয়া পো এদিন দুপৰীয়া তিনিজন মোৱাঁমৰীয়া বৈষ্ণৱ আহি উপস্থিত।",
+          "pieces": [
+            "▁অষ্টম",
+            "▁আ",
+            "ধ্যা",
+            "▁তো",
+            "ল",
+            "নীয়া",
+            "▁পো",
+            "▁এদিন",
+            "▁দুপৰীয়া",
+            "▁তিনিজন",
+            "▁ম",
+            "োৱা",
+            "ঁ",
+            "ম",
+            "ৰীয়া",
+            "▁বৈষ্ণৱ",
+            "▁আহি",
+            "▁উপস্থিত",
+            "।"
+          ],
+          "token_count": 19,
+          "characters": 76,
+          "chars_per_token": 3.473684210526316
+        }
+      ]
+    },
+    {
+      "model": "C:\\lma_work\\assamese\\tokenizer\\sweep\\assamese_sweep_8000.model",
+      "vocab_size": 8000,
+      "per_source": {
+        "archive": {
+          "characters": 2386065,
+          "non_space_characters": 1924596,
+          "words": 386713,
+          "tokens": 947382,
+          "chars_per_token": 2.0314888819926913,
+          "fertility_tokens_per_word": 2.4498323045772965,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 2514,
+          "byte_fallback_rate": 0.002653628631322951
+        },
+        "sangraha": {
+          "characters": 4556529,
+          "non_space_characters": 3838511,
+          "words": 713595,
+          "tokens": 1271901,
+          "chars_per_token": 3.017932213277606,
+          "fertility_tokens_per_word": 1.7823849662623756,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 5051,
+          "byte_fallback_rate": 0.0039712210305676305
+        },
+        "wikipedia": {
+          "characters": 285076,
+          "non_space_characters": 241967,
+          "words": 42291,
+          "tokens": 79922,
+          "chars_per_token": 3.0275393508670954,
+          "fertility_tokens_per_word": 1.889811070913433,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 325,
+          "byte_fallback_rate": 0.004066464803183104
+        },
+        "wikisource": {
+          "characters": 291838,
+          "non_space_characters": 242682,
+          "words": 48462,
+          "tokens": 93050,
+          "chars_per_token": 2.608081676518001,
+          "fertility_tokens_per_word": 1.9200610787833767,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 209,
+          "byte_fallback_rate": 0.002246104245029554
+        }
+      },
+      "combined": {
+        "non_space_characters": 6247756,
+        "words": 1191061,
+        "tokens": 2392255,
+        "unknown_tokens": 0,
+        "byte_fallback_tokens": 8099,
+        "chars_per_token": 2.611659710189758,
+        "fertility_tokens_per_word": 2.008507540755679,
+        "unknown_rate": 0.0,
+        "byte_fallback_rate": 0.0033855086518786667
+      },
+      "frequency": {
+        "total_tokens": 2392255,
+        "distinct_pieces_used": 7818,
+        "vocabulary_utilisation": 0.97725,
+        "singleton_pieces": 7,
+        "coverage": {
+          "top_100_coverage": 0.39152515095589724,
+          "top_500_coverage": 0.6070891272042487,
+          "top_1000_coverage": 0.7108410265628037,
+          "top_5000_coverage": 0.9567115545792568
+        },
+        "top_30": [
+          [
+            "▁",
+            111469
+          ],
+          [
+            "ৰ",
+            81798
+          ],
+          [
+            "।",
+            73609
+          ],
+          [
+            ",",
+            46031
+          ],
+          [
+            "ত",
+            34143
+          ],
+          [
+            "1",
+            25880
+          ],
+          [
+            "ক",
+            24261
+          ],
+          [
+            "0",
+            23507
+          ],
+          [
+            "ে",
+            19320
+          ],
+          [
+            "▁আৰু",
+            17558
+          ],
+          [
+            "'",
+            17444
+          ],
+          [
+            "ল",
+            16693
+          ],
+          [
+            "-",
+            16575
+          ],
+          [
+            "▁।",
+            14911
+          ],
+          [
+            "ব",
+            12630
+          ],
+          [
+            "ই",
+            11940
+          ],
+          [
+            "|",
+            10049
+          ],
+          [
+            "▁এই",
+            9317
+          ],
+          [
+            "ন",
+            8848
+          ],
+          [
+            "▁কৰি",
+            8724
+          ],
+          [
+            "6",
+            8571
+          ],
+          [
+            ")",
+            7921
+          ],
+          [
+            "▁হ",
+            7720
+          ],
+          [
+            "ম",
+            7711
+          ],
+          [
+            "৷",
+            7440
+          ],
+          [
+            ".",
+            7063
+          ],
+          [
+            "▁ক",
+            6766
+          ],
+          [
+            "8",
+            6578
+          ],
+          [
+            "ী",
+            6383
+          ],
+          [
+            "য়",
+            6294
+          ]
+        ]
+      },
+      "embedding_parameters": 3072000,
+      "examples": [
+        {
+          "origin": "archive",
+          "text": "Ill = | No 5 THE 7TH SEPTEMBER, 1983 PRINTED AT R.D.",
+          "pieces": [
+            "▁I",
+            "ll",
+            "▁=",
+            "▁|",
+            "▁No",
+            "▁",
+            "5",
+            "▁T",
+            "H",
+            "E",
+            "▁",
+            "7",
+            "T",
+            "H",
+            "▁S",
+            "E",
+            "P",
+            "T",
+            "E",
+            "M",
+            "B",
+            "ER",
+            ",",
+            "▁",
+            "1",
+            "9",
+            "8",
+            "3",
+            "▁P",
+            "R",
+            "IN",
+            "T",
+            "E",
+            "D",
+            "▁",
+            "AT",
+            "▁R",
+            ".",
+            "D",
+            "."
+          ],
+          "token_count": 40,
+          "characters": 52,
+          "chars_per_token": 1.025
+        },
+        {
+          "origin": "sangraha",
+          "text": "অক্লান্ত আলি হাইদৰ ২৭৩ নাট সন্ধালনিকৈ যোৱা শতিকাৰ সত্তৰ দশকৰ পৰা প্ৰসাৰ হ'বলৈ ধৰে।",
+          "pieces": [
+            "▁অ",
+            "ক্",
+            "ল",
+            "ান্ত",
+            "▁আলি",
+            "▁হাই",
+            "দৰ",
+            "▁২",
+            "৭৩",
+            "▁নাট",
+            "▁স",
+            "ন্ধা",
+            "ল",
+            "নি",
+            "কৈ",
+            "▁যোৱা",
+            "▁শতিকাৰ",
+            "▁স",
+            "ত্ত",
+            "ৰ",
+            "▁দশক",
+            "ৰ",
+            "▁পৰা",
+            "▁প্ৰসাৰ",
+            "▁হ",
+            "'",
+            "বলৈ",
+            "▁ধৰে",
+            "।"
+          ],
+          "token_count": 29,
+          "characters": 82,
+          "chars_per_token": 2.3793103448275863
+        },
+        {
+          "origin": "wikipedia",
+          "text": "300px|thumb|right|ভাওনাত দুজন ভাৱৰীয়া আৰু নামঘৰৰ দৰ্শক অসমৰ সৰ্বতোকালৰ সৰ্বোত্তম মহাপুৰুষ শ্ৰীমন্ত শংকৰদেৱৰ অনুপম সৃষ্টি অংকীয়া নাট ভাওনা।",
+          "pieces": [
+            "▁",
+            "3",
+            "0",
+            "0",
+            "p",
+            "x",
+            "|",
+            "th",
+            "um",
+            "b",
+            "|",
+            "right",
+            "|",
+            "ভা",
+            "ও",
+            "না",
+            "ত",
+            "▁দুজন",
+            "▁ভাৱ",
+            "ৰীয়া",
+            "▁আৰু",
+            "▁নামঘৰ",
+            "ৰ",
+            "▁দৰ্শক",
+            "▁অসমৰ",
+            "▁সৰ্ব",
+            "তো",
+            "কালৰ",
+            "▁সৰ্ব",
+            "োত্তম",
+            "▁মহাপুৰুষ",
+            "▁শ্ৰীমন্ত",
+            "▁শংকৰদেৱ",
+            "ৰ",
+            "▁অনুপম",
+            "▁সৃষ্টি",
+            "▁অংক",
+            "ীয়া",
+            "▁নাট",
+            "▁ভাওনা",
+            "।"
+          ],
+          "token_count": 41,
+          "characters": 140,
+          "chars_per_token": 3.024390243902439
+        },
+        {
+          "origin": "wikisource",
+          "text": "অষ্টম আধ্যা তোলনীয়া পো এদিন দুপৰীয়া তিনিজন মোৱাঁমৰীয়া বৈষ্ণৱ আহি উপস্থিত।",
+          "pieces": [
+            "▁অষ্টম",
+            "▁আধ্যা",
+            "▁তো",
+            "ল",
+            "নীয়া",
+            "▁পো",
+            "▁এদিন",
+            "▁দুপৰীয়া",
+            "▁তিনিজন",
+            "▁ম",
+            "োৱা",
+            "ঁ",
+            "ম",
+            "ৰীয়া",
+            "▁বৈষ্ণৱ",
+            "▁আহি",
+            "▁উপস্থিত",
+            "।"
+          ],
+          "token_count": 18,
+          "characters": 76,
+          "chars_per_token": 3.6666666666666665
+        }
+      ]
+    },
+    {
+      "model": "C:\\lma_work\\assamese\\tokenizer\\sweep\\assamese_sweep_10000.model",
+      "vocab_size": 10000,
+      "per_source": {
+        "archive": {
+          "characters": 2386065,
+          "non_space_characters": 1924596,
+          "words": 386713,
+          "tokens": 925082,
+          "chars_per_token": 2.080459894366121,
+          "fertility_tokens_per_word": 2.39216680070233,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 2514,
+          "byte_fallback_rate": 0.002717596926542728
+        },
+        "sangraha": {
+          "characters": 4556529,
+          "non_space_characters": 3838511,
+          "words": 713595,
+          "tokens": 1223746,
+          "chars_per_token": 3.136689312978347,
+          "fertility_tokens_per_word": 1.714902710921461,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 5051,
+          "byte_fallback_rate": 0.004127490508651305
+        },
+        "wikipedia": {
+          "characters": 285076,
+          "non_space_characters": 241967,
+          "words": 42291,
+          "tokens": 76870,
+          "chars_per_token": 3.147742942630415,
+          "fertility_tokens_per_word": 1.817644416069613,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 325,
+          "byte_fallback_rate": 0.004227917262911409
+        },
+        "wikisource": {
+          "characters": 291838,
+          "non_space_characters": 242682,
+          "words": 48462,
+          "tokens": 90031,
+          "chars_per_token": 2.6955382035076805,
+          "fertility_tokens_per_word": 1.8577648466839998,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 209,
+          "byte_fallback_rate": 0.0023214226210971777
+        }
+      },
+      "combined": {
+        "non_space_characters": 6247756,
+        "words": 1191061,
+        "tokens": 2315729,
+        "unknown_tokens": 0,
+        "byte_fallback_tokens": 8099,
+        "chars_per_token": 2.6979650900429197,
+        "fertility_tokens_per_word": 1.9442572630620933,
+        "unknown_rate": 0.0,
+        "byte_fallback_rate": 0.003497386784032156
+      },
+      "frequency": {
+        "total_tokens": 2315729,
+        "distinct_pieces_used": 9815,
+        "vocabulary_utilisation": 0.9815,
+        "singleton_pieces": 13,
+        "coverage": {
+          "top_100_coverage": 0.3851819448648784,
+          "top_500_coverage": 0.5898064929013714,
+          "top_1000_coverage": 0.6889843327954178,
+          "top_5000_coverage": 0.9299969901486745,
+          "top_10000_coverage": 1.0
+        },
+        "top_30": [
+          [
+            "▁",
+            108953
+          ],
+          [
+            "ৰ",
+            75758
+          ],
+          [
+            "।",
+            73609
+          ],
+          [
+            ",",
+            45953
+          ],
+          [
+            "ত",
+            29861
+          ],
+          [
+            "1",
+            25880
+          ],
+          [
+            "0",
+            23507
+          ],
+          [
+            "ক",
+            22186
+          ],
+          [
+            "ে",
+            18099
+          ],
+          [
+            "▁আৰু",
+            17558
+          ],
+          [
+            "'",
+            17444
+          ],
+          [
+            "-",
+            16588
+          ],
+          [
+            "▁।",
+            14911
+          ],
+          [
+            "ল",
+            14444
+          ],
+          [
+            "ব",
+            11651
+          ],
+          [
+            "ই",
+            10865
+          ],
+          [
+            "|",
+            10007
+          ],
+          [
+            "▁এই",
+            9317
+          ],
+          [
+            "▁কৰি",
+            8673
+          ],
+          [
+            "6",
+            8571
+          ],
+          [
+            ")",
+            7777
+          ],
+          [
+            "▁হ",
+            7519
+          ],
+          [
+            "ন",
+            7493
+          ],
+          [
+            "৷",
+            7141
+          ],
+          [
+            ".",
+            6772
+          ],
+          [
+            "8",
+            6578
+          ],
+          [
+            "▁ক",
+            6370
+          ],
+          [
+            "▁(",
+            6127
+          ],
+          [
+            "▁কৰা",
+            5727
+          ],
+          [
+            "য়",
+            5713
+          ]
+        ]
+      },
+      "embedding_parameters": 3840000,
+      "examples": [
+        {
+          "origin": "archive",
+          "text": "Ill = | No 5 THE 7TH SEPTEMBER, 1983 PRINTED AT R.D.",
+          "pieces": [
+            "▁I",
+            "ll",
+            "▁=",
+            "▁|",
+            "▁No",
+            "▁",
+            "5",
+            "▁T",
+            "H",
+            "E",
+            "▁",
+            "7",
+            "T",
+            "H",
+            "▁",
+            "SE",
+            "P",
+            "T",
+            "E",
+            "M",
+            "B",
+            "ER",
+            ",",
+            "▁",
+            "1",
+            "9",
+            "8",
+            "3",
+            "▁P",
+            "R",
+            "IN",
+            "T",
+            "E",
+            "D",
+            "▁",
+            "AT",
+            "▁R",
+            ".",
+            "D",
+            "."
+          ],
+          "token_count": 40,
+          "characters": 52,
+          "chars_per_token": 1.025
+        },
+        {
+          "origin": "sangraha",
+          "text": "অক্লান্ত আলি হাইদৰ ২৭৩ নাট সন্ধালনিকৈ যোৱা শতিকাৰ সত্তৰ দশকৰ পৰা প্ৰসাৰ হ'বলৈ ধৰে।",
+          "pieces": [
+            "▁অ",
+            "ক্",
+            "ল",
+            "ান্ত",
+            "▁আলি",
+            "▁হাই",
+            "দৰ",
+            "▁২",
+            "৭৩",
+            "▁নাট",
+            "▁স",
+            "ন্ধা",
+            "ল",
+            "নি",
+            "কৈ",
+            "▁যোৱা",
+            "▁শতিকাৰ",
+            "▁স",
+            "ত্ত",
+            "ৰ",
+            "▁দশকৰ",
+            "▁পৰা",
+            "▁প্ৰসাৰ",
+            "▁হ",
+            "'",
+            "বলৈ",
+            "▁ধৰে",
+            "।"
+          ],
+          "token_count": 28,
+          "characters": 82,
+          "chars_per_token": 2.4642857142857144
+        },
+        {
+          "origin": "wikipedia",
+          "text": "300px|thumb|right|ভাওনাত দুজন ভাৱৰীয়া আৰু নামঘৰৰ দৰ্শক অসমৰ সৰ্বতোকালৰ সৰ্বোত্তম মহাপুৰুষ শ্ৰীমন্ত শংকৰদেৱৰ অনুপম সৃষ্টি অংকীয়া নাট ভাওনা।",
+          "pieces": [
+            "▁",
+            "3",
+            "0",
+            "0",
+            "px",
+            "|",
+            "th",
+            "um",
+            "b",
+            "|",
+            "right",
+            "|",
+            "ভা",
+            "ও",
+            "নাত",
+            "▁দুজন",
+            "▁ভাৱ",
+            "ৰীয়া",
+            "▁আৰু",
+            "▁নামঘৰ",
+            "ৰ",
+            "▁দৰ্শক",
+            "▁অসমৰ",
+            "▁সৰ্ব",
+            "তো",
+            "কালৰ",
+            "▁সৰ্ব",
+            "োত্তম",
+            "▁মহাপুৰুষ",
+            "▁শ্ৰীমন্ত",
+            "▁শংকৰদেৱ",
+            "ৰ",
+            "▁অনুপম",
+            "▁সৃষ্টি",
+            "▁অংক",
+            "ীয়া",
+            "▁নাট",
+            "▁ভাওনা",
+            "।"
+          ],
+          "token_count": 39,
+          "characters": 140,
+          "chars_per_token": 3.1794871794871793
+        },
+        {
+          "origin": "wikisource",
+          "text": "অষ্টম আধ্যা তোলনীয়া পো এদিন দুপৰীয়া তিনিজন মোৱাঁমৰীয়া বৈষ্ণৱ আহি উপস্থিত।",
+          "pieces": [
+            "▁অষ্টম",
+            "▁আধ্যা",
+            "▁তো",
+            "ল",
+            "নীয়া",
+            "▁পো",
+            "▁এদিন",
+            "▁দুপৰীয়া",
+            "▁তিনিজন",
+            "▁ম",
+            "োৱা",
+            "ঁ",
+            "ম",
+            "ৰীয়া",
+            "▁বৈষ্ণৱ",
+            "▁আহি",
+            "▁উপস্থিত",
+            "।"
+          ],
+          "token_count": 18,
+          "characters": 76,
+          "chars_per_token": 3.6666666666666665
+        }
+      ]
+    },
+    {
+      "model": "C:\\lma_work\\assamese\\tokenizer\\sweep\\assamese_sweep_12000.model",
+      "vocab_size": 12000,
+      "per_source": {
+        "archive": {
+          "characters": 2386065,
+          "non_space_characters": 1924596,
+          "words": 386713,
+          "tokens": 907558,
+          "chars_per_token": 2.1206314086813185,
+          "fertility_tokens_per_word": 2.346851541065338,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 2514,
+          "byte_fallback_rate": 0.0027700708935406884
+        },
+        "sangraha": {
+          "characters": 4556529,
+          "non_space_characters": 3838511,
+          "words": 713595,
+          "tokens": 1189995,
+          "chars_per_token": 3.2256530489623905,
+          "fertility_tokens_per_word": 1.667605574590629,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 5051,
+          "byte_fallback_rate": 0.004244555649393485
+        },
+        "wikipedia": {
+          "characters": 285076,
+          "non_space_characters": 241967,
+          "words": 42291,
+          "tokens": 74674,
+          "chars_per_token": 3.2403112194338055,
+          "fertility_tokens_per_word": 1.7657184743798917,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 325,
+          "byte_fallback_rate": 0.004352251118193749
+        },
+        "wikisource": {
+          "characters": 291838,
+          "non_space_characters": 242682,
+          "words": 48462,
+          "tokens": 87696,
+          "chars_per_token": 2.7673097974822114,
+          "fertility_tokens_per_word": 1.8095827658784203,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 209,
+          "byte_fallback_rate": 0.0023832329866812626
+        }
+      },
+      "combined": {
+        "non_space_characters": 6247756,
+        "words": 1191061,
+        "tokens": 2259923,
+        "unknown_tokens": 0,
+        "byte_fallback_tokens": 8099,
+        "chars_per_token": 2.764587997024677,
+        "fertility_tokens_per_word": 1.8974032396325629,
+        "unknown_rate": 0.0,
+        "byte_fallback_rate": 0.0035837504198151884
+      },
+      "frequency": {
+        "total_tokens": 2259923,
+        "distinct_pieces_used": 11807,
+        "vocabulary_utilisation": 0.9839166666666667,
+        "singleton_pieces": 19,
+        "coverage": {
+          "top_100_coverage": 0.3818041588142605,
+          "top_500_coverage": 0.5773090499101076,
+          "top_1000_coverage": 0.6732424069315636,
+          "top_5000_coverage": 0.9083791792906218,
+          "top_10000_coverage": 0.9901518768559814
+        },
+        "top_30": [
+          [
+            "▁",
+            107379
+          ],
+          [
+            "।",
+            73609
+          ],
+          [
+            "ৰ",
+            69755
+          ],
+          [
+            ",",
+            45953
+          ],
+          [
+            "ত",
+            27914
+          ],
+          [
+            "1",
+            25880
+          ],
+          [
+            "0",
+            23507
+          ],
+          [
+            "ক",
+            20622
+          ],
+          [
+            "▁আৰু",
+            17558
+          ],
+          [
+            "'",
+            17444
+          ],
+          [
+            "ে",
+            17059
+          ],
+          [
+            "-",
+            16588
+          ],
+          [
+            "▁।",
+            14911
+          ],
+          [
+            "ল",
+            13559
+          ],
+          [
+            "ব",
+            10937
+          ],
+          [
+            "ই",
+            10052
+          ],
+          [
+            "|",
+            9900
+          ],
+          [
+            "▁এই",
+            9140
+          ],
+          [
+            "6",
+            8571
+          ],
+          [
+            "▁কৰি",
+            8552
+          ],
+          [
+            ")",
+            7790
+          ],
+          [
+            "▁হ",
+            7436
+          ],
+          [
+            "৷",
+            7141
+          ],
+          [
+            ".",
+            6772
+          ],
+          [
+            "ন",
+            6588
+          ],
+          [
+            "8",
+            6578
+          ],
+          [
+            "▁(",
+            6127
+          ],
+          [
+            "▁ক",
+            5751
+          ],
+          [
+            "▁কৰা",
+            5727
+          ],
+          [
+            "▁পৰা",
+            5621
+          ]
+        ]
+      },
+      "embedding_parameters": 4608000,
+      "examples": [
+        {
+          "origin": "archive",
+          "text": "Ill = | No 5 THE 7TH SEPTEMBER, 1983 PRINTED AT R.D.",
+          "pieces": [
+            "▁I",
+            "ll",
+            "▁=",
+            "▁|",
+            "▁No",
+            "▁",
+            "5",
+            "▁T",
+            "H",
+            "E",
+            "▁",
+            "7",
+            "T",
+            "H",
+            "▁",
+            "SE",
+            "P",
+            "TE",
+            "M",
+            "B",
+            "ER",
+            ",",
+            "▁",
+            "1",
+            "9",
+            "8",
+            "3",
+            "▁P",
+            "R",
+            "IN",
+            "TE",
+            "D",
+            "▁",
+            "AT",
+            "▁R",
+            ".",
+            "D",
+            "."
+          ],
+          "token_count": 38,
+          "characters": 52,
+          "chars_per_token": 1.0789473684210527
+        },
+        {
+          "origin": "sangraha",
+          "text": "অক্লান্ত আলি হাইদৰ ২৭৩ নাট সন্ধালনিকৈ যোৱা শতিকাৰ সত্তৰ দশকৰ পৰা প্ৰসাৰ হ'বলৈ ধৰে।",
+          "pieces": [
+            "▁অক্লান্ত",
+            "▁আলি",
+            "▁হাই",
+            "দৰ",
+            "▁২৭",
+            "৩",
+            "▁নাট",
+            "▁স",
+            "ন্ধা",
+            "ল",
+            "নি",
+            "কৈ",
+            "▁যোৱা",
+            "▁শতিকাৰ",
+            "▁স",
+            "ত্ত",
+            "ৰ",
+            "▁দশকৰ",
+            "▁পৰা",
+            "▁প্ৰসাৰ",
+            "▁হ",
+            "'",
+            "বলৈ",
+            "▁ধৰে",
+            "।"
+          ],
+          "token_count": 25,
+          "characters": 82,
+          "chars_per_token": 2.76
+        },
+        {
+          "origin": "wikipedia",
+          "text": "300px|thumb|right|ভাওনাত দুজন ভাৱৰীয়া আৰু নামঘৰৰ দৰ্শক অসমৰ সৰ্বতোকালৰ সৰ্বোত্তম মহাপুৰুষ শ্ৰীমন্ত শংকৰদেৱৰ অনুপম সৃষ্টি অংকীয়া নাট ভাওনা।",
+          "pieces": [
+            "▁",
+            "3",
+            "0",
+            "0",
+            "px",
+            "|",
+            "thumb",
+            "|",
+            "right",
+            "|",
+            "ভা",
+            "ও",
+            "নাত",
+            "▁দুজন",
+            "▁ভাৱ",
+            "ৰীয়া",
+            "▁আৰু",
+            "▁নামঘৰ",
+            "ৰ",
+            "▁দৰ্শক",
+            "▁অসমৰ",
+            "▁সৰ্ব",
+            "তো",
+            "কালৰ",
+            "▁সৰ্ব",
+            "োত্তম",
+            "▁মহাপুৰুষ",
+            "▁শ্ৰীমন্ত",
+            "▁শংকৰদেৱৰ",
+            "▁অনুপম",
+            "▁সৃষ্টি",
+            "▁অংক",
+            "ীয়া",
+            "▁নাট",
+            "▁ভাওনা",
+            "।"
+          ],
+          "token_count": 36,
+          "characters": 140,
+          "chars_per_token": 3.4444444444444446
+        },
+        {
+          "origin": "wikisource",
+          "text": "অষ্টম আধ্যা তোলনীয়া পো এদিন দুপৰীয়া তিনিজন মোৱাঁমৰীয়া বৈষ্ণৱ আহি উপস্থিত।",
+          "pieces": [
+            "▁অষ্টম",
+            "▁আধ্যা",
+            "▁তো",
+            "ল",
+            "নীয়া",
+            "▁পো",
+            "▁এদিন",
+            "▁দুপৰীয়া",
+            "▁তিনিজন",
+            "▁ম",
+            "োৱা",
+            "ঁ",
+            "ম",
+            "ৰীয়া",
+            "▁বৈষ্ণৱ",
+            "▁আহি",
+            "▁উপস্থিত",
+            "।"
+          ],
+          "token_count": 18,
+          "characters": 76,
+          "chars_per_token": 3.6666666666666665
+        }
+      ]
+    },
+    {
+      "model": "C:\\lma_work\\assamese\\tokenizer\\final\\assamese_final_8000.model",
+      "vocab_size": 8000,
+      "per_source": {
+        "archive": {
+          "characters": 2386065,
+          "non_space_characters": 1924596,
+          "words": 386713,
+          "tokens": 931119,
+          "chars_per_token": 2.0669710316296843,
+          "fertility_tokens_per_word": 2.4077778611011267,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 467,
+          "byte_fallback_rate": 0.0005015470632647385
+        },
+        "sangraha": {
+          "characters": 4556529,
+          "non_space_characters": 3838511,
+          "words": 713595,
+          "tokens": 1278047,
+          "chars_per_token": 3.0034192795726606,
+          "fertility_tokens_per_word": 1.7909976947708435,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 7773,
+          "byte_fallback_rate": 0.006081935953842073
+        },
+        "wikipedia": {
+          "characters": 285076,
+          "non_space_characters": 241967,
+          "words": 42291,
+          "tokens": 81385,
+          "chars_per_token": 2.973115438962954,
+          "fertility_tokens_per_word": 1.9244047196803102,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 572,
+          "byte_fallback_rate": 0.00702832217239049
+        },
+        "wikisource": {
+          "characters": 291838,
+          "non_space_characters": 242682,
+          "words": 48462,
+          "tokens": 92817,
+          "chars_per_token": 2.614628785675038,
+          "fertility_tokens_per_word": 1.9152531880648755,
+          "unknown_tokens": 0,
+          "unknown_rate": 0.0,
+          "byte_fallback_tokens": 570,
+          "byte_fallback_rate": 0.006141116390316429
+        }
+      },
+      "combined": {
+        "non_space_characters": 6247756,
+        "words": 1191061,
+        "tokens": 2383368,
+        "unknown_tokens": 0,
+        "byte_fallback_tokens": 9382,
+        "chars_per_token": 2.6213979544912913,
+        "fertility_tokens_per_word": 2.001046126101014,
+        "unknown_rate": 0.0,
+        "byte_fallback_rate": 0.003936446239103655
+      },
+      "frequency": {
+        "total_tokens": 2383368,
+        "distinct_pieces_used": 7833,
+        "vocabulary_utilisation": 0.979125,
+        "singleton_pieces": 6,
+        "coverage": {
+          "top_100_coverage": 0.38731282789732846,
+          "top_500_coverage": 0.5937173780968781,
+          "top_1000_coverage": 0.6965109878122052,
+          "top_5000_coverage": 0.9503207226076712
+        },
+        "top_30": [
+          [
+            "▁",
+            113721
+          ],
+          [
+            "ৰ",
+            82999
+          ],
+          [
+            "।",
+            73600
+          ],
+          [
+            ",",
+            46077
+          ],
+          [
+            "ত",
+            33578
+          ],
+          [
+            "1",
+            25880
+          ],
+          [
+            "ক",
+            24165
+          ],
+          [
+            "0",
+            23507
+          ],
+          [
+            "ে",
+            18445
+          ],
+          [
+            "▁আৰু",
+            17558
+          ],
+          [
+            "'",
+            17444
+          ],
+          [
+            "-",
+            16558
+          ],
+          [
+            "ল",
+            15258
+          ],
+          [
+            "▁।",
+            14769
+          ],
+          [
+            "ব",
+            12481
+          ],
+          [
+            "ই",
+            11591
+          ],
+          [
+            "|",
+            9942
+          ],
+          [
+            "▁এই",
+            9350
+          ],
+          [
+            "▁কৰি",
+            8822
+          ],
+          [
+            "ন",
+            8593
+          ],
+          [
+            "6",
+            8571
+          ],
+          [
+            ")",
+            7850
+          ],
+          [
+            "▁হ",
+            7393
+          ],
+          [
+            ".",
+            6987
+          ],
+          [
+            "ম",
+            6761
+          ],
+          [
+            "8",
+            6578
+          ],
+          [
+            "▁ক",
+            6504
+          ],
+          [
+            "লে",
+            6312
+          ],
+          [
+            "▁(",
+            6127
+          ],
+          [
+            "য়",
+            6012
+          ]
+        ]
+      },
+      "embedding_parameters": 3072000,
+      "examples": [
+        {
+          "origin": "archive",
+          "text": "Ill = | No 5 THE 7TH SEPTEMBER, 1983 PRINTED AT R.D.",
+          "pieces": [
+            "▁I",
+            "l",
+            "l",
+            "▁=",
+            "▁|",
+            "▁No",
+            "▁",
+            "5",
+            "▁T",
+            "H",
+            "E",
+            "▁",
+            "7",
+            "T",
+            "H",
+            "▁S",
+            "E",
+            "P",
+            "T",
+            "E",
+            "M",
+            "B",
+            "E",
+            "R",
+            ",",
+            "▁",
+            "1",
+            "9",
+            "8",
+            "3",
+            "▁P",
+            "R",
+            "I",
+            "N",
+            "T",
+            "E",
+            "D",
+            "▁A",
+            "T",
+            "▁R",
+            ".",
+            "D",
+            "."
+          ],
+          "token_count": 43,
+          "characters": 52,
+          "chars_per_token": 0.9534883720930233
+        },
+        {
+          "origin": "sangraha",
+          "text": "অক্লান্ত আলি হাইদৰ ২৭৩ নাট সন্ধালনিকৈ যোৱা শতিকাৰ সত্তৰ দশকৰ পৰা প্ৰসাৰ হ'বলৈ ধৰে।",
+          "pieces": [
+            "▁অ",
+            "ক্ল",
+            "ান্ত",
+            "▁আলি",
+            "▁হাই",
+            "দৰ",
+            "▁২৭",
+            "৩",
+            "▁নাট",
+            "▁স",
+            "ন্ধা",
+            "ল",
+            "নি",
+            "কৈ",
+            "▁যোৱা",
+            "▁শতিকাৰ",
+            "▁",
+            "সত্ত",
+            "ৰ",
+            "▁দশকৰ",
+            "▁পৰা",
+            "▁প্ৰসাৰ",
+            "▁হ",
+            "'",
+            "বলৈ",
+            "▁ধৰে",
+            "।"
+          ],
+          "token_count": 27,
+          "characters": 82,
+          "chars_per_token": 2.5555555555555554
+        },
+        {
+          "origin": "wikipedia",
+          "text": "300px|thumb|right|ভাওনাত দুজন ভাৱৰীয়া আৰু নামঘৰৰ দৰ্শক অসমৰ সৰ্বতোকালৰ সৰ্বোত্তম মহাপুৰুষ শ্ৰীমন্ত শংকৰদেৱৰ অনুপম সৃষ্টি অংকীয়া নাট ভাওনা।",
+          "pieces": [
+            "▁",
+            "3",
+            "0",
+            "0",
+            "p",
+            "x",
+            "|",
+            "th",
+            "um",
+            "b",
+            "|",
+            "r",
+            "ight",
+            "|",
+            "ভা",
+            "ও",
+            "নাত",
+            "▁দুজন",
+            "▁ভাৱ",
+            "ৰীয়া",
+            "▁আৰু",
+            "▁নামঘৰ",
+            "ৰ",
+            "▁দৰ্শক",
+            "▁অসমৰ",
+            "▁সৰ্ব",
+            "তো",
+            "কালৰ",
+            "▁সৰ্ব",
+            "োত্তম",
+            "▁মহাপুৰুষ",
+            "▁শ্ৰীমন্ত",
+            "▁শংকৰদেৱ",
+            "ৰ",
+            "▁অনুপম",
+            "▁সৃষ্টি",
+            "▁অংক",
+            "ীয়া",
+            "▁নাট",
+            "▁ভাওনা",
+            "।"
+          ],
+          "token_count": 41,
+          "characters": 140,
+          "chars_per_token": 3.024390243902439
+        },
+        {
+          "origin": "wikisource",
+          "text": "অষ্টম আধ্যা তোলনীয়া পো এদিন দুপৰীয়া তিনিজন মোৱাঁমৰীয়া বৈষ্ণৱ আহি উপস্থিত।",
+          "pieces": [
+            "▁অষ্টম",
+            "▁আধ্যা",
+            "▁তোল",
+            "নীয়া",
+            "▁পো",
+            "▁এদিন",
+            "▁দুপৰীয়া",
+            "▁তিনিজন",
+            "▁ম",
+            "োৱা",
+            "ঁ",
+            "ম",
+            "ৰীয়া",
+            "▁বৈষ্ণৱ",
+            "▁আহি",
+            "▁উপস্থিত",
+            "।"
+          ],
+          "token_count": 17,
+          "characters": 76,
+          "chars_per_token": 3.8823529411764706
+        }
+      ]
+    }
+  ]
+}

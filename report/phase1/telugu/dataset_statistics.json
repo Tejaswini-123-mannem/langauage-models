@@ -1,0 +1,222 @@
+{
+  "language": "Telugu",
+  "tokenizer": "C:/lma_work/telugu/tokenizer/final/telugu_final_8000.model",
+  "vocab_size": 8000,
+  "splits": {
+    "train": {
+      "documents": 1015350,
+      "characters": 2288825203,
+      "tokens": 647207005,
+      "manual_tokens": 142510452,
+      "sangraha_tokens": 504696553,
+      "manual_token_share": 0.22019299991970884,
+      "chars_per_token": 3.5364654358152383
+    },
+    "validation": {
+      "documents": 5171,
+      "characters": 11324463,
+      "tokens": 3185932,
+      "manual_tokens": 568837,
+      "sangraha_tokens": 2617095,
+      "manual_token_share": 0.1785464975398094,
+      "chars_per_token": 3.5545212515521363
+    },
+    "test": {
+      "documents": 5120,
+      "characters": 11368714,
+      "tokens": 3192593,
+      "manual_tokens": 729561,
+      "sangraha_tokens": 2463032,
+      "manual_token_share": 0.22851675738185231,
+      "chars_per_token": 3.5609656476725973
+    }
+  },
+  "per_source": [
+    {
+      "split": "train",
+      "source_type": "archive",
+      "source_group": "manual",
+      "documents": 819,
+      "characters": 143917900,
+      "tokens": 54865499,
+      "chars_per_token": 2.1918,
+      "median_doc_tokens": 34576,
+      "p95_doc_tokens": 165670,
+      "max_doc_tokens": 3368455
+    },
+    {
+      "split": "train",
+      "source_type": "sangraha",
+      "source_group": "sangraha",
+      "documents": 911584,
+      "characters": 1849488951,
+      "tokens": 504696553,
+      "chars_per_token": 3.2041,
+      "median_doc_tokens": 367,
+      "p95_doc_tokens": 1529,
+      "max_doc_tokens": 89505
+    },
+    {
+      "split": "train",
+      "source_type": "textbook",
+      "source_group": "manual",
+      "documents": 17944,
+      "characters": 26586684,
+      "tokens": 9037590,
+      "chars_per_token": 2.5334,
+      "median_doc_tokens": 481,
+      "p95_doc_tokens": 839,
+      "max_doc_tokens": 3870
+    },
+    {
+      "split": "train",
+      "source_type": "wikipedia",
+      "source_group": "manual",
+      "documents": 76209,
+      "characters": 233394230,
+      "tokens": 63569624,
+      "chars_per_token": 3.1898,
+      "median_doc_tokens": 618,
+      "p95_doc_tokens": 2062,
+      "max_doc_tokens": 75227
+    },
+    {
+      "split": "train",
+      "source_type": "wikisource",
+      "source_group": "manual",
+      "documents": 8794,
+      "characters": 35437438,
+      "tokens": 15037739,
+      "chars_per_token": 2.0114,
+      "median_doc_tokens": 890,
+      "p95_doc_tokens": 5350,
+      "max_doc_tokens": 209117
+    },
+    {
+      "split": "validation",
+      "source_type": "archive",
+      "source_group": "manual",
+      "documents": 6,
+      "characters": 495581,
+      "tokens": 178122,
+      "chars_per_token": 2.3166,
+      "median_doc_tokens": 27668,
+      "p95_doc_tokens": 83674,
+      "max_doc_tokens": 83674
+    },
+    {
+      "split": "validation",
+      "source_type": "sangraha",
+      "source_group": "sangraha",
+      "documents": 4636,
+      "characters": 9515124,
+      "tokens": 2617095,
+      "chars_per_token": 3.181,
+      "median_doc_tokens": 370,
+      "p95_doc_tokens": 1537,
+      "max_doc_tokens": 30235
+    },
+    {
+      "split": "validation",
+      "source_type": "textbook",
+      "source_group": "manual",
+      "documents": 80,
+      "characters": 121801,
+      "tokens": 41531,
+      "chars_per_token": 2.5144,
+      "median_doc_tokens": 506,
+      "p95_doc_tokens": 942,
+      "max_doc_tokens": 1175
+    },
+    {
+      "split": "validation",
+      "source_type": "wikipedia",
+      "source_group": "manual",
+      "documents": 398,
+      "characters": 1039473,
+      "tokens": 283062,
+      "chars_per_token": 3.1903,
+      "median_doc_tokens": 483,
+      "p95_doc_tokens": 1661,
+      "max_doc_tokens": 20059
+    },
+    {
+      "split": "validation",
+      "source_type": "wikisource",
+      "source_group": "manual",
+      "documents": 51,
+      "characters": 152484,
+      "tokens": 66122,
+      "chars_per_token": 1.9705,
+      "median_doc_tokens": 649,
+      "p95_doc_tokens": 5049,
+      "max_doc_tokens": 6237
+    },
+    {
+      "split": "test",
+      "source_type": "archive",
+      "source_group": "manual",
+      "documents": 7,
+      "characters": 755190,
+      "tokens": 288330,
+      "chars_per_token": 2.1945,
+      "median_doc_tokens": 40121,
+      "p95_doc_tokens": 66221,
+      "max_doc_tokens": 66221
+    },
+    {
+      "split": "test",
+      "source_type": "sangraha",
+      "source_group": "sangraha",
+      "documents": 4605,
+      "characters": 9093163,
+      "tokens": 2463032,
+      "chars_per_token": 3.2279,
+      "median_doc_tokens": 366,
+      "p95_doc_tokens": 1525,
+      "max_doc_tokens": 28490
+    },
+    {
+      "split": "test",
+      "source_type": "textbook",
+      "source_group": "manual",
+      "documents": 74,
+      "characters": 122567,
+      "tokens": 40601,
+      "chars_per_token": 2.608,
+      "median_doc_tokens": 559,
+      "p95_doc_tokens": 908,
+      "max_doc_tokens": 1146
+    },
+    {
+      "split": "test",
+      "source_type": "wikipedia",
+      "source_group": "manual",
+      "documents": 395,
+      "characters": 1258297,
+      "tokens": 343549,
+      "chars_per_token": 3.1824,
+      "median_doc_tokens": 594,
+      "p95_doc_tokens": 2254,
+      "max_doc_tokens": 12753
+    },
+    {
+      "split": "test",
+      "source_type": "wikisource",
+      "source_group": "manual",
+      "documents": 39,
+      "characters": 139497,
+      "tokens": 57081,
+      "chars_per_token": 2.1038,
+      "median_doc_tokens": 683,
+      "p95_doc_tokens": 8274,
+      "max_doc_tokens": 8526
+    }
+  ],
+  "requirements": {
+    "min_manual_share": 0.2,
+    "manual_share": 0.22019299991970884,
+    "meets_manual_requirement": true,
+    "training_tokens": 647207005
+  }
+}

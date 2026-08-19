@@ -1,0 +1,186 @@
+{
+  "language": "Assamese",
+  "tokenizer": "C:/lma_work/assamese/tokenizer/final/assamese_final_8000.model",
+  "vocab_size": 8000,
+  "splits": {
+    "train": {
+      "documents": 392097,
+      "characters": 1767282379,
+      "tokens": 559359252,
+      "manual_tokens": 312112673,
+      "sangraha_tokens": 247246579,
+      "manual_token_share": 0.5579824985177863,
+      "chars_per_token": 3.1594764414480445
+    },
+    "validation": {
+      "documents": 1970,
+      "characters": 7517542,
+      "tokens": 2383367,
+      "manual_tokens": 1105320,
+      "sangraha_tokens": 1278047,
+      "manual_token_share": 0.4637640782976352,
+      "chars_per_token": 3.1541688711809805
+    },
+    "test": {
+      "documents": 1976,
+      "characters": 9553317,
+      "tokens": 2879068,
+      "manual_tokens": 1485210,
+      "sangraha_tokens": 1393858,
+      "manual_token_share": 0.5158648562659861,
+      "chars_per_token": 3.3181977639986275
+    }
+  },
+  "per_source": [
+    {
+      "split": "train",
+      "source_type": "archive",
+      "source_group": "manual",
+      "documents": 2397,
+      "characters": 762230185,
+      "tokens": 273694395,
+      "chars_per_token": 2.2733,
+      "median_doc_tokens": 80722,
+      "p95_doc_tokens": 347490,
+      "max_doc_tokens": 1700107
+    },
+    {
+      "split": "train",
+      "source_type": "sangraha",
+      "source_group": "sangraha",
+      "documents": 312105,
+      "characters": 880006376,
+      "tokens": 247246579,
+      "chars_per_token": 3.001,
+      "median_doc_tokens": 328,
+      "p95_doc_tokens": 2995,
+      "max_doc_tokens": 73915
+    },
+    {
+      "split": "train",
+      "source_type": "wikipedia",
+      "source_group": "manual",
+      "documents": 23941,
+      "characters": 60213235,
+      "tokens": 17333563,
+      "chars_per_token": 2.9488,
+      "median_doc_tokens": 514,
+      "p95_doc_tokens": 1922,
+      "max_doc_tokens": 22476
+    },
+    {
+      "split": "train",
+      "source_type": "wikisource",
+      "source_group": "manual",
+      "documents": 53654,
+      "characters": 64832583,
+      "tokens": 21084715,
+      "chars_per_token": 2.5602,
+      "median_doc_tokens": 324,
+      "p95_doc_tokens": 933,
+      "max_doc_tokens": 14450
+    },
+    {
+      "split": "validation",
+      "source_type": "archive",
+      "source_group": "manual",
+      "documents": 11,
+      "characters": 2386055,
+      "tokens": 931118,
+      "chars_per_token": 2.067,
+      "median_doc_tokens": 58814,
+      "p95_doc_tokens": 259445,
+      "max_doc_tokens": 259445
+    },
+    {
+      "split": "validation",
+      "source_type": "sangraha",
+      "source_group": "sangraha",
+      "documents": 1573,
+      "characters": 4554957,
+      "tokens": 1278047,
+      "chars_per_token": 3.0034,
+      "median_doc_tokens": 319,
+      "p95_doc_tokens": 2913,
+      "max_doc_tokens": 47332
+    },
+    {
+      "split": "validation",
+      "source_type": "wikipedia",
+      "source_group": "manual",
+      "documents": 129,
+      "characters": 284948,
+      "tokens": 81385,
+      "chars_per_token": 2.9731,
+      "median_doc_tokens": 528,
+      "p95_doc_tokens": 1520,
+      "max_doc_tokens": 3969
+    },
+    {
+      "split": "validation",
+      "source_type": "wikisource",
+      "source_group": "manual",
+      "documents": 257,
+      "characters": 291582,
+      "tokens": 92817,
+      "chars_per_token": 2.6146,
+      "median_doc_tokens": 304,
+      "p95_doc_tokens": 816,
+      "max_doc_tokens": 1450
+    },
+    {
+      "split": "test",
+      "source_type": "archive",
+      "source_group": "manual",
+      "documents": 8,
+      "characters": 4035292,
+      "tokens": 1305106,
+      "chars_per_token": 2.5464,
+      "median_doc_tokens": 137356,
+      "p95_doc_tokens": 293136,
+      "max_doc_tokens": 293136
+    },
+    {
+      "split": "test",
+      "source_type": "sangraha",
+      "source_group": "sangraha",
+      "documents": 1581,
+      "characters": 4937921,
+      "tokens": 1393858,
+      "chars_per_token": 2.9906,
+      "median_doc_tokens": 324,
+      "p95_doc_tokens": 3225,
+      "max_doc_tokens": 69046
+    },
+    {
+      "split": "test",
+      "source_type": "wikipedia",
+      "source_group": "manual",
+      "documents": 101,
+      "characters": 236412,
+      "tokens": 67286,
+      "chars_per_token": 2.9831,
+      "median_doc_tokens": 451,
+      "p95_doc_tokens": 1551,
+      "max_doc_tokens": 8607
+    },
+    {
+      "split": "test",
+      "source_type": "wikisource",
+      "source_group": "manual",
+      "documents": 286,
+      "characters": 343692,
+      "tokens": 112818,
+      "chars_per_token": 2.5279,
+      "median_doc_tokens": 324,
+      "p95_doc_tokens": 908,
+      "max_doc_tokens": 4129
+    }
+  ],
+  "requirements": {
+    "min_manual_share": 0.2,
+    "manual_share": 0.5579824985177863,
+    "meets_manual_requirement": true,
+    "training_tokens": 559359252
+  }
+}

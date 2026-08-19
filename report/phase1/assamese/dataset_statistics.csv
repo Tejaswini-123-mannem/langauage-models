@@ -1,0 +1,13 @@
+split,source_type,source_group,documents,characters,tokens,chars_per_token,median_doc_tokens,p95_doc_tokens,max_doc_tokens
+train,archive,manual,2397,762230185,273694395,2.2733,80722,347490,1700107
+train,sangraha,sangraha,312105,880006376,247246579,3.001,328,2995,73915
+train,wikipedia,manual,23941,60213235,17333563,2.9488,514,1922,22476
+train,wikisource,manual,53654,64832583,21084715,2.5602,324,933,14450
+validation,archive,manual,11,2386055,931118,2.067,58814,259445,259445
+validation,sangraha,sangraha,1573,4554957,1278047,3.0034,319,2913,47332
+validation,wikipedia,manual,129,284948,81385,2.9731,528,1520,3969
+validation,wikisource,manual,257,291582,92817,2.6146,304,816,1450
+test,archive,manual,8,4035292,1305106,2.5464,137356,293136,293136
+test,sangraha,sangraha,1581,4937921,1393858,2.9906,324,3225,69046
+test,wikipedia,manual,101,236412,67286,2.9831,451,1551,8607
+test,wikisource,manual,286,343692,112818,2.5279,324,908,4129
