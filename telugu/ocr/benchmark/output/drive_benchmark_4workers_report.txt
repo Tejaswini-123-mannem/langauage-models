@@ -1,0 +1,15 @@
+================================================================================
+TELUGU OCR — GOOGLE DRIVE 4 WORKER BENCHMARK
+================================================================================
+
+PDF: Copy of 10 telugu fl 2025-26.pdf
+Workers: 4
+Pages requested: 20
+Pages successful: 20
+Pages failed: 0
+Total time: 8.84 seconds
+Pages/minute: 135.71
+Pages/hour: 8142.70
+Total characters: 24,877
+Telugu characters: 19,588
+Overall Telugu: 78.74%

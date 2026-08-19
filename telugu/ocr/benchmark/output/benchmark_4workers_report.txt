@@ -1,0 +1,16 @@
+================================================================================
+TELUGU OCR — 4 WORKER BENCHMARK
+================================================================================
+
+PDF: Copy of 10 telugu fl 2025-26.pdf
+Workers: 4
+Pages requested: 20
+Pages successful: 20
+Pages failed: 0
+Total time: 7.85 seconds
+Average wall time/page: 0.39 seconds
+Pages/minute: 152.87
+Pages/hour: 9172.37
+Total characters: 24,909
+Telugu characters: 19,588
+Overall Telugu: 78.64%

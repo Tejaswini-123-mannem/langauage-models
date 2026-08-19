@@ -1,0 +1,13 @@
+================================================================================
+TELUGU OCR LAPTOP BENCHMARK
+================================================================================
+
+PDF: Copy of 10 telugu fl 2025-26.pdf
+Pages processed: 20
+Total time: 18.52 seconds
+Average time/page: 0.93 seconds
+Pages/minute: 64.79
+Pages/hour: 3887.61
+Total characters: 24,909
+Total Telugu characters: 19,588
+Overall Telugu percentage: 78.64%
