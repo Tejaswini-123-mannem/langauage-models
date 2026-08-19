@@ -1,0 +1,21 @@
+{
+  "_comment": "Provisional tokenizer. Trained on a 2% document sample of the assembled corpus for the sole purpose of measuring characters-per-token per source, so the ~400M Sangraha / ~100M manual TOKEN mix can be planned. This model is not a Phase 1 deliverable and is not used for training data.",
+  "model_prefix": "telugu_provisional",
+  "output_dir": "C:/lma_work/telugu/tokenizer/provisional",
+  "input_files": [
+    "C:/lma_work/telugu/corpus/all/corpus_textbook.jsonl",
+    "C:/lma_work/telugu/corpus/all/corpus_wikisource.jsonl",
+    "C:/lma_work/telugu/corpus/all/corpus_archive.jsonl",
+    "C:/lma_work/telugu/corpus/all/corpus_sangraha.jsonl"
+  ],
+  "sample_rate": 0.02,
+  "seed": 42,
+  "model_type": "unigram",
+  "vocab_size": 32000,
+  "character_coverage": 0.9995,
+  "byte_fallback": true,
+  "input_sentence_size": 2000000,
+  "num_threads": 4,
+  "train_extremely_large_corpus": false,
+  "_path_note": "Paths point at the local working area. The original run read the same corpus files from the Google Drive copy, before the pipeline was moved to local disk to stop Drive's cache evicting large unsynced files. The files are identical; only their location changed."
+}

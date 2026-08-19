@@ -1,0 +1,77 @@
+{
+  "_comment": "FINAL Telugu tokenizer (Model H). Trained on the FULL training split only, never on validation or test, so held-out fertility and Phase 2 perplexity are not optimistically biased.",
+
+  "_choice": "8,000 pieces, chosen from a 6k/8k/10k/12k sweep measured on held-out validation text. See _why_8000 below.",
+
+  "_why_8000": [
+    "Phase 2 fixes the model at ~25M parameters and the embedding matrix is",
+    "inside that budget, not outside it. At d_model=384 with a tied output",
+    "head the embedding costs vocab x 384, and each Transformer block costs",
+    "12 x 384^2 = 1,769,472. Vocabulary is therefore bought directly out of",
+    "depth.",
+    "",
+    "Measured on held-out validation text:",
+    "",
+    "   vocab  chars/tok  fertility  unk rate  vocab used  embedding  layers",
+    "   6,000      2.889      2.397    0.000%     97.30%   2,304,000     12",
+    "   8,000      3.053      2.268    0.000%     97.97%   3,072,000     12",
+    "  10,000      3.179      2.178    0.000%     98.38%   3,840,000     11",
+    "  12,000      3.278      2.113    0.000%     98.63%   4,608,000     11",
+    "",
+    "The trade is a step function rather than a smooth curve. 6k and 8k both",
+    "afford twelve layers; 10k and 12k afford eleven. Within twelve layers 8k",
+    "strictly dominates 6k -- 5.7% better compression, higher utilisation,",
+    "identical depth -- so 8k is the best tokenizer available at no cost in",
+    "layers. Going on to 10k buys 4.0% fertility for a whole Transformer",
+    "block.",
+    "",
+    "Unknown-token rate is 0.000% at every candidate, so it cannot",
+    "discriminate; byte_fallback covers the tail. Fertility and compression",
+    "against parameter cost decide.",
+    "",
+    "Model L (Assamese) selects 8,000 by the same rule on its own measured",
+    "sweep. Holding the vocabulary size equal across the two models is a",
+    "methodological gain for Phase 3: with granularity constant, a Model H",
+    "versus Model L difference is attributable to the DATA rather than to one",
+    "model having a coarser tokenizer than the other. The two vocabularies",
+    "remain entirely separate and are trained on separate corpora."
+  ],
+
+  "_supersedes": [
+    "This replaces a 32,000-piece tokenizer chosen from a 8k-64k sweep on",
+    "held-out fertility alone. That selection was sound on compression and",
+    "wrong on budget: 32,000 spends 12,288,000 parameters, 53% of a ~25M",
+    "model, leaving only seven Transformer layers. The reported Phase 1",
+    "figure of 522,289,581 training tokens was measured with that tokenizer;",
+    "the count under 8,000 is higher, because a smaller vocabulary segments",
+    "the same text into more pieces. The corpus is unchanged -- only the",
+    "measuring instrument is."
+  ],
+
+  "model_prefix": "telugu_final_8000",
+  "output_dir": "C:/lma_work/telugu/tokenizer/final",
+
+  "input_files": [
+    "C:/lma_work/telugu/corpus/splits/train.jsonl"
+  ],
+
+  "training_text": "C:/lma_work/telugu/tokenizer/final/final_input.txt",
+
+  "sample_rate": 1.0,
+  "seed": 42,
+
+  "model_type": "unigram",
+  "vocab_size": 8000,
+  "character_coverage": 0.9995,
+  "byte_fallback": true,
+
+  "max_sentence_length": 16384,
+  "_max_sentence_length_note": "SentencePiece's limit is in BYTES and defaults to 4,192. Telugu costs three bytes per character, so the exporter's 2,000-character chunks reach ~6,000 bytes and would be dropped SILENTLY. Measured here, the default discarded 0.72% of lines but 7.15% of the text, weighted towards the longest continuous prose - exactly what subword learning depends on.",
+
+  "input_sentence_size": 1500000,
+  "_input_sentence_size_note": "Sentences SentencePiece loads into memory, sampled with shuffle_input_sentence across the whole export. NOT a corpus limit: sample_rate is 1.0, so every document in the training split is exported and eligible to be sampled. Reduced from 3,000,000 after measurement. Telugu sweep candidates peaked at 5.5 GB on a 223.6M-character sample; 3,000,000 sentences loads ~581M characters, which extrapolates to ~14 GB on a 15.8 GB machine. Two candidates had already died with STATUS_DLL_INIT_FAILED (0xC0000142) when memory pressure prevented a process from starting. 1,500,000 loads ~290M characters at roughly 6 GB. For scale, the Assamese final tokenizer learned from 259.7M characters and measured BETTER than its 10%-sample candidate (2.621 vs 2.612 chars/token, fertility 2.001 vs 2.009), so ~290M is ample evidence for the unigram model.",
+
+  "num_threads": 4,
+  "train_extremely_large_corpus": true,
+  "_train_extremely_large_corpus_note": "Memory-frugal training path. The training split is 2.29B characters, and the earlier 8k-64k sweep produced std::bad_alloc at 48k on this machine. Slower, but it finishes."
+}

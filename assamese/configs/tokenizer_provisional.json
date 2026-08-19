@@ -1,0 +1,32 @@
+{
+  "_comment": "Provisional Assamese tokenizer. Trained on a 5% document sample of the assembled corpus for the sole purpose of measuring characters-per-token per source, so the mix can be planned in TOKENS rather than characters. This model is not a Phase 1 deliverable and is not used for training data.",
+
+  "model_prefix": "assamese_provisional",
+  "output_dir": "C:/lma_work/assamese/tokenizer/provisional",
+
+  "input_files": [
+    "C:/lma_work/assamese/corpus/all/corpus_wikisource.jsonl",
+    "C:/lma_work/assamese/corpus/all/corpus_wikipedia.jsonl",
+    "C:/lma_work/assamese/corpus/all/corpus_archive.jsonl",
+    "C:/lma_work/assamese/corpus/all/corpus_sangraha.jsonl"
+  ],
+
+  "sample_rate": 0.05,
+  "_sample_rate_note": "Telugu sampled 2% of a 2.29B character corpus, giving ~46M characters. The Assamese corpus is 1.11B characters, so 5% draws a comparable absolute sample (~55M characters) rather than a comparable fraction. What the measurement needs is enough text per source for a stable characters-per-token ratio, which is an absolute quantity.",
+
+  "seed": 42,
+
+  "model_type": "unigram",
+  "vocab_size": 16000,
+  "_vocab_size_note": "Provisional only. Set near the vocabulary size the sweep is expected to select for a corpus this size, so the measured characters-per-token is close to what the final tokenizer will deliver. The mix decision is barely sensitive to this: a systematic shift applies to every source alike, and the allocation depends on the ratios between sources.",
+
+  "character_coverage": 0.9995,
+  "byte_fallback": true,
+
+  "max_sentence_length": 16384,
+  "_max_sentence_length_note": "SentencePiece's limit is in BYTES and defaults to 4,192. Assamese costs three bytes per character in the Bengali-Assamese block, so the exporter's 2,000-character chunks reach ~6,000 bytes and would be dropped SILENTLY. On Telugu that silently discarded 0.72% of lines but 7.15% of the text, weighted towards the longest prose.",
+
+  "input_sentence_size": 2000000,
+  "num_threads": 4,
+  "train_extremely_large_corpus": false
+}

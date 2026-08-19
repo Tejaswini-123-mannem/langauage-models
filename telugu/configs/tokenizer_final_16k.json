@@ -1,0 +1,21 @@
+{
+  "_comment": "FINAL Telugu tokenizer, alternative candidate at 16k. Trained on the full training split alongside the 32k primary so the two can be compared at full scale rather than only on the 10% sweep sample. 16k is the realistic alternative because it is the only other size that leaves a usable Phase 2 parameter budget: 6.1M embedding leaves ~18.9M for blocks, about 10-11 layers at d_model=384, against 32k's ~7. It costs 0.19 chars/token (roughly 9% worse compression). 48k and 64k were excluded on budget grounds - they leave ~3-4 and ~0 layers respectively.",
+  "model_prefix": "telugu_final_16000",
+  "output_dir": "C:/lma_work/telugu/tokenizer/final",
+  "input_files": [
+    "C:/lma_work/telugu/corpus/splits/train.jsonl"
+  ],
+  "training_text": "C:/lma_work/telugu/tokenizer/final/final_input.txt",
+  "sample_rate": 1.0,
+  "seed": 42,
+  "model_type": "unigram",
+  "vocab_size": 16000,
+  "character_coverage": 0.9995,
+  "byte_fallback": true,
+  "max_sentence_length": 16384,
+  "input_sentence_size": 3000000,
+  "num_threads": 4,
+  "train_extremely_large_corpus": true,
+  "_input_sentence_size_note": "Sentences SentencePiece loads into memory, sampled with shuffle_input_sentence across the whole export. Not a corpus limit: sample_rate is 1.0, so every document in the training split contributes lines and the sample is drawn across all of them. Capped because the 10%-sample sweep (223M chars) already produced std::bad_alloc at 48k on this machine, and the full split is 2.29B chars. A vocabulary converges long before it needs billions of characters, so this costs nothing in quality.",
+  "_train_extremely_large_corpus_note": "Uses SentencePiece's memory-frugal training path. Slower, but the alternative on this machine is not finishing."
+}

@@ -1,0 +1,79 @@
+{
+  "_comment": "FINAL Assamese tokenizer (Model L). Trained on the FULL training split only, never on validation or test, so held-out fertility and Phase 2 perplexity are not optimistically biased.",
+
+  "_choice": "8,000 pieces, chosen from a 6k/8k/10k/12k sweep measured on held-out validation text. See _why_8000 below.",
+
+  "_why_8000": [
+    "The vocabulary is not free: at d_model=384 with a tied output head it",
+    "costs vocab x 384 parameters out of the ~25M Phase 2 budget, and each",
+    "Transformer block costs 12 x 384^2 = 1,769,472. Vocabulary is therefore",
+    "bought directly out of depth, and depth is what Phase 3's comparative",
+    "reasoning needs.",
+    "",
+    "Measured on held-out validation text (518.5M-token corpus, 2,416",
+    "Internet Archive books included):",
+    "",
+    "   vocab  chars/tok  fertility  unk rate  vocab used  embedding  layers",
+    "   6,000      2.494      2.103    0.000%     97.02%   2,304,000     12",
+    "   8,000      2.612      2.009    0.000%     97.72%   3,072,000     12",
+    "  10,000      2.698      1.944    0.000%     98.15%   3,840,000     11",
+    "  12,000      2.765      1.897    0.000%     98.39%   4,608,000     11",
+    "",
+    "8,000 is the elbow, and the argument is a step function rather than a",
+    "smooth trade. 6k and 8k both afford twelve layers; 10k and 12k afford",
+    "eleven. Within twelve layers, 8k strictly dominates 6k -- 4.7% better",
+    "compression, higher vocabulary utilisation, same depth -- so 8k is the",
+    "best tokenizer available at no cost in layers. Going further to 10k buys",
+    "3.3% fertility for a whole Transformer block, and 12k buys 2.5% more for",
+    "19% of the model spent on a lookup table that performs no computation.",
+    "",
+    "Unknown-token rate is 0.000% at every candidate, so it cannot",
+    "discriminate here; byte_fallback covers the tail. The decision rests on",
+    "fertility and compression against parameter cost, as the assignment asks.",
+    "",
+    "Vocabulary utilisation RISES with size across the whole sweep (97.02% ->",
+    "98.39%), which normally indicates the corpus could support more pieces",
+    "still. It is not taken as an argument for a larger vocabulary here: the",
+    "binding constraint is the parameter budget, not whether the corpus can",
+    "fill the vocabulary.",
+    "",
+    "10,000 is retained as a documented alternative should Phase 2 find the",
+    "twelfth layer worth less than the compression."
+  ],
+
+  "_supersedes": [
+    "An earlier configuration chose 16,000 on a sweep over 4k-32k. Two things",
+    "invalidated it. The corpus grew from 289M to 518.5M tokens when the",
+    "Internet Archive collection was repaired, so the old sweep measured a",
+    "different distribution. And the selection ignored the parameter budget:",
+    "16,000 spends 6,144,000 parameters, 30% of the model, leaving ten layers.",
+    "The sweep bracket was moved to 6k-12k for both languages accordingly."
+  ],
+
+  "model_prefix": "assamese_final_8000",
+  "output_dir": "C:/lma_work/assamese/tokenizer/final",
+
+  "input_files": [
+    "C:/lma_work/assamese/corpus/splits/train.jsonl"
+  ],
+
+  "training_text": "C:/lma_work/assamese/tokenizer/final/final_input.txt",
+
+  "sample_rate": 1.0,
+  "seed": 42,
+
+  "model_type": "unigram",
+  "vocab_size": 8000,
+  "character_coverage": 0.9995,
+  "byte_fallback": true,
+
+  "max_sentence_length": 16384,
+  "_max_sentence_length_note": "SentencePiece's limit is in BYTES and defaults to 4,192. The Bengali-Assamese block costs three bytes per character, so the exporter's 2,000-character chunks reach ~6,000 bytes and would be dropped SILENTLY. Measured on Telugu, the default discarded 0.72% of lines but 7.15% of the text, weighted towards the longest continuous prose - exactly what subword learning depends on.",
+
+  "input_sentence_size": 3000000,
+  "_input_sentence_size_note": "Sentences SentencePiece loads into memory, sampled with shuffle_input_sentence across the whole export. Not a corpus limit: sample_rate is 1.0, so every document in the training split contributes lines.",
+
+  "num_threads": 4,
+  "train_extremely_large_corpus": true,
+  "_train_extremely_large_corpus_note": "Memory-frugal training path. The training split is now 1.77B characters, up from 1.09B, and the earlier 10%-sample sweep already produced std::bad_alloc at 48k on this machine. Slower, but it finishes."
+}
