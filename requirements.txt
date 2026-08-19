@@ -1,0 +1,26 @@
+# Phase 1 dependencies, pinned to the versions the reported results were
+# produced with (Python 3.12, Windows 11).
+#
+# Install with:
+#     python -m venv .venv
+#     .venv\Scripts\pip install -r requirements.txt
+
+# ---- tokenizer --------------------------------------------------------------
+sentencepiece==0.2.2
+
+# ---- corpus construction ----------------------------------------------------
+datasketch==2.0.0          # MinHash LSH for near-duplicate removal
+numpy==2.5.2               # MinHash signature comparison
+pyarrow==25.0.1            # reads the Sangraha parquet shards
+mwparserfromhell==0.7.2    # MediaWiki markup cleaning
+internetarchive==5.11.0    # Internet Archive item search and download
+
+# ---- textbook OCR (Model H manual source) -----------------------------------
+# Also needs the Tesseract binary itself, with the `tel` language pack:
+#     https://github.com/UB-Mannheim/tesseract/wiki
+pymupdf==1.28.2            # renders PDF pages to images
+pytesseract==0.3.13        # Tesseract wrapper
+pillow==12.3.0             # image handling between the two
+
+# ---- figures ----------------------------------------------------------------
+matplotlib==3.11.1
