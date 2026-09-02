@@ -121,10 +121,46 @@ for entry in sorted(REPO.rglob("*"))[:40]:
 # discovered later. TokenDataset raises on a mismatch, but confirming it
 # now costs a second.
 
-DATA = {}
-for language in ("telugu", "assamese"):
+def resolve_tokens(language):
+    """
+    Find a language's .bin files, whether the dataset holds them loose or
+    as a zip.
+
+    The two datasets are packaged differently and it is worth knowing why.
+    Telugu uploaded as eight loose files. Assamese failed twice at the same
+    file with a misreported authentication error, and went up as a single
+    zip instead -- one file is one upload call, which removes whatever the
+    eighth call was hitting. It also transfers less: 1.13 GB of token ids
+    compresses to 0.73 GB, because an 8,000-entry vocabulary leaves the top
+    bits of every uint16 zero.
+
+    A zip is extracted to /kaggle/working, since /kaggle/input is read-only.
+    """
+
     root = next(INPUT.glob(f"lma-{language}-tokens"), None)
     assert root is not None, f"Dataset lma-{language}-tokens is not mounted."
+
+    if (root / "train.bin").exists():
+        return root
+
+    archive = next(root.glob("*.zip"), None)
+    assert archive is not None, (
+        f"{root} holds neither train.bin nor a zip: {list(root.iterdir())}"
+    )
+
+    target = Path("/kaggle/working/tokens") / language
+    if not (target / "train.bin").exists():
+        target.mkdir(parents=True, exist_ok=True)
+        print(f"  extracting {archive.name} ...", flush=True)
+        with zipfile.ZipFile(archive) as handle:
+            handle.extractall(target)
+
+    return target
+
+
+DATA = {}
+for language in ("telugu", "assamese"):
+    root = resolve_tokens(language)
     DATA[language] = root
 
     print(f"\n{language}: {root}")
