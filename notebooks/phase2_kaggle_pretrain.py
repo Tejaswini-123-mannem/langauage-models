@@ -274,8 +274,16 @@ if SMOKE:
          "--max-steps", "60"],
         check=True, env={**os.environ},
     )
-    print("\nSmoke run complete. Read the tok/s figure above: at ~60k tok/s "
-          "Model H's 10,550 steps take about 3 hours.")
+    print(
+        "\nSmoke run complete. Compare the tok/s above against the measured\n"
+        "baseline for this setup: 30.3k tok/s per model on a Kaggle T4, both\n"
+        "GPUs running concurrently. That puts Model H's 10,550 steps at 5.9\n"
+        "hours and Model L's 9,110 at 5.1, so about 6 hours wall clock for\n"
+        "the pair -- inside the 12 hour session limit, with no resume needed.\n"
+        "\n"
+        "Substantially below 30k means something is wrong: another notebook\n"
+        "sharing the GPU, or a fallback to fp32."
+    )
 
 # %% [code]
 # ---- Cell 5: the real run -------------------------------------------------
