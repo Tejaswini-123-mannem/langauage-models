@@ -1,42 +1,3 @@
-"""
-Kaggle notebook source: pretrain Model H and Model L on T4 x2.
-
-This is the .py source of the Kaggle notebook, kept in the repository so
-the run is reproducible from the branch rather than only from a Kaggle
-account. Paste the cells below into a Kaggle notebook, or use
-`kaggle kernels push`.
-
-SESSION SETUP (do this in the Kaggle UI before running anything)
-----------------------------------------------------------------
-    Settings -> Accelerator          : GPU T4 x2
-    Settings -> Internet             : off (nothing here downloads)
-    Add Data -> Your Datasets        : lma-code
-                                       lma-telugu-tokens
-                                       lma-assamese-tokens
-
-Internet is deliberately OFF. Every input is a mounted dataset, and a
-notebook with no network cannot silently pip-install a package that
-changes behaviour between runs. It also removes the possibility of
-accidentally replacing Kaggle's CUDA build of torch with a CPU wheel,
-which fails by training slowly rather than by erroring.
-
-HOW A RUN THAT OUTLIVES ITS SESSION WORKS
------------------------------------------
-Kaggle sessions end at 12 hours, and can end sooner. The pattern is:
-
-    1. Run this notebook with "Save & Run All (Commit)". It executes on
-       Kaggle's servers with the browser closed.
-    2. When it finishes -- or is killed -- /kaggle/working is saved as the
-       notebook's OUTPUT.
-    3. To continue: Add Data -> Notebook Output -> this notebook's previous
-       version, then set RESUME_FROM below to that mounted path.
-
-Checkpoints carry model, optimizer, scheduler, step, sampler position and
-RNG state, so step 4,001 after a resume is the step 4,001 the
-uninterrupted run would have produced. common/test_train_resume.py proves
-this bit-for-bit.
-"""
-
 # %% [markdown]
 # # Phase 2 pretraining: Model H (Telugu) and Model L (Assamese)
 #
@@ -44,6 +5,49 @@ this bit-for-bit.
 # trained simultaneously. Separate corpora, tokenizers, vocabularies and
 # weights -- nothing is shared between them, and this notebook runs them as
 # two separate processes rather than one distributed job.
+#
+# The `.py` source of this notebook lives in the repository, so the run is
+# reproducible from the branch rather than only from a Kaggle account.
+#
+# ## Session setup -- do this in the Kaggle UI BEFORE running anything
+#
+# | Setting | Value |
+# |---|---|
+# | Accelerator | **GPU T4 x2** |
+# | Internet | **Off** |
+# | Add Data -> Your Datasets | `lma-code`, `lma-telugu-tokens`, `lma-assamese-tokens` |
+#
+# **Add Data is the step that is easy to miss.** Without it `/kaggle/input`
+# is empty and cell 2 has nothing to unpack.
+#
+# Internet is deliberately off. Every input is a mounted dataset, so nothing
+# here needs the network -- and with it off, the notebook cannot silently
+# pip-install over Kaggle's CUDA build of torch with a CPU wheel. That
+# failure does not raise; it just trains roughly fifty times slower.
+#
+# ## Precision on a T4
+#
+# `torch.cuda.is_bf16_supported()` returns True on these cards, which is
+# misleading: a T4 is Turing (SM 7.5) and has no bf16 hardware at all, so
+# what is being reported is emulation, which is slower than fp16 rather than
+# faster. The configs specify **fp16 with a GradScaler**, which is the right
+# choice here. Do not "upgrade" them to bf16.
+#
+# ## How a run outlives its session
+#
+# Kaggle sessions end at 12 hours, and can end sooner.
+#
+# 1. Run with **Save & Run All (Commit)**. It executes on Kaggle's servers
+#    with the browser closed.
+# 2. When it finishes -- or is killed -- `/kaggle/working` is saved as the
+#    notebook's **output**.
+# 3. To continue: *Add Data -> Notebook Output ->* this notebook's previous
+#    version, then set `RESUME_FROM` in cell 5 to that mounted path.
+#
+# Checkpoints carry model, optimizer, scheduler, step, sampler position and
+# RNG state, so step 4,001 after a resume is the step 4,001 the
+# uninterrupted run would have produced. `common/test_train_resume.py`
+# proves this bit-for-bit.
 
 # %% [code]
 # ---- Cell 1: verify the environment before spending any quota -------------
@@ -54,6 +58,7 @@ this bit-for-bit.
 
 import json
 import os
+import shutil
 import subprocess
 import sys
 import zipfile
@@ -79,9 +84,22 @@ if torch.cuda.is_available():
     print("bf16 supported:", torch.cuda.is_bf16_supported())
 
 INPUT = Path("/kaggle/input")
-print("\nmounted datasets:")
-for entry in sorted(INPUT.glob("*")):
-    print(" ", entry.name)
+mounted = sorted(entry.name for entry in INPUT.glob("*"))
+
+print("\nmounted datasets:", mounted or "(none)")
+
+# Checked here rather than discovered three cells later as a confusing
+# error from `cp`. Forgetting Add Data is the single easiest mistake to
+# make in this notebook, and an empty /kaggle/input looks identical to a
+# dataset that failed to attach.
+REQUIRED = ["lma-code", "lma-telugu-tokens", "lma-assamese-tokens"]
+missing = [name for name in REQUIRED if name not in mounted]
+assert not missing, (
+    f"Not mounted: {missing}\n"
+    f"Use the right sidebar: Add Data -> Your Datasets -> add each of "
+    f"{REQUIRED}. Then re-run this cell."
+)
+print("all three datasets are mounted")
 
 # %% [code]
 # ---- Cell 2: unpack the code and point the workspace at it ----------------
@@ -93,14 +111,27 @@ for entry in sorted(INPUT.glob("*")):
 REPO = Path("/kaggle/working/repo")
 REPO.mkdir(parents=True, exist_ok=True)
 
+# Kaggle extracts a zip uploaded to a dataset, so lma-code usually arrives
+# already unpacked as common/, telugu/, assamese/, work/. It is not
+# guaranteed to, so both forms are handled.
 code_zip = next(INPUT.glob("lma-code/*.zip"), None)
 if code_zip is not None:
     with zipfile.ZipFile(code_zip) as archive:
         archive.extractall(REPO)
     print("extracted", code_zip.name)
 else:
-    subprocess.run(["cp", "-r", str(INPUT / "lma-code" / "."), str(REPO)], check=True)
+    # shutil rather than a `cp` subprocess: it reports which path is
+    # missing, whereas cp's failure arrives as a bare non-zero exit code
+    # wrapped in a CalledProcessError.
+    shutil.copytree(INPUT / "lma-code", REPO, dirs_exist_ok=True)
     print("copied pre-extracted code")
+
+for needed in ("common/train.py", "common/launch_both.py",
+               "telugu/configs/train_h.json", "assamese/configs/train_l.json",
+               "work/telugu/tokenizer/final/telugu_final_8000.model",
+               "work/assamese/tokenizer/final/assamese_final_8000.model"):
+    assert (REPO / needed).exists(), f"Missing {needed} in lma-code"
+print("code, configs and both tokenizers present")
 
 # LMA_WORK relocates Workspace's root, which is where the evaluation
 # scripts find each language's tokenizer. One variable instead of a
