@@ -1,0 +1,72 @@
+{
+  "_comment": "MODEL H (Telugu) pretraining run. Consumed by common/train.py.",
+
+  "_budget": [
+    "One pass over the full 648,222,355-token training ribbon:",
+    "",
+    "    windows      (648,222,355 - 1) // 512 = 1,266,059",
+    "    per step     24 x 5 = 120 windows = 61,440 tokens",
+    "    steps        1,266,059 // 120       = 10,550",
+    "    tokens seen  10,550 x 61,440        = 648,192,000",
+    "",
+    "max_steps is left null so train.py computes it from the ribbon; the",
+    "numbers above are what it should print. 648M tokens against 24.6M",
+    "parameters is roughly 26 tokens per parameter, near the compute",
+    "optimal ratio for a model of this size, so a single pass is the right",
+    "budget rather than an arbitrary stopping point."
+  ],
+
+  "_batch": [
+    "micro_batch 24 is what a 16 GB T4 holds at block 512: the attention",
+    "probabilities alone are 24 x 6 x 512 x 512 per layer and are kept for",
+    "the backward pass. grad_accum 5 then builds a 61,440-token gradient,",
+    "which is large enough that the loss curve is readable rather than",
+    "noisy. Memory decides only how the batch is split, not its size.",
+    "",
+    "If a T4 reports OOM, halve micro_batch and double grad_accum -- the",
+    "effective batch, and therefore the run, is unchanged."
+  ],
+
+  "_precision": [
+    "fp16 with a GradScaler, not bf16. The Kaggle T4 is Turing and has no",
+    "bfloat16 support at all. fp16's exponent range is narrow enough that",
+    "small gradients flush to zero, so the scaler multiplies the loss",
+    "before backward and divides it out before the step."
+  ],
+
+  "_learning_rate": [
+    "6e-4 peak with 400 warmup steps and cosine decay to 6e-5. Warmup",
+    "because Adam's second moment is an average over the steps taken so",
+    "far, so its first few hundred updates are oversized and land on a",
+    "randomly initialised model. 400 steps is ~3.8% of the run.",
+    "",
+    "beta2 0.95 rather than 0.999: at 0.999 the second moment averages",
+    "over ~1000 steps, a tenth of this entire run."
+  ],
+
+  "name": "model_h_pretrain",
+  "language": "telugu",
+  "model_config": "telugu/configs/model_h.json",
+
+  "micro_batch": 24,
+  "grad_accum": 5,
+  "max_steps": null,
+
+  "learning_rate": 6e-4,
+  "min_lr": 6e-5,
+  "warmup_steps": 400,
+  "weight_decay": 0.1,
+  "beta1": 0.9,
+  "beta2": 0.95,
+  "grad_clip": 1.0,
+
+  "log_every": 20,
+  "eval_every": 500,
+  "eval_batches": 40,
+  "checkpoint_every": 1000,
+
+  "seed": 42,
+  "keep_last": 2,
+  "dtype": "fp16",
+  "compile_model": false
+}
