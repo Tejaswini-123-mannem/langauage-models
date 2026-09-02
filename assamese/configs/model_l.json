@@ -1,0 +1,71 @@
+{
+  "_comment": "MODEL L (Assamese) architecture. Consumed by common/model.py via GPTConfig.from_json. Keys beginning with an underscore are documentation and are ignored by the loader.",
+
+  "_budget": [
+    "Target is ~25M trainable parameters. The embedding matrix is INSIDE",
+    "that budget, so vocabulary, depth and width compete for one pool:",
+    "",
+    "    token embedding    8000 x 384                =  3,072,000",
+    "    position embedding  512 x 384                =    196,608",
+    "    12 blocks         x 1,774,464                = 21,293,568",
+    "    final LayerNorm                              =        768",
+    "    lm_head           tied to token embedding    =          0",
+    "                                                   ----------",
+    "                                                   24,562,944",
+    "",
+    "Untied, the same model is 27,634,944 and over budget. Tying the head",
+    "to the input embedding is what makes 12 layers affordable."
+  ],
+
+  "_depth_vs_width": [
+    "One block costs 12 x d_model^2 = 1,769,472 at d_model 384, so every",
+    "1,769,472 parameters spent elsewhere is one layer not built. Phase 1",
+    "chose an 8,000-piece vocabulary for exactly this reason: on Assamese",
+    "held-out text 6k and 8k both afford 12 layers while 10k and 12k",
+    "afford only 11, so 8k is the best tokenizer available at no cost in",
+    "depth.",
+    "",
+    "12 x 384 is preferred to a shallower, wider model of the same size",
+    "(e.g. 6 x 544) because attention routes information one hop per layer,",
+    "and Phase 3's comparative reasoning -- A > B, B > C, therefore A > C --",
+    "is multi-hop by construction. Width buys per-token capacity, which",
+    "matters less at 25M than the number of routing steps available."
+  ],
+
+  "_positions": [
+    "Learned absolute (GPT-2 style): nn.Embedding(512, 384) added to the",
+    "token embedding. Chosen for being the simplest scheme that is clearly",
+    "correct, the easiest to defend, and the cleanest to ablate for the",
+    "optional bonus.",
+    "",
+    "It caps the context HARD at 512. The table has 512 rows, so position",
+    "512 does not exist; and rows never seen in training keep their random",
+    "initialisation, so unlike sinusoidal encodings or RoPE this model",
+    "cannot extrapolate to a longer context at all. block_size is a",
+    "property of the trained weights, not only of this file."
+  ],
+
+  "_context_length": [
+    "512 tokens, about 1,616 Assamese characters at the measured 3.157",
+    "characters per token -- a shorter span of text than Model H sees in",
+    "the same 512 tokens, because Assamese Internet Archive OCR segments",
+    "less efficiently. Chosen against the compute budget: attention is",
+    "O(T^2), and the whole project runs inside a 30 hour weekly Kaggle GPU",
+    "quota that has to cover two pretraining runs plus Phase 3 finetuning."
+  ],
+
+  "name": "model_l",
+  "language": "assamese",
+
+  "vocab_size": 8000,
+  "block_size": 512,
+  "n_layer": 12,
+  "n_head": 6,
+  "d_model": 384,
+  "d_ff": 1536,
+
+  "dropout": 0.1,
+  "bias": true,
+  "tie_weights": true,
+  "use_positional_embedding": true
+}

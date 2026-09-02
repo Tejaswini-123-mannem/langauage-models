@@ -175,6 +175,42 @@ class Workspace:
 
         return self.tokenizer_final / f"{self.slug}_final_{vocab_size}.model"
 
+    # ---- tokenized corpus (Phase 2) -----------------------------------------
+    #
+    # The splits are re-encoded once into flat uint16 arrays so the training
+    # loop can np.memmap them instead of parsing JSON and running
+    # SentencePiece inside its inner loop. See build_token_bins.py for why.
+    #
+    # These live beside the corpus rather than inside it because they are
+    # derived from BOTH the splits and the tokenizer: regenerating either
+    # one invalidates them, and the manifest beside each .bin records the
+    # hashes that let the trainer detect that.
+
+    @property
+    def tokens(self):
+        return self.root / "tokens"
+
+    def token_file(self, split):
+        """Flat uint16 token stream for one split."""
+
+        return self.tokens / f"{split}.bin"
+
+    def token_manifest(self, split):
+        """Token count, tokenizer hash and source hash for one .bin."""
+
+        return self.tokens / f"{split}.json"
+
+    def token_index(self, split):
+        """
+        Document offsets within one held-out .bin.
+
+        Written for validation and test only. Generation evaluation needs
+        prefixes that start at real document starts; perplexity does not,
+        and a million-entry index for train would serve nobody.
+        """
+
+        return self.tokens / f"{split}_documents.json"
+
     # ---- report -------------------------------------------------------------
 
     @property

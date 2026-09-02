@@ -24,3 +24,15 @@ pillow==12.3.0             # image handling between the two
 
 # ---- figures ----------------------------------------------------------------
 matplotlib==3.11.1
+
+# ---- Phase 2: model, pretraining, evaluation --------------------------------
+# Installed here as the CPU build, which is enough to run common/test_model.py
+# and to inspect checkpoints locally:
+#
+#     .venv\Scripts\python -m pip install --index-url \
+#         https://download.pytorch.org/whl/cpu torch
+#
+# Training runs on Kaggle, whose images already ship a CUDA build of torch --
+# do NOT pip install torch in the notebook, it would replace the CUDA wheel
+# with this CPU one and training would silently fall back to the CPU.
+torch==2.14.0
