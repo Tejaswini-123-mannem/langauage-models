@@ -62,6 +62,7 @@ moved to C:\\lma_work\\telugu\\corpus when Assamese was added, so both
 languages share one layout and this module needs no special case.
 """
 
+import os
 from pathlib import Path
 
 from language_config import LanguageConfig, get_language
@@ -69,7 +70,19 @@ from language_config import LanguageConfig, get_language
 
 # Local working root. Intermediates and deliverables are written here; see
 # the module docstring for why not straight to Drive.
-WORK = Path(r"C:\lma_work")
+#
+# Overridable by the LMA_WORK environment variable, because Phase 2 runs
+# its training and evaluation on Kaggle, where C:\lma_work does not exist
+# and the mounted inputs live under /kaggle/input. The evaluation scripts
+# reach the tokenizer through this root, so one variable relocates every
+# path at once:
+#
+#     LMA_WORK=/kaggle/working/repo/work python common/evaluate.py ...
+#
+# Preferred to adding a --tokenizer flag to each script: three flags is
+# three chances to point one script at the wrong language's tokenizer, and
+# that mistake produces plausible numbers rather than an error.
+WORK = Path(os.environ.get("LMA_WORK") or r"C:\lma_work")
 
 # Google Drive root, where deliverables are published for the README links.
 DRIVE = Path(r"G:\My Drive\LMA_Individual_Project")
