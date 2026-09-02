@@ -78,4 +78,5 @@ desktop.ini
 # Token and normally kept at ~/.kaggle/kaggle.json; ignored here in case a copy
 # is ever placed in the repo. It is a secret key.
 kaggle.json
+access_token
 .kaggle/

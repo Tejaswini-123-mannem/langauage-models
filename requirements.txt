@@ -36,3 +36,17 @@ matplotlib==3.11.1
 # do NOT pip install torch in the notebook, it would replace the CUDA wheel
 # with this CPU one and training would silently fall back to the CPU.
 torch==2.14.0
+
+# ---- Phase 2: evaluation ----------------------------------------------------
+# BLEU and chrF. A metrics library, not a model: it ships no pretrained
+# weights. Used through its class API so each score carries the signature
+# recording the tokenizer and smoothing it was produced with.
+# ROUGE-L is implemented in common/generate.py instead -- the packaged
+# implementations tokenize for English and would silently measure something
+# other than what is claimed on Telugu and Assamese.
+sacrebleu==2.6.0
+
+# Uploads the token bins and code to Kaggle as datasets, and is how the
+# training runs get their data. Authenticate with `kaggle auth login`
+# (OAuth, nothing to store) rather than a token file.
+kaggle==2.2.4
