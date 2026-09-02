@@ -84,20 +84,48 @@ if torch.cuda.is_available():
     print("bf16 supported:", torch.cuda.is_bf16_supported())
 
 INPUT = Path("/kaggle/input")
-mounted = sorted(entry.name for entry in INPUT.glob("*"))
-
-print("\nmounted datasets:", mounted or "(none)")
-
-# Checked here rather than discovered three cells later as a confusing
-# error from `cp`. Forgetting Add Data is the single easiest mistake to
-# make in this notebook, and an empty /kaggle/input looks identical to a
-# dataset that failed to attach.
 REQUIRED = ["lma-code", "lma-telugu-tokens", "lma-assamese-tokens"]
-missing = [name for name in REQUIRED if name not in mounted]
+
+
+def find_dataset(name, root=INPUT, max_depth=4):
+    """
+    Locate a mounted dataset by name, wherever Kaggle put it.
+
+    Kaggle's mount layout is not a fixed path. This session mounts at
+
+        /kaggle/input/datasets/<username>/<slug>/
+
+    while the widely documented layout is
+
+        /kaggle/input/<slug>/
+
+    Hardcoding either one produces a failure that looks like the dataset
+    was never attached, which sends you back to the Add Data panel to
+    re-add a dataset that is already there. So the name is searched for
+    instead, breadth-first and depth-limited.
+    """
+
+    for depth in range(max_depth + 1):
+        for candidate in root.glob("/".join(["*"] * depth) + ("/" if depth else "") + name):
+            if candidate.is_dir():
+                return candidate
+
+    return None
+
+
+DATASETS = {name: find_dataset(name) for name in REQUIRED}
+
+print("\nmounted datasets:")
+for name, path in DATASETS.items():
+    print(f"  {name:<22}{path if path else '*** NOT FOUND ***'}")
+
+missing = [name for name, path in DATASETS.items() if path is None]
 assert not missing, (
     f"Not mounted: {missing}\n"
     f"Use the right sidebar: Add Data -> Your Datasets -> add each of "
-    f"{REQUIRED}. Then re-run this cell."
+    f"{REQUIRED}, then re-run this cell.\n"
+    f"Present under {INPUT}: "
+    f"{[str(p.relative_to(INPUT)) for p in INPUT.rglob('*') if p.is_dir()][:20]}"
 )
 print("all three datasets are mounted")
 
@@ -114,7 +142,8 @@ REPO.mkdir(parents=True, exist_ok=True)
 # Kaggle extracts a zip uploaded to a dataset, so lma-code usually arrives
 # already unpacked as common/, telugu/, assamese/, work/. It is not
 # guaranteed to, so both forms are handled.
-code_zip = next(INPUT.glob("lma-code/*.zip"), None)
+CODE = DATASETS["lma-code"]
+code_zip = next(CODE.glob("*.zip"), None)
 if code_zip is not None:
     with zipfile.ZipFile(code_zip) as archive:
         archive.extractall(REPO)
@@ -123,7 +152,7 @@ else:
     # shutil rather than a `cp` subprocess: it reports which path is
     # missing, whereas cp's failure arrives as a bare non-zero exit code
     # wrapped in a CalledProcessError.
-    shutil.copytree(INPUT / "lma-code", REPO, dirs_exist_ok=True)
+    shutil.copytree(CODE, REPO, dirs_exist_ok=True)
     print("copied pre-extracted code")
 
 for needed in ("common/train.py", "common/launch_both.py",
@@ -168,8 +197,7 @@ def resolve_tokens(language):
     A zip is extracted to /kaggle/working, since /kaggle/input is read-only.
     """
 
-    root = next(INPUT.glob(f"lma-{language}-tokens"), None)
-    assert root is not None, f"Dataset lma-{language}-tokens is not mounted."
+    root = DATASETS[f"lma-{language}-tokens"]
 
     if (root / "train.bin").exists():
         return root
@@ -208,6 +236,11 @@ for language in ("telugu", "assamese"):
             f"the dataset."
         )
 
+# launch_both.py resolves each language's directory beneath whatever root
+# it is given, so hand it the common parent of the two token datasets.
+TOKENS_ROOT = os.path.commonpath([str(p) for p in DATA.values()])
+print("\ntokens root for the launcher:", TOKENS_ROOT)
+
 # %% [code]
 # ---- Cell 4: a 30-step smoke run, and a resume, before the real thing -----
 #
@@ -224,7 +257,7 @@ SMOKE_DIR = Path("/kaggle/working/smoke")
 if SMOKE:
     subprocess.run(
         [sys.executable, "-u", str(REPO / "common" / "launch_both.py"),
-         "--data-root", str(INPUT),
+         "--data-root", str(TOKENS_ROOT),
          "--out-root", str(SMOKE_DIR),
          "--resume", "",
          "--max-steps", "30"],
@@ -235,7 +268,7 @@ if SMOKE:
     # restarting, the mechanism works on this machine.
     subprocess.run(
         [sys.executable, "-u", str(REPO / "common" / "launch_both.py"),
-         "--data-root", str(INPUT),
+         "--data-root", str(TOKENS_ROOT),
          "--out-root", str(SMOKE_DIR),
          "--resume", "auto",
          "--max-steps", "60"],
@@ -269,7 +302,7 @@ if RESUME_FROM is not None:
 
 subprocess.run(
     [sys.executable, "-u", str(REPO / "common" / "launch_both.py"),
-     "--data-root", str(INPUT),
+     "--data-root", str(TOKENS_ROOT),
      "--out-root", str(RUNS),
      "--resume", "auto"],
     check=True, env={**os.environ},
