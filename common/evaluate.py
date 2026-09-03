@@ -331,7 +331,8 @@ def parse_args():
     parser.add_argument("--checkpoint", required=True, help="Checkpoint .pt file.")
     parser.add_argument("--split", default="test", choices=["validation", "test"])
     parser.add_argument("--data", default=None, help="Directory holding the .bin files.")
-    parser.add_argument("--out", default=None, help="Where to write the JSON result.")
+    parser.add_argument("--out", default=None,
+                        help="Directory to write eval_<split>.json into.")
     parser.add_argument("--batch-windows", type=int, default=16)
     parser.add_argument("--device", default=None)
     parser.add_argument(
@@ -417,10 +418,16 @@ def main():
         }
 
     # ---- write --------------------------------------------------------------
-    out_path = Path(args.out) if args.out else (
-        REPO / "report" / "phase2" / workspace.slug / f"eval_{args.split}.json"
+    # --out is a directory, as it is for generate.py, attention.py and
+    # plots.py. It used to be the JSON's own path, which broke the moment
+    # anything passed one path to all four: this script left a *file* where
+    # the next script's mkdir() needed a directory, and that one failed with
+    # a FileExistsError naming a path that plainly existed.
+    out_dir = Path(args.out) if args.out else (
+        REPO / "report" / "phase2" / workspace.slug
     )
-    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / f"eval_{args.split}.json"
     out_path.write_text(json.dumps(result, indent=2, ensure_ascii=False),
                         encoding="utf-8")
 

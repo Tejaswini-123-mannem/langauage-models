@@ -198,6 +198,26 @@ def repetition_rate(tokens, n=4):
     return repeated / total if total else 0.0
 
 
+def require_sacrebleu():
+    """
+    Check for sacrebleu before generating rather than after.
+
+    The metrics import lives inside score_corpus(), which does not run
+    until the first decoding has finished, so a missing sacrebleu would
+    otherwise surface several minutes of GPU time into the run. Kaggle's
+    image does not ship it.
+    """
+
+    try:
+        import sacrebleu  # noqa: F401
+    except ModuleNotFoundError:
+        sys.exit(
+            "sacrebleu is not installed, and BLEU and chrF cannot "
+            "be computed without it. Install it with:\n\n"
+            "    pip install sacrebleu==2.6.0"
+        )
+
+
 def score_corpus(hypotheses, references):
     """
     Corpus BLEU-4 and chrF2 via sacrebleu, plus mean ROUGE-L.
@@ -403,6 +423,7 @@ def parse_args():
 
 def main():
     args = parse_args()
+    require_sacrebleu()
 
     torch.manual_seed(args.seed)
     device = torch.device(
