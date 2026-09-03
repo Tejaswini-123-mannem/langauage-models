@@ -224,6 +224,35 @@ class Workspace:
 
         return self.tokens / f"{split}_documents.json"
 
+    # ---- Phase 2 checkpoints ------------------------------------------------
+
+    @property
+    def checkpoints(self):
+        """
+        Trained model weights for this language.
+
+        Phase 2 trains on Kaggle, so unlike every other path here these
+        arrive by download rather than being written by a pipeline stage.
+        They are still staged locally before publishing, for the reason
+        publish_deliverables.py gives at length: a file in a sync-backed
+        folder is not durable until it has actually uploaded.
+        """
+
+        return self.root / "checkpoints"
+
+    @property
+    def drive_checkpoints(self):
+        """
+        Where the weights are published for the README links.
+
+        Keyed by language, like the rest of the Drive tree. The files
+        inside name the trainer's run instead -- model_h, model_l, in
+        their console logs -- which is provenance rather than a second
+        layout to keep in step.
+        """
+
+        return DRIVE / "checkpoints" / self.slug
+
     # ---- report -------------------------------------------------------------
 
     @property

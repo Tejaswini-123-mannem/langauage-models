@@ -1,5 +1,5 @@
 """
-Copy Phase 1 deliverables from the local working area to Google Drive.
+Copy deliverables from the local working area to Google Drive.
 
 Why deliverables are produced locally and copied afterwards
 -----------------------------------------------------------
@@ -22,6 +22,11 @@ the pipeline and would add tens of gigabytes to the upload.
 
 So this copies the splits, the tokenizers and the statistics, and leaves
 global_dedup, global_near_dedup and corpus/all on local disk.
+
+Phase 2 adds the trained checkpoints, which are required in the same
+sentence of the assignment as the datasets and tokenizers. They arrive
+from Kaggle rather than from a local stage, so they have to be staged
+under <work>/<language>/checkpoints/ before this script can publish them.
 
 Usage
 -----
@@ -132,6 +137,66 @@ def deliverables_for(language):
                 items.append(
                     (path, drive_sweep / path.name, f"sweep {path.name}")
                 )
+
+    return items
+
+
+# =============================================================================
+# PHASE 2 CHECKPOINTS
+# =============================================================================
+#
+# The assignment asks for checkpoints on Drive with the links in the
+# README, in the same breath as the datasets and tokenized corpora. They
+# are published from this script rather than copied by hand so that the
+# Drive layout is reproduced by one command per language, which is the
+# same argument the sweep candidates above are published under.
+#
+# Only best.pt and final.pt go up. The rolling step_*.pt files exist to
+# resume a run within a session and mean nothing once it has finished,
+# and latest.pt duplicates whichever step wrote last. The training log
+# and console output travel with them: a checkpoint whose loss curve
+# cannot be checked is a weight file rather than evidence.
+# =============================================================================
+
+CHECKPOINT_FILES = [
+    ("best.pt", "best checkpoint by validation loss"),
+    ("final.pt", "final checkpoint"),
+    ("train_log.jsonl", "training log"),
+    ("console.log", "training console output"),
+]
+
+
+def checkpoint_items_for(language):
+    """
+    Return (source, destination, description) for one language's model.
+
+    Files that are absent are left out rather than reported missing. A
+    language whose Phase 2 run has not happened yet should publish its
+    Phase 1 deliverables without a column of SKIP lines claiming that
+    something went wrong.
+    """
+
+    workspace = Workspace(language)
+    source_dir = workspace.checkpoints
+
+    if not source_dir.exists():
+        print(f"  NOTE: no checkpoints for {language} at {source_dir}")
+        return []
+
+    items = []
+
+    for name, label in CHECKPOINT_FILES:
+
+        path = source_dir / name
+
+        if path.exists():
+            items.append(
+                (
+                    path,
+                    workspace.drive_checkpoints / name,
+                    f"{workspace.language.model_tag} {label}",
+                )
+            )
 
     return items
 
@@ -401,7 +466,7 @@ def copy_one(source, destination, description, dry_run, verify):
 def main():
 
     parser = argparse.ArgumentParser(
-        description="Publish Phase 1 deliverables to Google Drive."
+        description="Publish deliverables to Google Drive."
     )
 
     parser.add_argument("--language", required=True)
@@ -421,6 +486,16 @@ def main():
         ),
     )
     parser.add_argument(
+        "--skip-checkpoints",
+        action="store_true",
+        help=(
+            "Do not publish the Phase 2 checkpoints. They are the largest "
+            "thing here at roughly 600 MB per language and do not change "
+            "between runs, so this is worth having when republishing only "
+            "a tokenizer."
+        ),
+    )
+    parser.add_argument(
         "--raw-only",
         action="store_true",
         help="Publish only the raw source files, skipping the deliverables.",
@@ -429,6 +504,13 @@ def main():
     args = parser.parse_args()
 
     items = [] if args.raw_only else deliverables_for(args.language)
+
+    # Included by default, unlike the raw sources. Both are large, but a
+    # checkpoint is a required deliverable and a missing one is not
+    # obvious from the README, whereas nobody grades the absence of a
+    # 2 GB Wikipedia dump they did not ask for.
+    if not (args.raw_only or args.skip_checkpoints):
+        items = items + checkpoint_items_for(args.language)
 
     if args.include_raw or args.raw_only:
         items = items + raw_items_for(args.language, dry_run=args.dry_run)
