@@ -1,0 +1,24 @@
+[
+  {
+    "model": "H",
+    "run": "model_h",
+    "steps": 10540,
+    "tokens": 647577600,
+    "final_val_loss": 3.42338,
+    "best_val_loss": 3.42338,
+    "best_val_perplexity": 30.673,
+    "seconds": 19078.6,
+    "mean_tokens_per_sec": 34029.9
+  },
+  {
+    "model": "L",
+    "run": "model_l",
+    "steps": 9100,
+    "tokens": 559104000,
+    "final_val_loss": 3.90435,
+    "best_val_loss": 3.90435,
+    "best_val_perplexity": 49.618,
+    "seconds": 16451.0,
+    "mean_tokens_per_sec": 34079.1
+  }
+]

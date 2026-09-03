@@ -1,0 +1,64 @@
+{
+  "language": "telugu",
+  "model": "model_h",
+  "checkpoint": "/kaggle/input/datasets/teja123mannem/lma-checkpoints/model_h/best.pt",
+  "step": 10550,
+  "split": "test",
+  "block_size": 512,
+  "parameters": 24562944,
+  "overall": {
+    "cross_entropy_nats_per_token": 3.489104,
+    "perplexity": 32.7566,
+    "bits_per_token": 5.033713,
+    "bits_per_byte": 0.536901,
+    "tokens": 3197440,
+    "bytes": 29977573
+  },
+  "by_source": {
+    "archive": {
+      "cross_entropy_nats_per_token": 3.543382,
+      "perplexity": 34.5837,
+      "bits_per_token": 5.112019,
+      "bits_per_byte": 1.008392,
+      "tokens": 3584,
+      "bytes": 18169,
+      "documents": 7
+    },
+    "sangraha": {
+      "cross_entropy_nats_per_token": 3.341721,
+      "perplexity": 28.2677,
+      "bits_per_token": 4.821084,
+      "bits_per_byte": 0.476679,
+      "tokens": 139568,
+      "bytes": 1411577,
+      "documents": 400
+    },
+    "textbook": {
+      "cross_entropy_nats_per_token": 3.593846,
+      "perplexity": 36.3737,
+      "bits_per_token": 5.184824,
+      "bits_per_byte": 0.652106,
+      "tokens": 33399,
+      "bytes": 265552,
+      "documents": 74
+    },
+    "wikipedia": {
+      "cross_entropy_nats_per_token": 2.387261,
+      "perplexity": 10.8836,
+      "bits_per_token": 3.444089,
+      "bits_per_byte": 0.356107,
+      "tokens": 157439,
+      "bytes": 1522673,
+      "documents": 395
+    },
+    "wikisource": {
+      "cross_entropy_nats_per_token": 3.526779,
+      "perplexity": 34.0142,
+      "bits_per_token": 5.088067,
+      "bits_per_byte": 0.92191,
+      "tokens": 18110,
+      "bytes": 99950,
+      "documents": 39
+    }
+  }
+}

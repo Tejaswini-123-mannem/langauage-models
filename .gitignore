@@ -80,3 +80,9 @@ desktop.ini
 kaggle.json
 access_token
 .kaggle/
+
+# Kaggle session output. results.zip is the whole /kaggle/working directory
+# including checkpoints (3 GB); phase2_report.zip is the report bundle, whose
+# contents are committed unpacked under report/phase2/. Neither archive
+# belongs in git, and the large one is a real hazard next to `git add -A`.
+*.zip

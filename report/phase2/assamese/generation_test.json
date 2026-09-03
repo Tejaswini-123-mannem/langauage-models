@@ -1,0 +1,92 @@
+{
+  "language": "assamese",
+  "model": "model_l",
+  "checkpoint": "/kaggle/input/datasets/teja123mannem/lma-checkpoints/model_l/best.pt",
+  "step": 9110,
+  "split": "test",
+  "n_samples": 200,
+  "prefix_tokens": 64,
+  "continuation_tokens": 64,
+  "metrics": {
+    "greedy": {
+      "bleu4": 1.4197,
+      "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:intl|smooth:exp|version:2.6.0",
+      "bleu_precisions": [
+        11.374,
+        1.972,
+        0.679,
+        0.335
+      ],
+      "chrf2": 13.7648,
+      "chrf_signature": "nrefs:1|case:mixed|eff:yes|nc:6|nw:0|space:no|version:2.6.0",
+      "rouge_l": 0.0487,
+      "distinct_1": 0.1732,
+      "distinct_2": 0.2848,
+      "distinct_1_tokens": 0.0852,
+      "distinct_2_tokens": 0.1865,
+      "repetition_rate_4gram": 0.5738,
+      "repetition_rate_4gram_tokens": 0.6893,
+      "mean_words": 32.28
+    },
+    "t0.5": {
+      "bleu4": 1.7914,
+      "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:intl|smooth:exp|version:2.6.0",
+      "bleu_precisions": [
+        14.594,
+        2.51,
+        0.858,
+        0.381
+      ],
+      "chrf2": 17.2556,
+      "chrf_signature": "nrefs:1|case:mixed|eff:yes|nc:6|nw:0|space:no|version:2.6.0",
+      "rouge_l": 0.0612,
+      "distinct_1": 0.3413,
+      "distinct_2": 0.6418,
+      "distinct_1_tokens": 0.1429,
+      "distinct_2_tokens": 0.4133,
+      "repetition_rate_4gram": 0.1731,
+      "repetition_rate_4gram_tokens": 0.3355,
+      "mean_words": 32.47
+    },
+    "t1.0": {
+      "bleu4": 0.6064,
+      "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:intl|smooth:exp|version:2.6.0",
+      "bleu_precisions": [
+        12.949,
+        1.119,
+        0.204,
+        0.052
+      ],
+      "chrf2": 19.0216,
+      "chrf_signature": "nrefs:1|case:mixed|eff:yes|nc:6|nw:0|space:no|version:2.6.0",
+      "rouge_l": 0.0447,
+      "distinct_1": 0.6358,
+      "distinct_2": 0.9738,
+      "distinct_1_tokens": 0.2832,
+      "distinct_2_tokens": 0.867,
+      "repetition_rate_4gram": 0.0,
+      "repetition_rate_4gram_tokens": 0.0101,
+      "mean_words": 34.38
+    },
+    "t1.5": {
+      "bleu4": 0.1016,
+      "bleu_signature": "nrefs:1|case:mixed|eff:no|tok:intl|smooth:exp|version:2.6.0",
+      "bleu_precisions": [
+        6.063,
+        0.228,
+        0.012,
+        0.006
+      ],
+      "chrf2": 18.0683,
+      "chrf_signature": "nrefs:1|case:mixed|eff:yes|nc:6|nw:0|space:no|version:2.6.0",
+      "rouge_l": 0.0204,
+      "distinct_1": 0.6992,
+      "distinct_2": 0.9976,
+      "distinct_1_tokens": 0.3659,
+      "distinct_2_tokens": 0.9843,
+      "repetition_rate_4gram": 0.0,
+      "repetition_rate_4gram_tokens": 0.0002,
+      "mean_words": 39.17
+    }
+  }
+}
