@@ -66,6 +66,8 @@ so it can be opened without requesting access.
 | **Assamese** tokenizer | `assamese_final_8000.{model,vocab}` with training metadata | https://drive.google.com/drive/folders/147l3I6VW_3iYj_kDnLjE531x3jhXzWsB?usp=sharing |
 | **Assamese** vocabulary sweep | candidates at 6k / 8k / 10k / 12k, trained on a 10% sample | https://drive.google.com/drive/folders/1choNnxGTO9kij0FN4UdqmJO7o1RPKVnq?usp=sharing |
 | **Assamese** raw sources (1.6 GB) | `archive.zip` (3,034 book texts, 514 MB), 3 Sangraha parquet shards, `aswiki`/`aswikisource` dumps | https://drive.google.com/drive/folders/1jCZRV1bhe1N4cLPsXlMimj9AjBdkrZEs?usp=sharing |
+| **Telugu** checkpoints (Model H) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | _paste share link_ |
+| **Assamese** checkpoints (Model L) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | _paste share link_ |
 
 
 
@@ -80,6 +82,8 @@ LMA_Individual_Project/
     data/processed/<language>/splits/     train.jsonl, validation.jsonl, test.jsonl
     tokenizer/<language>/final/           .model, .vocab, _metadata.json
     tokenizer/<language>/sweep/           vocabulary-size candidates
+    checkpoints/<language>/               best.pt, final.pt, train_log.jsonl,
+                                          console.log                    (1.1 GB)
 ```
 
 Raw sources were originally stored per *source type* (`data/raw/manual/`,
@@ -88,8 +92,11 @@ now grouped per language, so the two models' inputs are separated the same way
 everywhere and neither is the implicit default.
 
 `python common/publish_deliverables.py --language <lang>` copies the splits,
-both tokenizer directories (`final` and `sweep`) and the statistics; add
-`--include-raw` for the collected source files, and `--dry-run` to preview.
+both tokenizer directories (`final` and `sweep`), the statistics and the Phase 2
+checkpoints; add `--include-raw` for the collected source files, `--dry-run` to
+preview, and `--skip-checkpoints` when republishing only a tokenizer. The
+checkpoints are staged at `<work>/<language>/checkpoints/` first — Phase 2
+trains on Kaggle, so they arrive by download rather than from a local stage.
 
 Two behaviours worth knowing:
 
@@ -285,6 +292,201 @@ Figures are in `report/phase1/<language>/figures/`.
 
 ---
 
+## Phase 2: pretraining and evaluation
+
+Two independent decoder-only Transformers, one per language. Nothing is shared
+between them — separate corpora, tokenizers, vocabularies and weights — and
+they are trained as two processes rather than one distributed job.
+
+### Architecture
+
+Identical for both models:
+
+| | |
+|---|---|
+| Layers | 12 |
+| Attention heads | 6 (d_k 64) |
+| Model dimension | 384 |
+| Feed-forward dimension | 1,536 |
+| Context length | 512 tokens |
+| Vocabulary | 8,000 |
+| Dropout | 0.1 |
+| Weight tying | input embedding = output projection |
+| Parameters | 24,562,944 |
+
+The two are identical on purpose. They differ only in the data they saw, so
+every difference in the results below is a statement about the corpora rather
+than about the architecture.
+
+### Training
+
+One pass over each language's training ribbon, both models trained
+simultaneously on a Kaggle T4 x2, one per GPU. Batch is 24 micro × 5
+accumulation = 61,440 tokens per step; AdamW (β 0.9/0.95, weight decay 0.1,
+gradient clip 1.0), learning rate 6e-4 decayed by cosine to 6e-5 after 400
+warmup steps, fp16 with a GradScaler.
+
+| | Model H (Telugu) | Model L (Assamese) |
+|---|---|---|
+| Steps | 10,550 | 9,110 |
+| Tokens seen | 648,192,000 | 559,718,400 |
+| Tokens per parameter | 26 | 23 |
+| Wall clock | 5:17:58 | 4:34:10 |
+| Throughput | 34,030 tok/s | 34,079 tok/s |
+| Final validation loss | 3.4234 | 3.9043 |
+| Final validation perplexity | 30.67 | 49.62 |
+
+**fp16 rather than bf16, on a card that claims to support both.**
+`torch.cuda.is_bf16_supported()` returns True on a T4, which is misleading: a
+T4 is Turing and has no bf16 hardware at all, so what is being reported is
+emulation — slower than fp16, not faster.
+
+### Test-set language modelling
+
+Neither model has seen the test split, and neither tokenizer was trained on it.
+
+| | Model H (Telugu) | Model L (Assamese) |
+|---|---|---|
+| Cross-entropy | 3.4891 nats/token | 3.8859 nats/token |
+| Perplexity | 32.76 | 48.71 |
+| Bits per token | 5.0337 | 5.6062 |
+| **Bits per byte** | **0.5369** | **0.6509** |
+| Test tokens | 3,197,440 | 2,881,024 |
+
+**Bits per byte is the only figure here that compares the two models.**
+Perplexity is per *token*, and a token means something different in each
+model — the two tokenizers were trained on different corpora and segment at
+different rates (3.54 vs 3.16 characters per token). Normalising to bytes
+removes that, and on bytes Telugu is ahead by 0.114 bits, which is what the
+larger and cleaner corpus buys.
+
+Per source, on the first 2,000 test documents:
+
+| Model H (Telugu) | docs | tokens | ppl | bits/byte |
+|---|---|---|---|---|
+| wikipedia | 395 | 157,439 | 10.88 | 0.3561 |
+| sangraha | 400 | 139,568 | 28.27 | 0.4767 |
+| textbook | 74 | 33,399 | 36.37 | 0.6521 |
+| wikisource | 39 | 18,110 | 34.01 | 0.9219 |
+| archive | 7 | 3,584 | 34.58 | 1.0084 |
+
+| Model L (Assamese) | docs | tokens | ppl | bits/byte |
+|---|---|---|---|---|
+| wikipedia | 101 | 38,992 | 35.09 | 0.5405 |
+| sangraha | 500 | 168,959 | 36.54 | 0.5463 |
+| wikisource | 286 | 95,366 | 73.52 | 0.7722 |
+| archive | 8 | 4,096 | 45.14 | 1.0914 |
+
+Both models rank their sources the same way, and the spread within a language
+is wider than the gap between the languages: Telugu Wikipedia costs 0.356
+bits/byte while Telugu Archive costs 1.008, nearly three times as much. That
+is a statement about scan quality rather than about either language — the
+Archive rows are OCR output, and the model is paying for the errors.
+
+Note that the perplexity and bits/byte columns disagree about which source is
+hardest. Telugu `textbook` has the worst perplexity (36.37) but `archive` the
+worst bits/byte (1.0084), because OCR noise fragments into many short tokens:
+each individual token is easier to predict, and there are far more of them per
+byte of text.
+
+### Generation
+
+200 test documents, a 64-token prefix continued for 64 tokens, under four
+decoding settings.
+
+| Model H (Telugu) | BLEU-4 | chrF2 | ROUGE-L | dist-1 | dist-2 | rep-4 |
+|---|---|---|---|---|---|---|
+| greedy | 5.351 | 15.675 | 0.0751 | 0.2185 | 0.2982 | 0.539 |
+| t = 0.5 | **5.823** | 18.092 | 0.0826 | 0.3956 | 0.5922 | 0.234 |
+| t = 1.0 | 4.114 | **22.726** | 0.0671 | 0.7277 | 0.9585 | 0.004 |
+| t = 1.5 | 0.928 | 20.204 | 0.0225 | 0.7980 | 0.9974 | 0.000 |
+
+| Model L (Assamese) | BLEU-4 | chrF2 | ROUGE-L | dist-1 | dist-2 | rep-4 |
+|---|---|---|---|---|---|---|
+| greedy | 1.420 | 13.765 | 0.0487 | 0.1732 | 0.2848 | 0.574 |
+| t = 0.5 | **1.791** | 17.256 | 0.0612 | 0.3413 | 0.6418 | 0.173 |
+| t = 1.0 | 0.606 | **19.022** | 0.0447 | 0.6358 | 0.9738 | 0.000 |
+| t = 1.5 | 0.102 | 18.068 | 0.0204 | 0.6992 | 0.9976 | 0.000 |
+
+**Greedy decoding degenerates.** A repetition rate of 0.539 means over half of
+all 4-grams in the output are repeats, with distinct-1 down at 0.22 — the
+samples in `report/phase2/<language>/generation_samples_test.md` show it
+directly, as runs of a single token repeated to the length limit. This is the
+expected failure at 24.6M parameters, not a fault in the decoder.
+
+**The two metrics disagree, and chrF is the one to believe.** BLEU-4 peaks at
+t=0.5 while chrF2 peaks at t=1.0. chrF is character-based, so it does not
+depend on how these scripts are split into words; BLEU's `intl` tokenizer
+splits on Unicode punctuation and leaves Indic runs intact, which is the best
+option available but still a word-level assumption. At these values BLEU-4 is
+also near its own noise floor — Model L's 1.79 rests on a 4-gram precision of
+0.7%. Read by chrF, t=1.0 is the best decoding for both models and greedy is
+the *worst*, despite greedy ranking second on BLEU.
+
+Every score carries its sacrebleu signature in
+`report/phase2/<language>/generation_test.json`, so the numbers can be
+reproduced rather than merely quoted.
+
+### Attention
+
+8 test sequences of 128 tokens, all 12 layers, entropy normalised against a
+uniform distribution over the positions each query is allowed to see.
+
+Both models learned the same three-part structure: layers 0–1 attend broadly
+and at long range (normalised entropy ≈ 0.9), the middle layers collapse to
+sharp local attention — Telugu layers 3–5 look 8–12 positions back, entropy
+bottoming at 0.399 — and the last four re-broaden to long range. Local syntax
+in the middle of the stack, discourse-level context at the top.
+
+Model L layer 8 is the one departure from the pattern: the sharpest attention
+in either model (entropy 0.354) combined with the longest mean distance
+(55.37). Sharp *and* long-range is the signature of a head doing retrieval
+rather than smoothing, and it is the most interesting layer in either model.
+
+### Reproducing Phase 2
+
+Training runs on Kaggle, not locally. `notebooks/phase2_kaggle_pretrain.py` is
+the source of the notebook, so the run is reproducible from this branch rather
+than only from a Kaggle account.
+
+Upload the code, configs and both tokenizers as the `lma-code` dataset and the
+token bins as `lma-<language>-tokens`. Then, in the notebook: Accelerator
+**GPU T4 x2**, Internet **On**, *Add Data* for all three datasets, and run with
+**Save & Run All** — an interactive session that ends takes `/kaggle/working`
+with it, checkpoints included.
+
+Evaluation, against a downloaded checkpoint:
+
+```bash
+python common/evaluate.py  --checkpoint <best.pt> --split test --out report/phase2/<lang>
+python common/generate.py  --checkpoint <best.pt> --split test --out report/phase2/<lang> --n-samples 200
+python common/attention.py --checkpoint <best.pt> --split test --out report/phase2/<lang> --n-sequences 8
+python common/plots.py --runs <runs directory> --out report/phase2
+```
+
+`common/test_train_resume.py` proves bit-for-bit that a resumed run continues
+the run it interrupted: checkpoints carry model, optimizer, scheduler, step,
+sampler position and RNG state, so step 4,001 after a resume is the step 4,001
+the uninterrupted run would have produced.
+
+### Phase 2 deliverables
+
+| # | Deliverable | Where |
+|---|---|---|
+| 8 | Model implementation | `common/model.py`, `common/test_model.py` |
+| 9 | Training code | `common/train.py`, `common/launch_both.py`, `<lang>/configs/` |
+| 10 | Trained checkpoints | Drive, `best.pt` and `final.pt` per language |
+| 11 | Perplexity evaluation | `common/evaluate.py`, `report/phase2/<lang>/eval_test.json` |
+| 12 | Generation and metrics | `common/generate.py`, `report/phase2/<lang>/generation_*.json` |
+| 13 | Attention analysis | `common/attention.py`, `report/phase2/<lang>/attention*.{json,md}` |
+| 14 | Training curves | `report/phase2/figures/` |
+
+Figures are in `report/phase2/figures/` (loss, perplexity, learning rate,
+throughput, loss against tokens) and `report/phase2/<language>/figures/`
+(attention heatmaps for layers 0 and 11, entropy and distance by layer).
+
+---
+
 ## Results summary
 
 | | Model H (Telugu) | Model L (Assamese) |
@@ -314,4 +516,8 @@ data-side asymmetry Phase 3 has to account for.
   22.02% manual, 8,000-piece Unigram tokenizer.
 - **Phase 1, Model L (Assamese):** complete — 559,359,252 training tokens,
   55.80% manual, 8,000-piece Unigram tokenizer.
+- **Phase 2, Model H (Telugu):** complete — 24.6M parameters, 10,550 steps
+  over 648M tokens, test perplexity 32.76 at 0.5369 bits/byte.
+- **Phase 2, Model L (Assamese):** complete — 24.6M parameters, 9,110 steps
+  over 560M tokens, test perplexity 48.71 at 0.6509 bits/byte.
 
