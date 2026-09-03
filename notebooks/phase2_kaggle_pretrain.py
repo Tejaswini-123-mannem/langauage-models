@@ -14,16 +14,23 @@
 # | Setting | Value |
 # |---|---|
 # | Accelerator | **GPU T4 x2** |
-# | Internet | **Off** |
+# | Internet | **On** -- see below |
 # | Add Data -> Your Datasets | `lma-code`, `lma-telugu-tokens`, `lma-assamese-tokens` |
 #
 # **Add Data is the step that is easy to miss.** Without it `/kaggle/input`
 # is empty and cell 2 has nothing to unpack.
 #
-# Internet is deliberately off. Every input is a mounted dataset, so nothing
-# here needs the network -- and with it off, the notebook cannot silently
-# pip-install over Kaggle's CUDA build of torch with a CPU wheel. That
-# failure does not raise; it just trains roughly fifty times slower.
+# Internet was off in earlier revisions, on the reasoning that every input
+# is a mounted dataset and that with the network down the notebook cannot
+# pip-install over Kaggle's CUDA build of torch with a CPU wheel -- a
+# failure that does not raise, it just trains roughly fifty times slower.
+#
+# It has to be on, because Kaggle's image does not ship sacrebleu and the
+# BLEU and chrF in Cell 6 need it. Cell 1 installs that one package and
+# nothing else, then re-asserts that torch still sees CUDA, which is the
+# specific hazard the old setting was guarding against. Toggling Internet
+# restarts the kernel, so set it before the run rather than partway
+# through. Training itself still touches the network for nothing.
 #
 # ## Precision on a T4
 #
@@ -128,6 +135,40 @@ assert not missing, (
     f"{[str(p.relative_to(INPUT)) for p in INPUT.rglob('*') if p.is_dir()][:20]}"
 )
 print("all three datasets are mounted")
+
+# ---- the one dependency the image is missing ------------------------------
+#
+# Kaggle ships torch, numpy and sentencepiece, but not sacrebleu, and the
+# miss surfaces only in Cell 6 -- after both models have finished training.
+# Installing it here means the failure lands now, while it costs a minute
+# instead of a session. Nothing else from requirements.txt is installed:
+# the image's torch is the CUDA build, and reinstalling it would swap in
+# the CPU wheel.
+#
+# Needs Settings -> Internet -> On. If it is off, pip cannot reach PyPI.
+
+try:
+    import sacrebleu
+    print("sacrebleu", sacrebleu.__version__, "already installed")
+except ModuleNotFoundError:
+    # Deliberately not fatal. Training needs nothing from sacrebleu, and
+    # stopping the cell that gates a ten-hour run over an evaluation-only
+    # dependency is the wrong trade -- but it has to be said now rather
+    # than in Cell 6, once both models have already trained.
+    ok = subprocess.run(
+        [sys.executable, "-m", "pip", "install", "-q", "sacrebleu==2.6.0"]
+    ).returncode == 0
+    print("installed sacrebleu" if ok else
+          "*** sacrebleu MISSING: Cell 6's generate.py will stop before it "
+          "decodes. Settings -> Internet -> On, then re-run this cell. "
+          "Training is unaffected. ***")
+
+# pip is what could quietly swap the CUDA torch for a CPU wheel, so the
+# check that opened this cell is worth repeating now that pip has run.
+assert torch.cuda.is_available(), (
+    "torch lost CUDA after the install above. Restart the session; do not "
+    "train from here, it would run on the CPU."
+)
 
 # %% [code]
 # ---- Cell 2: unpack the code and point the workspace at it ----------------
@@ -322,6 +363,24 @@ subprocess.run(
 # Runs against the test split, which neither model has seen and which the
 # tokenizer was never trained on either.
 
+# Restated rather than inherited from Cell 5. A kernel restart clears the
+# variables but leaves /kaggle/working intact, and re-running Cell 5 just
+# to get RUNS back would restart training.
+#
+# RUNS_FROM evaluates checkpoints trained in an earlier session without
+# retraining them. Nothing below writes to RUNS, so a read-only
+# /kaggle/input path is fine. Two ways to get one:
+#
+#   Add Data -> Notebook Output -> the version that trained them. Keeps the
+#   layout, so the path ends in /runs.
+#
+#   Add Data -> Your Datasets -> a dataset uploaded with `kaggle datasets
+#   create --dir-mode zip`. That zips runs/ and Kaggle unpacks it at the
+#   dataset root, so model_h/ and model_l/ sit directly in the mount and
+#   the path has no /runs on the end. Check before assuming:
+#       !find /kaggle/input/<mount> -name best.pt
+RUNS_FROM = None            # e.g. Path("/kaggle/input/lma-checkpoints")
+RUNS = RUNS_FROM or Path("/kaggle/working/runs")
 REPORT = Path("/kaggle/working/report")
 
 for tag, language in (("h", "telugu"), ("l", "assamese")):
