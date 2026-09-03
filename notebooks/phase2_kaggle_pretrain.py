@@ -377,9 +377,16 @@ subprocess.run(
 #   Add Data -> Your Datasets -> a dataset uploaded with `kaggle datasets
 #   create --dir-mode zip`. That zips runs/ and Kaggle unpacks it at the
 #   dataset root, so model_h/ and model_l/ sit directly in the mount and
-#   the path has no /runs on the end. Check before assuming:
-#       !find /kaggle/input/<mount> -name best.pt
-RUNS_FROM = None            # e.g. Path("/kaggle/input/lma-checkpoints")
+#   the path has no /runs on the end.
+#
+# Use Cell 1's find_dataset() rather than writing the path out. Where a
+# dataset mounts is not fixed -- this account gets
+# /kaggle/input/datasets/<username>/<slug>, not the documented
+# /kaggle/input/<slug> -- and a hardcoded path fails as if the dataset
+# were never attached:
+#
+#     RUNS_FROM = find_dataset("lma-checkpoints")
+RUNS_FROM = None
 RUNS = RUNS_FROM or Path("/kaggle/working/runs")
 REPORT = Path("/kaggle/working/report")
 
