@@ -66,8 +66,8 @@ so it can be opened without requesting access.
 | **Assamese** tokenizer | `assamese_final_8000.{model,vocab}` with training metadata | https://drive.google.com/drive/folders/147l3I6VW_3iYj_kDnLjE531x3jhXzWsB?usp=sharing |
 | **Assamese** vocabulary sweep | candidates at 6k / 8k / 10k / 12k, trained on a 10% sample | https://drive.google.com/drive/folders/1choNnxGTO9kij0FN4UdqmJO7o1RPKVnq?usp=sharing |
 | **Assamese** raw sources (1.6 GB) | `archive.zip` (3,034 book texts, 514 MB), 3 Sangraha parquet shards, `aswiki`/`aswikisource` dumps | https://drive.google.com/drive/folders/1jCZRV1bhe1N4cLPsXlMimj9AjBdkrZEs?usp=sharing |
-| **Telugu** checkpoints (Model H) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | _paste share link_ |
-| **Assamese** checkpoints (Model L) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | _paste share link_ |
+| **Telugu** checkpoints (Model H) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | https://drive.google.com/drive/folders/1QL21Wl45GYJA82YjVQyCQno366kZvgRY?usp=sharing |
+| **Assamese** checkpoints (Model L) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | _paste the **assamese** checkpoints folder link_ |
 
 
 
@@ -480,10 +480,19 @@ the uninterrupted run would have produced.
 | 12 | Generation and metrics | `common/generate.py`, `report/phase2/<lang>/generation_*.json` |
 | 13 | Attention analysis | `common/attention.py`, `report/phase2/<lang>/attention*.{json,md}` |
 | 14 | Training curves | `report/phase2/figures/` |
+| 15 | Training logs | `report/phase2/<lang>/train_log.jsonl`, `console.log` |
 
 Figures are in `report/phase2/figures/` (loss, perplexity, learning rate,
 throughput, loss against tokens) and `report/phase2/<language>/figures/`
 (attention heatmaps for layers 0 and 11, entropy and distance by layer).
+
+The logs are committed rather than only linked, since a grader reads the branch
+and not Drive. `train_log.jsonl` is one JSON object per record — `train` lines
+carry step, loss, perplexity, learning rate, tokens, throughput and elapsed
+time, `eval` lines the validation loss and whether it was a new best, and a
+final `done` line the totals — and it is what `common/plots.py` draws the curves
+from. `console.log` is the run's stdout: the resolved configuration, the
+parameter count, every validation evaluation and every checkpoint write.
 
 ---
 
