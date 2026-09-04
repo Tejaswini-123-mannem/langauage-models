@@ -298,6 +298,10 @@ Two independent decoder-only Transformers, one per language. Nothing is shared
 between them — separate corpora, tokenizers, vocabularies and weights — and
 they are trained as two processes rather than one distributed job.
 
+**Phase 2 report:** [report/phase2/phase2_report.md](report/phase2/phase2_report.md)
+— architecture, training, evaluation, attention and the resource-level
+comparison in one place. The sections below summarise it.
+
 ### Architecture
 
 Identical for both models:
