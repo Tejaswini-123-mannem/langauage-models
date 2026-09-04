@@ -67,7 +67,7 @@ so it can be opened without requesting access.
 | **Assamese** vocabulary sweep | candidates at 6k / 8k / 10k / 12k, trained on a 10% sample | https://drive.google.com/drive/folders/1choNnxGTO9kij0FN4UdqmJO7o1RPKVnq?usp=sharing |
 | **Assamese** raw sources (1.6 GB) | `archive.zip` (3,034 book texts, 514 MB), 3 Sangraha parquet shards, `aswiki`/`aswikisource` dumps | https://drive.google.com/drive/folders/1jCZRV1bhe1N4cLPsXlMimj9AjBdkrZEs?usp=sharing |
 | **Telugu** checkpoints (Model H) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | https://drive.google.com/drive/folders/1QL21Wl45GYJA82YjVQyCQno366kZvgRY?usp=sharing |
-| **Assamese** checkpoints (Model L) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | _paste the **assamese** checkpoints folder link_ |
+| **Assamese** checkpoints (Model L) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | https://drive.google.com/drive/folders/18n4tms8r80zPj5YZatLq3iOVMlKCm_VZ?usp=sharing |
 
 
 
