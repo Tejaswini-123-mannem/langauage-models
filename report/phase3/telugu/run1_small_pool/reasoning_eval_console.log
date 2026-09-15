@@ -1,0 +1,74 @@
+==============================================================================
+REASONING EVAL - MODEL H (TELUGU) - pretrained
+==============================================================================
+  checkpoint : /kaggle/input/datasets/teja123mannem/lma-checkpoints/model_h/best.pt (stage pretrain, step 10550)
+  examples   : 2,400 from test
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.000  choice 0.420  (21s)
+      400/2400  EM 0.000  choice 0.398  (43s)
+      600/2400  EM 0.000  choice 0.375  (63s)
+      800/2400  EM 0.000  choice 0.378  (83s)
+     1000/2400  EM 0.000  choice 0.386  (103s)
+     1200/2400  EM 0.000  choice 0.383  (124s)
+     1400/2400  EM 0.000  choice 0.386  (143s)
+     1600/2400  EM 0.000  choice 0.386  (163s)
+     1800/2400  EM 0.000  choice 0.385  (183s)
+     2000/2400  EM 0.000  choice 0.386  (203s)
+     2200/2400  EM 0.000  choice 0.389  (223s)
+     2400/2400  EM 0.000  choice 0.390  (243s)
+
+  3-shot on 600 examples
+      200/600  EM 0.000  choice 0.375  (22s)
+      400/600  EM 0.000  choice 0.345  (43s)
+      600/600  EM 0.000  choice 0.332  (64s)
+
+  RESULTS
+    zero_shot    EM 0.000  choice 0.390  (chance 0.409)
+      chain_extreme      EM 0.000  choice 0.182
+      chain_pair         EM 0.000  choice 0.492
+      chain_yesno        EM 0.000  choice 0.482
+      numeric_extreme    EM 0.000  choice 0.333
+      numeric_pair       EM 0.000  choice 0.517
+      numeric_relation   EM 0.000  choice 0.330
+    few_shot_3   EM 0.000  choice 0.332  (chance 0.409)
+      chain_extreme      EM 0.000  choice 0.090
+      chain_pair         EM 0.000  choice 0.470
+      chain_yesno        EM 0.000  choice 0.420
+      numeric_extreme    EM 0.000  choice 0.230
+      numeric_pair       EM 0.000  choice 0.440
+      numeric_relation   EM 0.000  choice 0.340
+
+  wrote /kaggle/working/report/phase3/telugu
+==============================================================================
+REASONING EVAL - MODEL H (TELUGU) - finetuned
+==============================================================================
+  checkpoint : /kaggle/working/repo/work/telugu/runs/model_h_reasoning/best.pt (stage reasoning_finetune, step 250)
+  examples   : 2,400 from test
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.135  choice 0.380  (6s)
+      400/2400  EM 0.130  choice 0.357  (12s)
+      600/2400  EM 0.127  choice 0.362  (18s)
+      800/2400  EM 0.125  choice 0.354  (24s)
+     1000/2400  EM 0.122  choice 0.358  (30s)
+     1200/2400  EM 0.132  choice 0.373  (35s)
+     1400/2400  EM 0.129  choice 0.380  (41s)
+     1600/2400  EM 0.134  choice 0.383  (46s)
+     1800/2400  EM 0.137  choice 0.387  (52s)
+     2000/2400  EM 0.141  choice 0.399  (58s)
+     2200/2400  EM 0.141  choice 0.395  (64s)
+     2400/2400  EM 0.142  choice 0.397  (69s)
+
+  RESULTS
+    zero_shot    EM 0.142  choice 0.397  (chance 0.409)
+      chain_extreme      EM 0.000  choice 0.223
+      chain_pair         EM 0.000  choice 0.495
+      chain_yesno        EM 0.510  choice 0.510
+      numeric_extreme    EM 0.000  choice 0.328
+      numeric_pair       EM 0.000  choice 0.482
+      numeric_relation   EM 0.343  choice 0.343
+
+  wrote /kaggle/working/report/phase3/telugu

@@ -88,9 +88,13 @@ TASKS = (
 
 SPLITS = ("train", "validation", "test")
 
-# Share of the entity pools given to each split. With 60 names that is
-# 42 / 9 / 9 and with 24 items 16 / 4 / 4 -- the smaller pools still hold
-# the four distinct entities a three-hop chain needs.
+# Share of the entity pools given to each split. With 156 names that is
+# 110 / 23 / 23 and with 64 items 40 / 8 / 8.
+#
+# The pools were 60 names and 24 items at first, and that was too few: with
+# 42 training names both models learned to answer with a memorised training
+# name instead of copying one from the prompt, and scored 0 on name answers
+# for the held-out test names. A larger pool makes that shortcut stop paying.
 POOL_FRACTIONS = {"train": 0.70, "validation": 0.15, "test": 0.15}
 
 
@@ -543,7 +547,7 @@ def write_samples(path, examples_by_split, title, per_task=3):
 def main():
     parser = argparse.ArgumentParser(description="Generate the reasoning dataset.")
     add_language_argument(parser)
-    parser.add_argument("--train", type=int, default=24000)
+    parser.add_argument("--train", type=int, default=120000)
     parser.add_argument("--validation", type=int, default=1200)
     parser.add_argument("--test", type=int, default=2400)
     parser.add_argument("--seed", type=int, default=42)

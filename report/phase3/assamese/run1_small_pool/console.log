@@ -1,0 +1,185 @@
+  --resume auto: no checkpoint found, starting from the pretrained model
+==============================================================================
+FINETUNE - MODEL L (ASSAMESE) - model_l_reasoning
+==============================================================================
+  device       : cuda
+  precision    : fp16
+  init from    : /kaggle/input/datasets/teja123mannem/lma-checkpoints/model_l/best.pt (pretrain step 9110)
+  parameters   : 24,562,944
+  tokenizer    : 8,000 pieces (fixed)
+  train        : 24,000 examples
+  validation   : 300 examples scored per eval
+  batch        : 32 x 1
+  steps        : 3,000 (4.00 epochs)
+  lr           : 1.0e-04 -> 1.0e-05, 100 warmup, cosine
+  weight decay : 0.1
+  out          : /kaggle/working/repo/work/assamese/runs/model_l_reasoning
+  config       : {"name": "model_l_reasoning", "language": "assamese", "init_checkpoint": "C:/lma_work/assamese/checkpoints/best.pt", "data_dir": null, "out_dir": null, "batch_size": 32, "grad_accum": 1, "epochs": 4.0, "max_steps": null, "learning_rate": 0.0001, "min_lr": 1e-05, "warmup_steps": 100, "weight_decay": 0.1, "beta1": 0.9, "beta2": 0.95, "grad_clip": 1.0, "log_every": 20, "eval_every": 250, "eval_examples": 300, "checkpoint_every": 250, "seed": 42, "dtype": "fp16"}
+==============================================================================
+  step      0  VAL loss 6.2423  EM 0.000  choice 0.363
+  step     20/3,000  loss 4.1585  lr 2.00e-05    31393 tok/s  eta 0:02:47
+  step     40/3,000  loss 1.2650  lr 4.00e-05    44246 tok/s  eta 0:01:58
+  step     60/3,000  loss 0.8492  lr 6.00e-05    44767 tok/s  eta 0:01:58
+  step     80/3,000  loss 0.7896  lr 8.00e-05    44435 tok/s  eta 0:01:56
+  step    100/3,000  loss 0.7369  lr 1.00e-04    43370 tok/s  eta 0:01:55
+  step    120/3,000  loss 0.7014  lr 1.00e-04    43338 tok/s  eta 0:01:57
+  step    140/3,000  loss 0.6653  lr 1.00e-04    41974 tok/s  eta 0:01:57
+  step    160/3,000  loss 0.6365  lr 9.99e-05    44116 tok/s  eta 0:01:53
+  step    180/3,000  loss 0.6716  lr 9.98e-05    44043 tok/s  eta 0:01:52
+  step    200/3,000  loss 0.6005  lr 9.97e-05    42064 tok/s  eta 0:01:58
+  step    220/3,000  loss 0.6358  lr 9.96e-05    43126 tok/s  eta 0:01:52
+  step    240/3,000  loss 0.6184  lr 9.95e-05    39196 tok/s  eta 0:02:01
+          VAL loss 2.0568  EM 0.200  choice 0.450   <- best
+  step    260/3,000  loss 0.6119  lr 9.93e-05     3308 tok/s  eta 0:24:12
+  step    280/3,000  loss 0.5926  lr 9.92e-05    43675 tok/s  eta 0:01:50
+  step    300/3,000  loss 0.6283  lr 9.90e-05    41437 tok/s  eta 0:01:55
+  step    320/3,000  loss 0.6067  lr 9.87e-05    43165 tok/s  eta 0:01:50
+  step    340/3,000  loss 0.5942  lr 9.85e-05    44280 tok/s  eta 0:01:46
+  step    360/3,000  loss 0.5632  lr 9.82e-05    43330 tok/s  eta 0:01:47
+  step    380/3,000  loss 0.5566  lr 9.80e-05    43622 tok/s  eta 0:01:46
+  step    400/3,000  loss 0.6086  lr 9.77e-05    42922 tok/s  eta 0:01:46
+  step    420/3,000  loss 0.5929  lr 9.73e-05    43743 tok/s  eta 0:01:45
+  step    440/3,000  loss 0.5849  lr 9.70e-05    43096 tok/s  eta 0:01:45
+  step    460/3,000  loss 0.5448  lr 9.66e-05    44436 tok/s  eta 0:01:43
+  step    480/3,000  loss 0.5483  lr 9.63e-05    40076 tok/s  eta 0:01:52
+  step    500/3,000  loss 0.5390  lr 9.59e-05    43747 tok/s  eta 0:01:42
+          VAL loss 2.9581  EM 0.110  choice 0.367
+  step    520/3,000  loss 0.5839  lr 9.54e-05     3481 tok/s  eta 0:20:57
+  step    540/3,000  loss 0.5166  lr 9.50e-05    39776 tok/s  eta 0:01:48
+  step    560/3,000  loss 0.5641  lr 9.46e-05    43181 tok/s  eta 0:01:40
+  step    580/3,000  loss 0.5324  lr 9.41e-05    43551 tok/s  eta 0:01:40
+  step    600/3,000  loss 0.5428  lr 9.36e-05    43529 tok/s  eta 0:01:37
+  step    620/3,000  loss 0.5304  lr 9.31e-05    40252 tok/s  eta 0:01:44
+  step    640/3,000  loss 0.5249  lr 9.25e-05    33524 tok/s  eta 0:02:03
+  step    660/3,000  loss 0.5745  lr 9.20e-05    36696 tok/s  eta 0:01:48
+  step    680/3,000  loss 0.5286  lr 9.14e-05    42479 tok/s  eta 0:01:37
+  step    700/3,000  loss 0.5386  lr 9.09e-05    42939 tok/s  eta 0:01:33
+  step    720/3,000  loss 0.5068  lr 9.03e-05    42260 tok/s  eta 0:01:35
+  step    740/3,000  loss 0.5569  lr 8.96e-05    41838 tok/s  eta 0:01:36
+          VAL loss 3.7912  EM 0.133  choice 0.433
+  step    760/3,000  loss 0.5136  lr 8.90e-05     3389 tok/s  eta 0:19:21
+  step    780/3,000  loss 0.4829  lr 8.84e-05    42747 tok/s  eta 0:01:32
+  step    800/3,000  loss 0.5020  lr 8.77e-05    42706 tok/s  eta 0:01:32
+  step    820/3,000  loss 0.5093  lr 8.70e-05    43223 tok/s  eta 0:01:30
+  step    840/3,000  loss 0.5183  lr 8.63e-05    42743 tok/s  eta 0:01:28
+  step    860/3,000  loss 0.4879  lr 8.56e-05    42988 tok/s  eta 0:01:28
+  step    880/3,000  loss 0.4961  lr 8.49e-05    41749 tok/s  eta 0:01:30
+  step    900/3,000  loss 0.4880  lr 8.42e-05    40949 tok/s  eta 0:01:29
+  step    920/3,000  loss 0.4915  lr 8.34e-05    42754 tok/s  eta 0:01:27
+  step    940/3,000  loss 0.4969  lr 8.27e-05    43223 tok/s  eta 0:01:24
+  step    960/3,000  loss 0.4745  lr 8.19e-05    42757 tok/s  eta 0:01:25
+  step    980/3,000  loss 0.5034  lr 8.11e-05    39534 tok/s  eta 0:01:29
+  step  1,000/3,000  loss 0.4838  lr 8.03e-05    42701 tok/s  eta 0:01:21
+          VAL loss 4.0757  EM 0.133  choice 0.420
+  step  1,020/3,000  loss 0.4852  lr 7.95e-05     3416 tok/s  eta 0:17:02
+  step  1,040/3,000  loss 0.5126  lr 7.87e-05    42362 tok/s  eta 0:01:21
+  step  1,060/3,000  loss 0.4957  lr 7.78e-05    40389 tok/s  eta 0:01:25
+  step  1,080/3,000  loss 0.5025  lr 7.70e-05    39187 tok/s  eta 0:01:26
+  step  1,100/3,000  loss 0.4743  lr 7.61e-05    40877 tok/s  eta 0:01:23
+  step  1,120/3,000  loss 0.4634  lr 7.53e-05    43077 tok/s  eta 0:01:17
+  step  1,140/3,000  loss 0.5046  lr 7.44e-05    41023 tok/s  eta 0:01:20
+  step  1,160/3,000  loss 0.4837  lr 7.35e-05    42039 tok/s  eta 0:01:15
+  step  1,180/3,000  loss 0.4918  lr 7.26e-05    42283 tok/s  eta 0:01:15
+  step  1,200/3,000  loss 0.4949  lr 7.17e-05    42132 tok/s  eta 0:01:15
+  step  1,220/3,000  loss 0.4811  lr 7.08e-05    40832 tok/s  eta 0:01:17
+  step  1,240/3,000  loss 0.4630  lr 6.99e-05    41329 tok/s  eta 0:01:14
+          VAL loss 4.3361  EM 0.133  choice 0.410
+  step  1,260/3,000  loss 0.4791  lr 6.90e-05     3419 tok/s  eta 0:14:58
+  step  1,280/3,000  loss 0.4860  lr 6.80e-05    41889 tok/s  eta 0:01:12
+  step  1,300/3,000  loss 0.4751  lr 6.71e-05    42882 tok/s  eta 0:01:09
+  step  1,320/3,000  loss 0.5003  lr 6.61e-05    42879 tok/s  eta 0:01:09
+  step  1,340/3,000  loss 0.4958  lr 6.52e-05    42782 tok/s  eta 0:01:07
+  step  1,360/3,000  loss 0.4724  lr 6.42e-05    40879 tok/s  eta 0:01:11
+  step  1,380/3,000  loss 0.4829  lr 6.33e-05    38511 tok/s  eta 0:01:14
+  step  1,400/3,000  loss 0.4648  lr 6.23e-05    38743 tok/s  eta 0:01:11
+  step  1,420/3,000  loss 0.4778  lr 6.14e-05    41586 tok/s  eta 0:01:07
+  step  1,440/3,000  loss 0.4721  lr 6.04e-05    42375 tok/s  eta 0:01:05
+  step  1,460/3,000  loss 0.4553  lr 5.94e-05    37225 tok/s  eta 0:01:12
+  step  1,480/3,000  loss 0.4591  lr 5.85e-05    40245 tok/s  eta 0:01:06
+  step  1,500/3,000  loss 0.4497  lr 5.75e-05    42520 tok/s  eta 0:01:02
+          VAL loss 4.4619  EM 0.127  choice 0.393
+  step  1,520/3,000  loss 0.4362  lr 5.65e-05     3323 tok/s  eta 0:13:03
+  step  1,540/3,000  loss 0.4320  lr 5.55e-05    39980 tok/s  eta 0:01:05
+  step  1,560/3,000  loss 0.3980  lr 5.46e-05    42124 tok/s  eta 0:01:00
+  step  1,580/3,000  loss 0.4165  lr 5.36e-05    41841 tok/s  eta 0:00:59
+  step  1,600/3,000  loss 0.4074  lr 5.26e-05    40363 tok/s  eta 0:00:59
+  step  1,620/3,000  loss 0.4486  lr 5.16e-05    38120 tok/s  eta 0:01:04
+  step  1,640/3,000  loss 0.4159  lr 5.07e-05    40038 tok/s  eta 0:01:01
+  step  1,660/3,000  loss 0.4140  lr 4.97e-05    42022 tok/s  eta 0:00:56
+  step  1,680/3,000  loss 0.4074  lr 4.87e-05    42345 tok/s  eta 0:00:56
+  step  1,700/3,000  loss 0.4239  lr 4.78e-05    40367 tok/s  eta 0:00:57
+  step  1,720/3,000  loss 0.4654  lr 4.68e-05    32655 tok/s  eta 0:01:08
+  step  1,740/3,000  loss 0.4240  lr 4.59e-05    37597 tok/s  eta 0:00:59
+          VAL loss 4.5601  EM 0.137  choice 0.383
+  step  1,760/3,000  loss 0.4251  lr 4.49e-05     3386 tok/s  eta 0:10:42
+  step  1,780/3,000  loss 0.4468  lr 4.40e-05    41287 tok/s  eta 0:00:52
+  step  1,800/3,000  loss 0.4278  lr 4.30e-05    41266 tok/s  eta 0:00:51
+  step  1,820/3,000  loss 0.4215  lr 4.21e-05    41658 tok/s  eta 0:00:50
+  step  1,840/3,000  loss 0.3968  lr 4.11e-05    39701 tok/s  eta 0:00:51
+  step  1,860/3,000  loss 0.4113  lr 4.02e-05    38935 tok/s  eta 0:00:52
+  step  1,880/3,000  loss 0.4374  lr 3.93e-05    38673 tok/s  eta 0:00:50
+  step  1,900/3,000  loss 0.3937  lr 3.84e-05    41274 tok/s  eta 0:00:47
+  step  1,920/3,000  loss 0.4272  lr 3.75e-05    40241 tok/s  eta 0:00:46
+  step  1,940/3,000  loss 0.4219  lr 3.66e-05    38669 tok/s  eta 0:00:48
+  step  1,960/3,000  loss 0.4222  lr 3.57e-05    41014 tok/s  eta 0:00:44
+  step  1,980/3,000  loss 0.4275  lr 3.48e-05    40303 tok/s  eta 0:00:44
+  step  2,000/3,000  loss 0.4040  lr 3.40e-05    40718 tok/s  eta 0:00:43
+          VAL loss 4.4410  EM 0.147  choice 0.413
+  step  2,020/3,000  loss 0.3951  lr 3.31e-05     3279 tok/s  eta 0:08:44
+  step  2,040/3,000  loss 0.4057  lr 3.23e-05    41695 tok/s  eta 0:00:40
+  step  2,060/3,000  loss 0.4260  lr 3.14e-05    41082 tok/s  eta 0:00:40
+  step  2,080/3,000  loss 0.4165  lr 3.06e-05    38874 tok/s  eta 0:00:41
+  step  2,100/3,000  loss 0.4218  lr 2.98e-05    38465 tok/s  eta 0:00:40
+  step  2,120/3,000  loss 0.4297  lr 2.90e-05    40208 tok/s  eta 0:00:38
+  step  2,140/3,000  loss 0.4173  lr 2.82e-05    41378 tok/s  eta 0:00:36
+  step  2,160/3,000  loss 0.4117  lr 2.74e-05    40836 tok/s  eta 0:00:36
+  step  2,180/3,000  loss 0.4131  lr 2.67e-05    40595 tok/s  eta 0:00:35
+  step  2,200/3,000  loss 0.4001  lr 2.59e-05    41793 tok/s  eta 0:00:33
+  step  2,220/3,000  loss 0.4217  lr 2.52e-05    41682 tok/s  eta 0:00:33
+  step  2,240/3,000  loss 0.4130  lr 2.44e-05    41278 tok/s  eta 0:00:32
+          VAL loss 4.4679  EM 0.127  choice 0.397
+  step  2,260/3,000  loss 0.3771  lr 2.37e-05     3333 tok/s  eta 0:06:39
+  step  2,280/3,000  loss 0.3626  lr 2.30e-05    42446 tok/s  eta 0:00:30
+  step  2,300/3,000  loss 0.3793  lr 2.24e-05    40851 tok/s  eta 0:00:30
+  step  2,320/3,000  loss 0.3587  lr 2.17e-05    39971 tok/s  eta 0:00:30
+  step  2,340/3,000  loss 0.3907  lr 2.11e-05    40433 tok/s  eta 0:00:28
+  step  2,360/3,000  loss 0.3537  lr 2.04e-05    40587 tok/s  eta 0:00:27
+  step  2,380/3,000  loss 0.3679  lr 1.98e-05    41831 tok/s  eta 0:00:26
+  step  2,400/3,000  loss 0.3683  lr 1.92e-05    39695 tok/s  eta 0:00:26
+  step  2,420/3,000  loss 0.3789  lr 1.86e-05    40702 tok/s  eta 0:00:24
+  step  2,440/3,000  loss 0.3683  lr 1.81e-05    42018 tok/s  eta 0:00:23
+  step  2,460/3,000  loss 0.3680  lr 1.75e-05    41282 tok/s  eta 0:00:22
+  step  2,480/3,000  loss 0.3710  lr 1.70e-05    41702 tok/s  eta 0:00:22
+  step  2,500/3,000  loss 0.3697  lr 1.65e-05    41583 tok/s  eta 0:00:20
+          VAL loss 4.2551  EM 0.133  choice 0.390
+  step  2,520/3,000  loss 0.3905  lr 1.60e-05     3236 tok/s  eta 0:04:18
+  step  2,540/3,000  loss 0.3744  lr 1.55e-05    40401 tok/s  eta 0:00:19
+  step  2,560/3,000  loss 0.3712  lr 1.50e-05    41921 tok/s  eta 0:00:18
+  step  2,580/3,000  loss 0.3580  lr 1.46e-05    41366 tok/s  eta 0:00:17
+  step  2,600/3,000  loss 0.3501  lr 1.42e-05    41897 tok/s  eta 0:00:17
+  step  2,620/3,000  loss 0.3748  lr 1.38e-05    41272 tok/s  eta 0:00:16
+  step  2,640/3,000  loss 0.3691  lr 1.34e-05    39756 tok/s  eta 0:00:16
+  step  2,660/3,000  loss 0.3607  lr 1.30e-05    41699 tok/s  eta 0:00:14
+  step  2,680/3,000  loss 0.3588  lr 1.27e-05    41922 tok/s  eta 0:00:13
+  step  2,700/3,000  loss 0.3677  lr 1.24e-05    40944 tok/s  eta 0:00:12
+  step  2,720/3,000  loss 0.3581  lr 1.21e-05    41955 tok/s  eta 0:00:11
+  step  2,740/3,000  loss 0.3713  lr 1.18e-05    41348 tok/s  eta 0:00:10
+          VAL loss 4.4086  EM 0.160  choice 0.400
+  step  2,760/3,000  loss 0.3707  lr 1.15e-05     3111 tok/s  eta 0:02:14
+  step  2,780/3,000  loss 0.3582  lr 1.13e-05    38175 tok/s  eta 0:00:10
+  step  2,800/3,000  loss 0.3640  lr 1.11e-05    38534 tok/s  eta 0:00:09
+  step  2,820/3,000  loss 0.3682  lr 1.09e-05    34289 tok/s  eta 0:00:09
+  step  2,840/3,000  loss 0.3621  lr 1.07e-05    39575 tok/s  eta 0:00:07
+  step  2,860/3,000  loss 0.3503  lr 1.05e-05    39768 tok/s  eta 0:00:06
+  step  2,880/3,000  loss 0.3686  lr 1.04e-05    41314 tok/s  eta 0:00:05
+  step  2,900/3,000  loss 0.3506  lr 1.03e-05    41874 tok/s  eta 0:00:04
+  step  2,920/3,000  loss 0.3555  lr 1.02e-05    42095 tok/s  eta 0:00:03
+  step  2,940/3,000  loss 0.3822  lr 1.01e-05    41594 tok/s  eta 0:00:02
+  step  2,960/3,000  loss 0.3589  lr 1.00e-05    41610 tok/s  eta 0:00:01
+  step  2,980/3,000  loss 0.3443  lr 1.00e-05    41598 tok/s  eta 0:00:00
+  step  3,000/3,000  loss 0.3420  lr 1.00e-05    41583 tok/s  eta 0:00:00
+          VAL loss 4.3354  EM 0.147  choice 0.387
+
+  finished 3,000 steps in 0:04:06
+  best validation exact match 0.200
+  checkpoints in /kaggle/working/repo/work/assamese/runs/model_l_reasoning

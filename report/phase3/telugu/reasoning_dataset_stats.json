@@ -1,47 +1,47 @@
 {
   "splits": {
     "train": {
-      "examples": 24000,
+      "examples": 120000,
       "tasks": {
-        "numeric_pair": 4000,
-        "numeric_relation": 4000,
-        "numeric_extreme": 4000,
-        "chain_pair": 4000,
-        "chain_extreme": 4000,
-        "chain_yesno": 4000
+        "numeric_pair": 20000,
+        "numeric_relation": 20000,
+        "numeric_extreme": 20000,
+        "chain_pair": 20000,
+        "chain_extreme": 20000,
+        "chain_yesno": 20000
       },
       "attributes": {
-        "price": 4828,
-        "weight": 4817,
-        "marks": 4867,
-        "age": 4759,
-        "height": 4729
+        "price": 24190,
+        "age": 23977,
+        "marks": 24107,
+        "weight": 24058,
+        "height": 23668
       },
       "hops": {
-        "1": 12000,
-        "2": 8671,
-        "3": 3329
+        "1": 60000,
+        "2": 43247,
+        "3": 16753
       },
       "chance_accuracy": {
         "numeric_pair": 0.5,
         "numeric_relation": 0.3333,
         "numeric_extreme": 0.3333,
         "chain_pair": 0.5,
-        "chain_extreme": 0.2913,
+        "chain_extreme": 0.2915,
         "chain_yesno": 0.5
       },
       "label_balance": {
         "numeric_relation": {
-          "సమానం": 1385,
-          "ఎక్కువ": 1336,
-          "తక్కువ": 1279
+          "సమానం": 6753,
+          "తక్కువ": 6661,
+          "ఎక్కువ": 6586
         },
         "chain_yesno": {
-          "అవును": 2022,
-          "కాదు": 1978
+          "కాదు": 10032,
+          "అవును": 9968
         }
       },
-      "mean_prompt_characters": 130.8
+      "mean_prompt_characters": 134.8
     },
     "validation": {
       "examples": 1200,
@@ -54,37 +54,37 @@
         "chain_yesno": 200
       },
       "attributes": {
-        "price": 217,
-        "height": 262,
+        "price": 229,
+        "height": 245,
         "weight": 239,
-        "marks": 246,
-        "age": 236
+        "marks": 253,
+        "age": 234
       },
       "hops": {
         "1": 600,
-        "2": 438,
-        "3": 162
+        "2": 413,
+        "3": 187
       },
       "chance_accuracy": {
         "numeric_pair": 0.5,
         "numeric_relation": 0.3333,
         "numeric_extreme": 0.3333,
         "chain_pair": 0.5,
-        "chain_extreme": 0.2929,
+        "chain_extreme": 0.2879,
         "chain_yesno": 0.5
       },
       "label_balance": {
         "numeric_relation": {
-          "ఎక్కువ": 76,
-          "తక్కువ": 65,
-          "సమానం": 59
+          "ఎక్కువ": 78,
+          "సమానం": 62,
+          "తక్కువ": 60
         },
         "chain_yesno": {
-          "కాదు": 105,
-          "అవును": 95
+          "అవును": 102,
+          "కాదు": 98
         }
       },
-      "mean_prompt_characters": 134.0
+      "mean_prompt_characters": 131.6
     },
     "test": {
       "examples": 2400,
@@ -97,66 +97,84 @@
         "chain_yesno": 400
       },
       "attributes": {
-        "height": 475,
-        "weight": 489,
-        "marks": 503,
-        "price": 453,
-        "age": 480
+        "height": 448,
+        "weight": 466,
+        "marks": 502,
+        "price": 483,
+        "age": 501
       },
       "hops": {
         "1": 1200,
-        "2": 842,
-        "3": 358
+        "2": 876,
+        "3": 324
       },
       "chance_accuracy": {
         "numeric_pair": 0.5,
         "numeric_relation": 0.3333,
         "numeric_extreme": 0.3333,
         "chain_pair": 0.5,
-        "chain_extreme": 0.2869,
+        "chain_extreme": 0.2925,
         "chain_yesno": 0.5
       },
       "label_balance": {
         "numeric_relation": {
-          "తక్కువ": 136,
-          "సమానం": 134,
-          "ఎక్కువ": 130
+          "సమానం": 141,
+          "తక్కువ": 138,
+          "ఎక్కువ": 121
         },
         "chain_yesno": {
-          "కాదు": 204,
-          "అవును": 196
+          "అవును": 219,
+          "కాదు": 181
         }
       },
-      "mean_prompt_characters": 133.5
+      "mean_prompt_characters": 132.8
     }
   },
   "pools": {
     "people": {
-      "test": 9,
-      "validation": 9,
-      "train": 42
+      "test": 23,
+      "validation": 23,
+      "train": 110
     },
     "people_test_names": [
+      "సుమ",
+      "వసంత",
+      "భార్గవి",
+      "మహేష్",
+      "మమత",
+      "మాధవి",
+      "నవీన్",
+      "సాయి",
+      "వాణి",
+      "ప్రసాద్",
+      "ఇందు",
+      "దుర్గ",
+      "రేఖ",
+      "విజయ్",
       "రాము",
-      "హేమ",
-      "రవి",
-      "పద్మ",
-      "గోపాల్",
-      "నరేష్",
-      "కావ్య",
-      "జ్యోతి",
-      "ప్రసాద్"
+      "సౌజన్య",
+      "పావని",
+      "సంతోష్",
+      "అక్షర",
+      "నీరజ",
+      "శ్రావణి",
+      "శ్వేత",
+      "మనోజ్"
     ],
     "items": {
-      "test": 4,
-      "validation": 4,
-      "train": 16
+      "test": 8,
+      "validation": 8,
+      "train": 40
     },
     "items_test_names": [
-      "బొమ్మ",
-      "చెప్పులు",
-      "రేడియో",
-      "చొక్కా"
+      "చెంచా",
+      "బంతి",
+      "పెన్సిలు",
+      "బిందె",
+      "పళ్ళెం",
+      "కత్తి",
+      "కుర్చీ",
+      "బ్యాగు"
     ]
   },
   "templates": {
