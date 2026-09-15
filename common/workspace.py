@@ -253,6 +253,34 @@ class Workspace:
 
         return DRIVE / "checkpoints" / self.slug
 
+    # ---- Phase 3 ------------------------------------------------------------
+
+    @property
+    def reasoning(self):
+        """Synthetic reasoning splits written by reasoning_data.py."""
+
+        return self.root / "reasoning"
+
+    @property
+    def finetuned(self):
+        """
+        Reasoning-finetuned weights, staged after download from Kaggle.
+
+        Kept apart from `checkpoints` rather than beside it: both hold a
+        best.pt, and a pretrained and a finetuned best.pt in one directory
+        is one mistyped path away from evaluating the wrong model.
+        """
+
+        return self.root / "finetuned"
+
+    @property
+    def drive_finetuned(self):
+        return DRIVE / "checkpoints" / self.slug / "finetuned"
+
+    @property
+    def drive_reasoning(self):
+        return DRIVE / "data" / "processed" / self.slug / "reasoning"
+
     # ---- report -------------------------------------------------------------
 
     @property

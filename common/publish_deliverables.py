@@ -202,6 +202,50 @@ def checkpoint_items_for(language):
 
 
 # =============================================================================
+# PHASE 3: FINETUNED CHECKPOINTS AND REASONING DATA
+# =============================================================================
+#
+# Published under the same per-language checkpoint folder, one level down
+# in finetuned/, so each language's Drive folder holds its whole lineage:
+# the pretrained weights and the weights finetuned from them. The reasoning
+# splits go beside the corpus splits. They are regenerable from the script
+# and seed, but publishing them means the reported accuracies can be
+# checked against the exact examples scored.
+# =============================================================================
+
+FINETUNED_FILES = [
+    ("best.pt", "finetuned checkpoint, best validation exact match"),
+    ("final.pt", "finetuned checkpoint, final step"),
+    ("finetune_log.jsonl", "finetuning log"),
+    ("console.log", "finetuning console output"),
+]
+
+
+def phase3_items_for(language):
+    """(source, destination, description) for finetuned weights and reasoning data."""
+
+    workspace = Workspace(language)
+    tag = workspace.language.model_tag
+    items = []
+
+    for name, label in FINETUNED_FILES:
+        path = workspace.finetuned / name
+        if path.exists():
+            items.append((path, workspace.drive_finetuned / name, f"{tag} {label}"))
+
+    for split in ("train", "validation", "test"):
+        path = workspace.reasoning / f"{split}.jsonl"
+        if path.exists():
+            items.append((path, workspace.drive_reasoning / path.name,
+                          f"{tag} reasoning {split} split"))
+
+    if not items:
+        print(f"  NOTE: no Phase 3 artifacts for {language}")
+
+    return items
+
+
+# =============================================================================
 # RAW SOURCE FILES
 # =============================================================================
 #
@@ -510,7 +554,7 @@ def main():
     # obvious from the README, whereas nobody grades the absence of a
     # 2 GB Wikipedia dump they did not ask for.
     if not (args.raw_only or args.skip_checkpoints):
-        items = items + checkpoint_items_for(args.language)
+        items = items + checkpoint_items_for(args.language) + phase3_items_for(args.language)
 
     if args.include_raw or args.raw_only:
         items = items + raw_items_for(args.language, dry_run=args.dry_run)
