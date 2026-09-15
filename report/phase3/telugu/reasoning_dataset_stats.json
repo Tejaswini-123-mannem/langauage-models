@@ -1,0 +1,177 @@
+{
+  "splits": {
+    "train": {
+      "examples": 24000,
+      "tasks": {
+        "numeric_pair": 4000,
+        "numeric_relation": 4000,
+        "numeric_extreme": 4000,
+        "chain_pair": 4000,
+        "chain_extreme": 4000,
+        "chain_yesno": 4000
+      },
+      "attributes": {
+        "price": 4828,
+        "weight": 4817,
+        "marks": 4867,
+        "age": 4759,
+        "height": 4729
+      },
+      "hops": {
+        "1": 12000,
+        "2": 8671,
+        "3": 3329
+      },
+      "chance_accuracy": {
+        "numeric_pair": 0.5,
+        "numeric_relation": 0.3333,
+        "numeric_extreme": 0.3333,
+        "chain_pair": 0.5,
+        "chain_extreme": 0.2913,
+        "chain_yesno": 0.5
+      },
+      "label_balance": {
+        "numeric_relation": {
+          "సమానం": 1385,
+          "ఎక్కువ": 1336,
+          "తక్కువ": 1279
+        },
+        "chain_yesno": {
+          "అవును": 2022,
+          "కాదు": 1978
+        }
+      },
+      "mean_prompt_characters": 130.8
+    },
+    "validation": {
+      "examples": 1200,
+      "tasks": {
+        "numeric_pair": 200,
+        "numeric_relation": 200,
+        "numeric_extreme": 200,
+        "chain_pair": 200,
+        "chain_extreme": 200,
+        "chain_yesno": 200
+      },
+      "attributes": {
+        "price": 217,
+        "height": 262,
+        "weight": 239,
+        "marks": 246,
+        "age": 236
+      },
+      "hops": {
+        "1": 600,
+        "2": 438,
+        "3": 162
+      },
+      "chance_accuracy": {
+        "numeric_pair": 0.5,
+        "numeric_relation": 0.3333,
+        "numeric_extreme": 0.3333,
+        "chain_pair": 0.5,
+        "chain_extreme": 0.2929,
+        "chain_yesno": 0.5
+      },
+      "label_balance": {
+        "numeric_relation": {
+          "ఎక్కువ": 76,
+          "తక్కువ": 65,
+          "సమానం": 59
+        },
+        "chain_yesno": {
+          "కాదు": 105,
+          "అవును": 95
+        }
+      },
+      "mean_prompt_characters": 134.0
+    },
+    "test": {
+      "examples": 2400,
+      "tasks": {
+        "numeric_pair": 400,
+        "numeric_relation": 400,
+        "numeric_extreme": 400,
+        "chain_pair": 400,
+        "chain_extreme": 400,
+        "chain_yesno": 400
+      },
+      "attributes": {
+        "height": 475,
+        "weight": 489,
+        "marks": 503,
+        "price": 453,
+        "age": 480
+      },
+      "hops": {
+        "1": 1200,
+        "2": 842,
+        "3": 358
+      },
+      "chance_accuracy": {
+        "numeric_pair": 0.5,
+        "numeric_relation": 0.3333,
+        "numeric_extreme": 0.3333,
+        "chain_pair": 0.5,
+        "chain_extreme": 0.2869,
+        "chain_yesno": 0.5
+      },
+      "label_balance": {
+        "numeric_relation": {
+          "తక్కువ": 136,
+          "సమానం": 134,
+          "ఎక్కువ": 130
+        },
+        "chain_yesno": {
+          "కాదు": 204,
+          "అవును": 196
+        }
+      },
+      "mean_prompt_characters": 133.5
+    }
+  },
+  "pools": {
+    "people": {
+      "test": 9,
+      "validation": 9,
+      "train": 42
+    },
+    "people_test_names": [
+      "రాము",
+      "హేమ",
+      "రవి",
+      "పద్మ",
+      "గోపాల్",
+      "నరేష్",
+      "కావ్య",
+      "జ్యోతి",
+      "ప్రసాద్"
+    ],
+    "items": {
+      "test": 4,
+      "validation": 4,
+      "train": 16
+    },
+    "items_test_names": [
+      "బొమ్మ",
+      "చెప్పులు",
+      "రేడియో",
+      "చొక్కా"
+    ]
+  },
+  "templates": {
+    "comparison_variants": 4,
+    "question_templates": 9,
+    "attributes": [
+      "age",
+      "height",
+      "weight",
+      "marks",
+      "price"
+    ],
+    "fact_templates": 5
+  },
+  "language": "telugu",
+  "seed": 42,
+  "out_dir": "C:\\lma_work\\telugu\\reasoning"
+}

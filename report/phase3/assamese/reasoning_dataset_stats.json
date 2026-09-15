@@ -1,0 +1,177 @@
+{
+  "splits": {
+    "train": {
+      "examples": 24000,
+      "tasks": {
+        "numeric_pair": 4000,
+        "numeric_relation": 4000,
+        "numeric_extreme": 4000,
+        "chain_pair": 4000,
+        "chain_extreme": 4000,
+        "chain_yesno": 4000
+      },
+      "attributes": {
+        "price": 4828,
+        "weight": 4817,
+        "marks": 4867,
+        "age": 4759,
+        "height": 4729
+      },
+      "hops": {
+        "1": 12000,
+        "2": 8671,
+        "3": 3329
+      },
+      "chance_accuracy": {
+        "numeric_pair": 0.5,
+        "numeric_relation": 0.3333,
+        "numeric_extreme": 0.3333,
+        "chain_pair": 0.5,
+        "chain_extreme": 0.2913,
+        "chain_yesno": 0.5
+      },
+      "label_balance": {
+        "numeric_relation": {
+          "সমান": 1385,
+          "বেছি": 1336,
+          "কম": 1279
+        },
+        "chain_yesno": {
+          "হয়": 2022,
+          "নহয়": 1978
+        }
+      },
+      "mean_prompt_characters": 118.6
+    },
+    "validation": {
+      "examples": 1200,
+      "tasks": {
+        "numeric_pair": 200,
+        "numeric_relation": 200,
+        "numeric_extreme": 200,
+        "chain_pair": 200,
+        "chain_extreme": 200,
+        "chain_yesno": 200
+      },
+      "attributes": {
+        "price": 217,
+        "height": 262,
+        "weight": 239,
+        "marks": 246,
+        "age": 236
+      },
+      "hops": {
+        "1": 600,
+        "2": 438,
+        "3": 162
+      },
+      "chance_accuracy": {
+        "numeric_pair": 0.5,
+        "numeric_relation": 0.3333,
+        "numeric_extreme": 0.3333,
+        "chain_pair": 0.5,
+        "chain_extreme": 0.2929,
+        "chain_yesno": 0.5
+      },
+      "label_balance": {
+        "numeric_relation": {
+          "বেছি": 76,
+          "কম": 65,
+          "সমান": 59
+        },
+        "chain_yesno": {
+          "নহয়": 105,
+          "হয়": 95
+        }
+      },
+      "mean_prompt_characters": 120.0
+    },
+    "test": {
+      "examples": 2400,
+      "tasks": {
+        "numeric_pair": 400,
+        "numeric_relation": 400,
+        "numeric_extreme": 400,
+        "chain_pair": 400,
+        "chain_extreme": 400,
+        "chain_yesno": 400
+      },
+      "attributes": {
+        "height": 475,
+        "weight": 489,
+        "marks": 503,
+        "price": 453,
+        "age": 480
+      },
+      "hops": {
+        "1": 1200,
+        "2": 842,
+        "3": 358
+      },
+      "chance_accuracy": {
+        "numeric_pair": 0.5,
+        "numeric_relation": 0.3333,
+        "numeric_extreme": 0.3333,
+        "chain_pair": 0.5,
+        "chain_extreme": 0.2869,
+        "chain_yesno": 0.5
+      },
+      "label_balance": {
+        "numeric_relation": {
+          "কম": 136,
+          "সমান": 134,
+          "বেছি": 130
+        },
+        "chain_yesno": {
+          "নহয়": 204,
+          "হয়": 196
+        }
+      },
+      "mean_prompt_characters": 118.9
+    }
+  },
+  "pools": {
+    "people": {
+      "test": 9,
+      "validation": 9,
+      "train": 42
+    },
+    "people_test_names": [
+      "কুশল",
+      "দীপিকা",
+      "সুমি",
+      "ৰশ্মি",
+      "গৌতম",
+      "হিমাংশু",
+      "ৰুমি",
+      "মিনতি",
+      "প্ৰতিমা"
+    ],
+    "items": {
+      "test": 4,
+      "validation": 4,
+      "train": 16
+    },
+    "items_test_names": [
+      "ছাতি",
+      "গিলাচ",
+      "আইনা",
+      "ঘড়ী"
+    ]
+  },
+  "templates": {
+    "comparison_variants": 4,
+    "question_templates": 9,
+    "attributes": [
+      "age",
+      "height",
+      "weight",
+      "marks",
+      "price"
+    ],
+    "fact_templates": 5
+  },
+  "language": "assamese",
+  "seed": 42,
+  "out_dir": "C:\\lma_work\\assamese\\reasoning"
+}

@@ -1,0 +1,103 @@
+{
+  "_comment": "MODEL L (Assamese) synthetic reasoning lexicon and templates. Consumed by common/reasoning_data.py. Keys beginning with an underscore are documentation.",
+
+  "_review": [
+    "The author does not read Assamese fluently, so these templates are",
+    "the part of Phase 3 most in need of a native speaker's check. They",
+    "were kept deliberately few and structurally simple -- genitive -ৰ,",
+    "comparative -তকৈ, question particle নেকি -- so that each one can be",
+    "verified in isolation, and every rendered example in the report can",
+    "be traced to exactly one line of this file."
+  ],
+
+  "_agreement": [
+    "Assamese does not mark gender on adjectives, but it does mark",
+    "classifiers and honorifics. As in Telugu, comparisons are phrased on",
+    "the attribute noun -- 'ৰাজুৰ বয়স গীতাৰ বয়সতকৈ বেছি', Raju's age is",
+    "more than Gita's age -- which avoids choosing a classifier per name."
+  ],
+
+  "_digits": [
+    "ASCII digits. See telugu/configs/reasoning.json: Assamese digits",
+    "merge into multi-digit pieces in this tokenizer, which would make",
+    "numeric comparison a different task for Model L than for Model H."
+  ],
+
+  "prompt_prefix": "প্ৰশ্ন:",
+  "answer_prefix": "উত্তৰ:",
+
+  "labels": {
+    "more": "বেছি",
+    "less": "কম",
+    "equal": "সমান",
+    "yes": "হয়",
+    "no": "নহয়"
+  },
+
+  "kinds": {
+    "people": {
+      "who": "কাৰ",
+      "of_two": ["", "দুয়োজনৰ ভিতৰত "],
+      "of_all": ["এওঁলোকৰ ভিতৰত ", "এইসকলৰ ভিতৰত "],
+      "of_pair": "{a} আৰু {b}ৰ ভিতৰত",
+      "most": "আটাইতকৈ"
+    },
+    "items": {
+      "who": "কোনটোৰ",
+      "of_two": ["", "দুয়োটাৰ ভিতৰত "],
+      "of_all": ["এইবোৰৰ ভিতৰত ", "এই বস্তুবোৰৰ ভিতৰত "],
+      "of_pair": "{a} আৰু {b}ৰ ভিতৰত",
+      "most": "আটাইতকৈ"
+    }
+  },
+
+  "attributes": [
+    {"key": "age",    "kind": "people", "noun": "বয়স",    "than": "বয়সতকৈ",    "range": [4, 85],
+     "fact": "{e}ৰ বয়স {n} বছৰ।"},
+    {"key": "height", "kind": "people", "noun": "উচ্চতা",  "than": "উচ্চতাতকৈ",  "range": [90, 195],
+     "fact": "{e}ৰ উচ্চতা {n} চেণ্টিমিটাৰ।"},
+    {"key": "weight", "kind": "people", "noun": "ওজন",    "than": "ওজনতকৈ",    "range": [15, 99],
+     "fact": "{e}ৰ ওজন {n} কিলোগ্ৰাম।"},
+    {"key": "marks",  "kind": "people", "noun": "নম্বৰ",   "than": "নম্বৰতকৈ",   "range": [10, 100],
+     "fact": "পৰীক্ষাত {e}ৰ নম্বৰ {n}।"},
+    {"key": "price",  "kind": "items",  "noun": "দাম",    "than": "দামতকৈ",    "range": [10, 990],
+     "fact": "{e}ৰ দাম {n} টকা।"}
+  ],
+
+  "templates": {
+    "compare_more": [
+      "{a}ৰ {noun} {b}ৰ {than} বেছি।",
+      "{b}ৰ {than} {a}ৰ {noun} বেছি।"
+    ],
+    "compare_less": [
+      "{a}ৰ {noun} {b}ৰ {than} কম।",
+      "{b}ৰ {than} {a}ৰ {noun} কম।"
+    ],
+    "ask_more": "{of_two}{who} {noun} বেছি?",
+    "ask_less": "{of_two}{who} {noun} কম?",
+    "ask_pair_more": "{of_pair} {who} {noun} বেছি?",
+    "ask_pair_less": "{of_pair} {who} {noun} কম?",
+    "ask_most":"{of_all}{who} {noun} {most} বেছি?",
+    "ask_least": "{of_all}{who} {noun} {most} কম?",
+    "ask_relation": "{a}ৰ {noun} {b}ৰ {than} বেছি, কম নে সমান?",
+    "ask_yes_more": "{a}ৰ {noun} {b}ৰ {than} বেছি নেকি?",
+    "ask_yes_less": "{a}ৰ {noun} {b}ৰ {than} কম নেকি?"
+  },
+
+  "people": [
+    "ৰাজু", "মনোজ", "প্ৰিয়া", "অনুপম", "দীপিকা", "বিকাশ", "হেমন্ত", "জ্যোতি",
+    "পল্লৱী", "ৰীতা", "গীতা", "সঞ্জীৱ", "মাধুৰী", "প্ৰণৱ", "ভাস্কৰ", "ৰুমি",
+    "কমল", "ধ্ৰুৱ", "অনিমা", "বৰ্ণালী", "মৃদুল", "পাপৰি", "হিমাংশু", "জুৰি",
+    "ৰঞ্জন", "মিনতি", "দিলীপ", "নমিতা", "প্ৰদীপ", "ৰশ্মি", "অমৰ", "লীনা",
+    "বিমল", "চন্দনা", "গৌতম", "অৰুণা", "নিতুল", "ৰূপম", "সুমি", "দিগন্ত",
+    "মামণি", "পংকজ", "ববিতা", "মুকুট", "জোনালী", "প্ৰাঞ্জল", "কৃষ্ণা", "হিৰণ",
+    "ৰেখা", "মানস", "সৌৰভ", "বন্দনা", "নিলয়", "ইন্দিৰা", "ৰাহুল", "প্ৰতিমা",
+    "কুশল", "অঞ্জলি", "ভূপেন", "শিল্পী"
+  ],
+
+  "items": [
+    "কিতাপ", "কলম", "মোনা", "ছাতি", "ঘড়ী", "চোলা", "বল", "চকী",
+    "মেজ", "চাকি", "জোতা", "টুপী", "কেচি", "আইনা", "কম্বল", "চাইকেল",
+    "গামোচা", "পুতলা", "মেখেলা", "কাঁহী", "গিলাচ", "তলা", "ফণী", "চাবোন"
+  ]
+}

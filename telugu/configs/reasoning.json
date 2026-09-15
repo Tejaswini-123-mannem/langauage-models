@@ -1,0 +1,105 @@
+{
+  "_comment": "MODEL H (Telugu) synthetic reasoning lexicon and templates. Consumed by common/reasoning_data.py. Keys beginning with an underscore are documentation.",
+
+  "_agreement": [
+    "Telugu predicate adjectives agree with the subject's gender",
+    "(పెద్దవాడు / పెద్దది), and the names here are both masculine and",
+    "feminine. Every comparison is therefore phrased on the ATTRIBUTE",
+    "noun rather than on the person -- 'రవి వయస్సు సీత వయస్సు కంటే",
+    "ఎక్కువ', Ravi's age is more than Sita's age -- where ఎక్కువ / తక్కువ",
+    "do not inflect. One template set then serves every name without a",
+    "gender lexicon that could be wrong."
+  ],
+
+  "_oblique": [
+    "A plural noun takes its oblique form before a postposition:",
+    "మార్కులు -> మార్కుల కంటే. `than` holds the form used before కంటే,",
+    "so templates never build it by string surgery."
+  ],
+
+  "_digits": [
+    "ASCII digits, for both languages. Both tokenizers split them into",
+    "one piece per digit, whereas Assamese digits merge into multi-digit",
+    "pieces (২৫ is one piece). Using the same digits keeps numeric",
+    "comparison equally hard for Model H and Model L, so a difference",
+    "between them is not an artefact of number tokenization."
+  ],
+
+  "prompt_prefix": "ప్రశ్న:",
+  "answer_prefix": "సమాధానం:",
+
+  "labels": {
+    "more": "ఎక్కువ",
+    "less": "తక్కువ",
+    "equal": "సమానం",
+    "yes": "అవును",
+    "no": "కాదు"
+  },
+
+  "kinds": {
+    "people": {
+      "who": "ఎవరి",
+      "of_two": ["", "ఇద్దరిలో "],
+      "of_all": ["వీరిలో ", "వీళ్ళలో "],
+      "of_pair": "{a}, {b} ఇద్దరిలో",
+      "most": "అందరికంటే"
+    },
+    "items": {
+      "who": "దేని",
+      "of_two": ["", "రెండింటిలో "],
+      "of_all": ["వీటిలో ", "ఈ వస్తువులలో "],
+      "of_pair": "{a}, {b} రెండింటిలో",
+      "most": "అన్నిటికంటే"
+    }
+  },
+
+  "attributes": [
+    {"key": "age",    "kind": "people", "noun": "వయస్సు", "than": "వయస్సు కంటే", "range": [4, 85],
+     "fact": "{e} వయస్సు {n} సంవత్సరాలు."},
+    {"key": "height", "kind": "people", "noun": "ఎత్తు",   "than": "ఎత్తు కంటే",   "range": [90, 195],
+     "fact": "{e} ఎత్తు {n} సెంటీమీటర్లు."},
+    {"key": "weight", "kind": "people", "noun": "బరువు",  "than": "బరువు కంటే",  "range": [15, 99],
+     "fact": "{e} బరువు {n} కిలోలు."},
+    {"key": "marks",  "kind": "people", "noun": "మార్కులు", "than": "మార్కుల కంటే", "range": [10, 100],
+     "fact": "పరీక్షలో {e} మార్కులు {n}."},
+    {"key": "price",  "kind": "items",  "noun": "ధర",     "than": "ధర కంటే",     "range": [10, 990],
+     "fact": "{e} ధర {n} రూపాయలు."}
+  ],
+
+  "templates": {
+    "compare_more": [
+      "{a} {noun} {b} {than} ఎక్కువ.",
+      "{b} {than} {a} {noun} ఎక్కువ."
+    ],
+    "compare_less": [
+      "{a} {noun} {b} {than} తక్కువ.",
+      "{b} {than} {a} {noun} తక్కువ."
+    ],
+    "ask_more": "{of_two}{who} {noun} ఎక్కువ?",
+    "ask_less": "{of_two}{who} {noun} తక్కువ?",
+    "ask_pair_more": "{of_pair} {who} {noun} ఎక్కువ?",
+    "ask_pair_less": "{of_pair} {who} {noun} తక్కువ?",
+    "ask_most":"{of_all}{who} {noun} {most} ఎక్కువ?",
+    "ask_least": "{of_all}{who} {noun} {most} తక్కువ?",
+    "ask_relation": "{a} {noun}, {b} {than} ఎక్కువా, తక్కువా, లేక సమానమా?",
+    "ask_yes_more": "{a} {noun} {b} {than} ఎక్కువా?",
+    "ask_yes_less": "{a} {noun} {b} {than} తక్కువా?"
+  },
+
+  "people": [
+    "రవి", "సీత", "రాము", "లక్ష్మి", "కృష్ణ", "రాధ", "సురేష్", "గీత",
+    "మహేష్", "శ్రీను", "వాణి", "కమల", "గోపాల్", "సుధ", "రమేష్", "పద్మ",
+    "వెంకట్", "లత", "కిరణ్", "శారద", "అనిల్", "జ్యోతి", "ప్రసాద్", "సరిత",
+    "నాగరాజు", "హేమ", "సతీష్", "రజని", "బాబు", "కావ్య", "శ్రీకాంత్", "మాధవి",
+    "చంద్ర", "అరుణ", "విజయ్", "దివ్య", "రాజేష్", "స్వప్న", "నరేష్", "ఉమ",
+    "గణేష్", "శిరీష", "మోహన్", "అనూష", "ప్రకాష్", "సుజాత", "హరి", "భారతి",
+    "శివ", "నీరజ", "సాయి", "పావని", "వంశీ", "తేజ", "అజయ్", "రేఖ",
+    "శంకర్", "మంజుల", "రఘు", "ఇందు"
+  ],
+
+  "items": [
+    "పుస్తకం", "పెన్ను", "సంచి", "గొడుగు", "గడియారం", "చొక్కా", "బంతి", "కుర్చీ",
+    "బల్ల", "దీపం", "చెప్పులు", "టోపీ", "కత్తెర", "అద్దం", "దుప్పటి", "సైకిల్",
+    "రేడియో", "బొమ్మ", "చీర", "పళ్ళెం", "గ్లాసు", "తాళం", "దువ్వెన", "సబ్బు"
+  ]
+}
