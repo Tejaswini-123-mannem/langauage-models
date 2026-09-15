@@ -1,0 +1,42 @@
+{
+  "_comment": "MODEL L (Assamese) reasoning finetune. Consumed by common/finetune.py via FinetuneConfig.from_json. Keys beginning with an underscore are documentation.",
+
+  "_init": [
+    "Starts from Model L's own Phase 2 best.pt (step 9,110, validation",
+    "loss 3.9043). finetune.py refuses a checkpoint whose model_config",
+    "names a different language. The path is the local staging directory",
+    "from common/workspace.py; pass --init to point elsewhere."
+  ],
+
+  "_schedule": [
+    "Every value except the language and checkpoint is identical to",
+    "telugu/configs/finetune_h.json, so that a Model H versus Model L",
+    "difference is attributable to the pretrained models and not to two",
+    "finetuning recipes. See that file for the reasoning behind each value."
+  ],
+
+  "name": "model_l_reasoning",
+  "language": "assamese",
+  "init_checkpoint": "C:/lma_work/assamese/checkpoints/best.pt",
+
+  "batch_size": 32,
+  "grad_accum": 1,
+  "epochs": 4.0,
+  "max_steps": null,
+
+  "learning_rate": 1e-4,
+  "min_lr": 1e-5,
+  "warmup_steps": 100,
+  "weight_decay": 0.1,
+  "beta1": 0.9,
+  "beta2": 0.95,
+  "grad_clip": 1.0,
+
+  "log_every": 20,
+  "eval_every": 250,
+  "eval_examples": 300,
+  "checkpoint_every": 250,
+
+  "seed": 42,
+  "dtype": "fp16"
+}
