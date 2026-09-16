@@ -1,0 +1,100 @@
+{
+  "language": "telugu",
+  "label": "pretrained_seen",
+  "checkpoint": "C:\\lma_work\\telugu\\checkpoints\\best.pt",
+  "stage": "pretrain",
+  "step": 10550,
+  "split": "test_seen",
+  "zero_shot": {
+    "n": 2400,
+    "overall": {
+      "exact_match": 0.0,
+      "choice_correct": 0.3746
+    },
+    "by_task": {
+      "chain_extreme": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.165
+      },
+      "chain_pair": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.53
+      },
+      "chain_yesno": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.47
+      },
+      "numeric_extreme": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.335
+      },
+      "numeric_pair": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.45
+      },
+      "numeric_relation": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.2975
+      }
+    },
+    "by_hops": {
+      "1": {
+        "n": 1200,
+        "exact_match": 0.0,
+        "choice_correct": 0.3608
+      },
+      "2": {
+        "n": 889,
+        "exact_match": 0.0,
+        "choice_correct": 0.4342
+      },
+      "3": {
+        "n": 311,
+        "exact_match": 0.0,
+        "choice_correct": 0.2572
+      }
+    },
+    "by_attribute": {
+      "age": {
+        "n": 485,
+        "exact_match": 0.0,
+        "choice_correct": 0.3216
+      },
+      "height": {
+        "n": 469,
+        "exact_match": 0.0,
+        "choice_correct": 0.4115
+      },
+      "marks": {
+        "n": 477,
+        "exact_match": 0.0,
+        "choice_correct": 0.4046
+      },
+      "price": {
+        "n": 472,
+        "exact_match": 0.0,
+        "choice_correct": 0.3517
+      },
+      "weight": {
+        "n": 497,
+        "exact_match": 0.0,
+        "choice_correct": 0.3843
+      }
+    },
+    "chance_by_task": {
+      "numeric_pair": 0.5,
+      "numeric_relation": 0.3333,
+      "numeric_extreme": 0.3333,
+      "chain_pair": 0.5,
+      "chain_extreme": 0.2919,
+      "chain_yesno": 0.5
+    },
+    "chance_overall": 0.4098
+  }
+}

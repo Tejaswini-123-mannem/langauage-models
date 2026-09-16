@@ -1,0 +1,17 @@
+{
+  "language": "telugu",
+  "model": "model_h",
+  "checkpoint": "C:/lma_work/phase3_kaggle_run5/checkpoints/telugu/curriculum/best.pt",
+  "step": 6000,
+  "split": "test",
+  "block_size": 512,
+  "parameters": 24562944,
+  "overall": {
+    "cross_entropy_nats_per_token": 3.206252,
+    "perplexity": 24.6864,
+    "bits_per_token": 4.625643,
+    "bits_per_byte": 0.515752,
+    "tokens": 307200,
+    "bytes": 2755196
+  }
+}

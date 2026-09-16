@@ -1,0 +1,17 @@
+{
+  "language": "telugu",
+  "model": "model_h",
+  "checkpoint": "C:/lma_work/telugu/checkpoints/best.pt",
+  "step": 10550,
+  "split": "test",
+  "block_size": 512,
+  "parameters": 24562944,
+  "overall": {
+    "cross_entropy_nats_per_token": 2.623677,
+    "perplexity": 13.7863,
+    "bits_per_token": 3.785166,
+    "bits_per_byte": 0.42204,
+    "tokens": 307200,
+    "bytes": 2755196
+  }
+}

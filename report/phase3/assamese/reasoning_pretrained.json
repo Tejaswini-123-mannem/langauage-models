@@ -1,0 +1,192 @@
+{
+  "language": "assamese",
+  "label": "pretrained",
+  "checkpoint": "/kaggle/input/datasets/teja123mannem/lma-checkpoints/model_l/best.pt",
+  "stage": "pretrain",
+  "step": 9110,
+  "split": "test",
+  "zero_shot": {
+    "n": 2400,
+    "overall": {
+      "exact_match": 0.0,
+      "choice_correct": 0.3904
+    },
+    "by_task": {
+      "chain_extreme": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.1575
+      },
+      "chain_pair": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.4725
+      },
+      "chain_yesno": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.5325
+      },
+      "numeric_extreme": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.3075
+      },
+      "numeric_pair": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.5275
+      },
+      "numeric_relation": {
+        "n": 400,
+        "exact_match": 0.0,
+        "choice_correct": 0.345
+      }
+    },
+    "by_hops": {
+      "1": {
+        "n": 1200,
+        "exact_match": 0.0,
+        "choice_correct": 0.3933
+      },
+      "2": {
+        "n": 876,
+        "exact_match": 0.0,
+        "choice_correct": 0.4258
+      },
+      "3": {
+        "n": 324,
+        "exact_match": 0.0,
+        "choice_correct": 0.284
+      }
+    },
+    "by_attribute": {
+      "age": {
+        "n": 501,
+        "exact_match": 0.0,
+        "choice_correct": 0.3513
+      },
+      "height": {
+        "n": 448,
+        "exact_match": 0.0,
+        "choice_correct": 0.3862
+      },
+      "marks": {
+        "n": 502,
+        "exact_match": 0.0,
+        "choice_correct": 0.4024
+      },
+      "price": {
+        "n": 483,
+        "exact_match": 0.0,
+        "choice_correct": 0.3913
+      },
+      "weight": {
+        "n": 466,
+        "exact_match": 0.0,
+        "choice_correct": 0.4227
+      }
+    },
+    "chance_by_task": {
+      "numeric_pair": 0.5,
+      "numeric_relation": 0.3333,
+      "numeric_extreme": 0.3333,
+      "chain_pair": 0.5,
+      "chain_extreme": 0.2925,
+      "chain_yesno": 0.5
+    },
+    "chance_overall": 0.4098
+  },
+  "few_shot_3": {
+    "n": 600,
+    "overall": {
+      "exact_match": 0.0,
+      "choice_correct": 0.4333
+    },
+    "by_task": {
+      "chain_extreme": {
+        "n": 100,
+        "exact_match": 0.0,
+        "choice_correct": 0.26
+      },
+      "chain_pair": {
+        "n": 100,
+        "exact_match": 0.0,
+        "choice_correct": 0.52
+      },
+      "chain_yesno": {
+        "n": 100,
+        "exact_match": 0.0,
+        "choice_correct": 0.58
+      },
+      "numeric_extreme": {
+        "n": 100,
+        "exact_match": 0.0,
+        "choice_correct": 0.35
+      },
+      "numeric_pair": {
+        "n": 100,
+        "exact_match": 0.0,
+        "choice_correct": 0.58
+      },
+      "numeric_relation": {
+        "n": 100,
+        "exact_match": 0.0,
+        "choice_correct": 0.31
+      }
+    },
+    "by_hops": {
+      "1": {
+        "n": 300,
+        "exact_match": 0.0,
+        "choice_correct": 0.4133
+      },
+      "2": {
+        "n": 227,
+        "exact_match": 0.0,
+        "choice_correct": 0.4802
+      },
+      "3": {
+        "n": 73,
+        "exact_match": 0.0,
+        "choice_correct": 0.3699
+      }
+    },
+    "by_attribute": {
+      "age": {
+        "n": 138,
+        "exact_match": 0.0,
+        "choice_correct": 0.3768
+      },
+      "height": {
+        "n": 112,
+        "exact_match": 0.0,
+        "choice_correct": 0.3929
+      },
+      "marks": {
+        "n": 130,
+        "exact_match": 0.0,
+        "choice_correct": 0.4538
+      },
+      "price": {
+        "n": 110,
+        "exact_match": 0.0,
+        "choice_correct": 0.4727
+      },
+      "weight": {
+        "n": 110,
+        "exact_match": 0.0,
+        "choice_correct": 0.4818
+      }
+    },
+    "chance_by_task": {
+      "numeric_pair": 0.5,
+      "numeric_relation": 0.3333,
+      "numeric_extreme": 0.3333,
+      "chain_pair": 0.5,
+      "chain_extreme": 0.2925,
+      "chain_yesno": 0.5
+    },
+    "chance_overall": 0.4098
+  }
+}
