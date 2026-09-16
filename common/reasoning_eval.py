@@ -47,7 +47,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from evaluate import load_checkpoint
 from language_config import get_language, use_utf8_output
-from reasoning_data import TASKS
+from reasoning_data import TASKS, load_lexicon
 from reasoning_task import (build_fewshot_prompt, encode_examples, load_examples,
                             score_example, tokenizer_for)
 from workspace import REPO, Workspace
@@ -92,7 +92,7 @@ def summarise(results, chance):
 
 
 def run(model, tokenizer, examples, device, fewshot=0, demos_by_task=None,
-        block_size=512, seed=0, progress_every=200):
+        block_size=512, seed=0, progress_every=200, therefore=None):
     """Score every example; with fewshot > 0, prepend same-task demonstrations."""
 
     rng = random.Random(seed)
@@ -105,7 +105,8 @@ def run(model, tokenizer, examples, device, fewshot=0, demos_by_task=None,
             demos = rng.sample(demos_by_task[e["task"]], fewshot)
             prompt_ids = build_fewshot_prompt(e, demos, tokenizer, block_size)
 
-        result = score_example(model, tokenizer, e, device, prompt_ids=prompt_ids)
+        result = score_example(model, tokenizer, e, device, prompt_ids=prompt_ids,
+                               therefore=therefore)
         result["prompt"] = e["prompt"]
         results.append(result)
 
@@ -127,7 +128,7 @@ def write_examples(path, title, results, per_task=3):
     """Successes and failures per task, for the qualitative analysis."""
 
     lines = [f"# {title}", "",
-             "Greedy answers on the test split. `choice` is the highest-likelihood",
+             "Greedy answers. `choice` is the highest-likelihood",
              "candidate, scored separately from generation.", ""]
 
     by_task = defaultdict(list)
@@ -161,7 +162,7 @@ def main():
     parser = argparse.ArgumentParser(description="Reasoning accuracy for one checkpoint.")
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--label", required=True, help="e.g. pretrained, finetuned")
-    parser.add_argument("--split", default="test", choices=["validation", "test"])
+    parser.add_argument("--split", default="test", choices=["validation", "test", "test_seen"])
     parser.add_argument("--data", default=None)
     parser.add_argument("--out", default=None)
     parser.add_argument("--limit", type=int, default=None)
@@ -185,7 +186,12 @@ def main():
     out_dir = Path(args.out) if args.out else REPO / "report" / "phase3" / workspace.slug
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    examples = encode_examples(load_examples(data_dir / f"{args.split}.jsonl"), tokenizer)
+    # A checkpoint trained on worked answers records its marker word; score
+    # it the way it was trained, and everything else on the bare answer.
+    therefore = state.get("therefore")
+
+    examples = encode_examples(load_examples(data_dir / f"{args.split}.jsonl"), tokenizer,
+                               therefore)
     if args.limit:
         # Round-robin generation means a prefix is still balanced over tasks.
         examples = examples[: args.limit]
@@ -204,7 +210,8 @@ def main():
     print(f"  device     : {device}")
 
     print("\n  zero-shot")
-    results = run(model, tokenizer, examples, device, block_size=config.block_size)
+    results = run(model, tokenizer, examples, device, block_size=config.block_size,
+                  therefore=therefore)
     report = {
         "language": workspace.slug,
         "label": args.label,
@@ -212,6 +219,7 @@ def main():
         "stage": state.get("stage", "pretrain"),
         "step": state.get("step"),
         "split": args.split,
+        "worked_answers": therefore is not None,
         "zero_shot": summarise(results, chance),
     }
 
@@ -251,3 +259,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

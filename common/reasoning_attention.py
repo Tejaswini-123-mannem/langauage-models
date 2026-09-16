@@ -210,10 +210,15 @@ def plot_by_layer(series, ylabel, title, path):
     """Per-layer lines; `series` maps legend label -> (n_layer,) array."""
 
     figure, axis = plt.subplots(figsize=(8, 4.5))
-    styles = ["o-", "o--", "s-", "s--"]
 
-    for (label, values), style in zip(series.items(), styles):
-        axis.plot(np.arange(len(values)), values, style, label=label)
+    # Marker shape separates the prompt type, colour the checkpoint, so the
+    # pretrained/finetuned contrast the figure is about reads at a glance.
+    # Colours are the first slots of the same validated categorical palette
+    # the other Phase 3 figures use.
+    styles = [("o-", "#2a78d6"), ("o--", "#eb6834"), ("s-", "#1baf7a"), ("s--", "#eda100")]
+
+    for (label, values), (style, colour) in zip(series.items(), styles):
+        axis.plot(np.arange(len(values)), values, style, color=colour, label=label)
 
     axis.set_title(title, fontsize=11)
     axis.set_xlabel("Layer (0 = closest to the embeddings)")

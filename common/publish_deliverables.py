@@ -233,7 +233,9 @@ def phase3_items_for(language):
         if path.exists():
             items.append((path, workspace.drive_finetuned / name, f"{tag} {label}"))
 
-    for split in ("train", "validation", "test"):
+    # test_seen included: it is the split the headline reasoning numbers are
+    # measured on, so a reader checking them needs the examples themselves.
+    for split in ("train", "validation", "test", "test_seen"):
         path = workspace.reasoning / f"{split}.jsonl"
         if path.exists():
             items.append((path, workspace.drive_reasoning / path.name,
