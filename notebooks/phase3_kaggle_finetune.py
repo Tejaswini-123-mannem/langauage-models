@@ -80,14 +80,36 @@ else:
 os.environ["LMA_WORK"] = str(REPO / "work")
 os.environ["PYTHONUNBUFFERED"] = "1"
 
+# Which finetuning run this version executes. The script has been run three
+# times; the configs record what each one changed and why.
+#
+#   RUN = "answers"  runs 1-2: train on the bare answer, evaluate the
+#                    pretrained model (zero- and 3-shot) and the finetuned one
+#   RUN = "worked"   run 3: train on worked answers; the pretrained
+#                    evaluations are unchanged by this, so they are skipped
+#   RUN = "run4"     run 3's schedule destroyed the language model (test
+#                    perplexity 13.8 -> 6,709 and 61.9 -> 868,303), so this
+#                    trains two gentler variants per language and evaluates
+#                    both; the language-model perplexity of each is measured
+#                    afterwards, and the variant that keeps it is kept
+#   RUN = "run5"     one variant: a low learning rate for many epochs with a
+#                    task curriculum (numeric first, chains later)
+RUN = "run5"
+
+VARIANTS = {"run4": ["gentle", "small"], "run5": ["curriculum"]}.get(RUN, [""])
+SUFFIX = "_worked" if RUN == "worked" else ""
 MODELS = {
-    "telugu":   {"tag": "model_h", "config": "telugu/configs/finetune_h.json", "gpu": "0"},
-    "assamese": {"tag": "model_l", "config": "assamese/configs/finetune_l.json", "gpu": "1"},
+    "telugu":   {"tag": "model_h", "short": "h", "gpu": "0"},
+    "assamese": {"tag": "model_l", "short": "l", "gpu": "1"},
 }
+for lang, m in MODELS.items():
+    m["config"] = f"{lang}/configs/finetune_{m['short']}{SUFFIX}.json"
 
 for lang, m in MODELS.items():
     m["init"] = next(CKPT.rglob(f"{m['tag']}/best.pt"))
-    m["runs"] = REPO / "work" / lang / "runs" / f"{m['tag']}_reasoning"
+    m["runs"] = REPO / "work" / lang / "runs" / f"{m['tag']}_reasoning{SUFFIX}"
+    m["variant_runs"] = {v: REPO / "work" / lang / "runs" / f"{m['tag']}_reasoning_{v}"
+                         for v in VARIANTS if v}
     m["report"] = Path("/kaggle/working/report/phase3") / lang
     for needed in (REPO / m["config"],
                    REPO / "work" / lang / "tokenizer" / "final" / f"{lang}_final_8000.model",
@@ -133,15 +155,52 @@ def run_parallel(stage, commands):
 
 # ---- 3. finetune --------------------------------------------------------------
 
-run_parallel("finetune", {
-    lang: (["common/finetune.py", "--config", m["config"], "--init", str(m["init"]),
-            "--out", str(m["runs"]), "--resume", "auto"],
-           f"{m['tag']}_finetune_console.log")
-    for lang, m in MODELS.items()
-})
+if RUN in ("run4", "run5"):
+    # Each language runs its variants back to back on its own GPU, the two
+    # languages concurrently. Every variant is trained and then scored on
+    # both test sets before the next one starts.
+    procs = []
+    for lang, m in MODELS.items():
+        m["report"].mkdir(parents=True, exist_ok=True)
+        steps = []
+        for variant in VARIANTS:
+            out = m["variant_runs"][variant]
+            config = f"{lang}/configs/finetune_{m['short']}_{variant}.json"
+            steps.append(f"common/finetune.py --config {config} --init {m['init']} "
+                         f"--out {out} --resume auto")
+            for split, label in (("test_seen", f"finetuned_{variant}_seen"),
+                                 ("test", f"finetuned_{variant}")):
+                steps.append(f"common/reasoning_eval.py --checkpoint {out / 'best.pt'} "
+                             f"--label {label} --split {split} --out {m['report']}")
 
-for lang, m in MODELS.items():
-    shutil.copy(m["runs"].parent / f"{m['tag']}_finetune_console.log", m["runs"] / "console.log")
+        cmd = " && ".join(f"{sys.executable} -X utf8 {s}" for s in steps)
+        env = dict(os.environ, CUDA_VISIBLE_DEVICES=m["gpu"])
+        log_path = m["report"] / f"{RUN}_console.log"
+        log = open(log_path, "w", encoding="utf-8")
+        procs.append((lang, log_path, log,
+                      subprocess.Popen(cmd, shell=True, cwd=REPO, env=env,
+                                       stdout=log, stderr=subprocess.STDOUT)))
+
+    failed = []
+    for lang, log_path, log, proc in procs:
+        code = proc.wait()
+        log.close()
+        print(f"\n===== {RUN} / {lang} (exit {code}) =====")
+        print(log_path.read_text(encoding="utf-8")[-8000:])
+        if code:
+            failed.append(lang)
+    assert not failed, f"{RUN} failed for {failed}"
+
+else:
+    run_parallel("finetune", {
+        lang: (["common/finetune.py", "--config", m["config"], "--init", str(m["init"]),
+                "--out", str(m["runs"]), "--resume", "auto"],
+               f"{m['tag']}_finetune_console.log")
+        for lang, m in MODELS.items()
+    })
+
+    for lang, m in MODELS.items():
+        shutil.copy(m["runs"].parent / f"{m['tag']}_finetune_console.log", m["runs"] / "console.log")
 
 # ---- 4. evaluate --------------------------------------------------------------
 #
@@ -149,21 +208,29 @@ for lang, m in MODELS.items():
 # languages concurrently.
 
 eval_commands = {}
-for lang, m in MODELS.items():
+for lang, m in (MODELS.items() if RUN not in ("run4", "run5") else []):
     m["report"].mkdir(parents=True, exist_ok=True)
-    script = (
-        f"common/reasoning_eval.py --checkpoint {m['init']} --label pretrained "
-        f"--fewshot 3 --fewshot-limit 600 --out {m['report']} && "
-        f"common/reasoning_eval.py --checkpoint {m['runs'] / 'best.pt'} --label finetuned "
-        f"--out {m['report']}"
-    )
+    best = m["runs"] / "best.pt"
+    if RUN == "worked":
+        script = (
+            f"common/reasoning_eval.py --checkpoint {best} --label finetuned_worked "
+            f"--out {m['report']} && "
+            f"common/reasoning_eval.py --checkpoint {best} --label finetuned_worked_seen "
+            f"--split test_seen --out {m['report']}"
+        )
+    else:
+        script = (
+            f"common/reasoning_eval.py --checkpoint {m['init']} --label pretrained "
+            f"--fewshot 3 --fewshot-limit 600 --out {m['report']} && "
+            f"common/reasoning_eval.py --checkpoint {best} --label finetuned "
+            f"--out {m['report']}"
+        )
     eval_commands[lang] = script
 
 procs = []
 for lang, script in eval_commands.items():
     m = MODELS[lang]
-    first, second = script.split(" && ")
-    cmd = (f"{sys.executable} -X utf8 {first} && {sys.executable} -X utf8 {second}")
+    cmd = " && ".join(f"{sys.executable} -X utf8 {part}" for part in script.split(" && "))
     env = dict(os.environ, CUDA_VISIBLE_DEVICES=m["gpu"])
     log_path = m["report"] / "reasoning_eval_console.log"
     log = open(log_path, "w", encoding="utf-8")
@@ -187,8 +254,14 @@ assert not failed, f"evaluation failed for {failed}"
 # final.pt are both kept, in the full resume-capable format.
 
 for lang, m in MODELS.items():
-    (m["runs"] / "latest.pt").unlink(missing_ok=True)
-    shutil.copytree(m["runs"], Path("/kaggle/working/checkpoints") / lang, dirs_exist_ok=True)
+    sources = m["variant_runs"] if RUN in ("run4", "run5") else {"": m["runs"]}
+    for variant, run_dir in sources.items():
+        if not run_dir.exists():
+            continue
+        (run_dir / "latest.pt").unlink(missing_ok=True)
+        destination = Path("/kaggle/working/checkpoints") / lang
+        shutil.copytree(run_dir, destination / variant if variant else destination,
+                        dirs_exist_ok=True)
 
 shutil.rmtree(REPO / "work", ignore_errors=True)
 print("\ndone. outputs:")

@@ -56,9 +56,11 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from curriculum import CurriculumSampler
 from data import PermutationSampler
 from evaluate import load_checkpoint
 from language_config import get_language, use_utf8_output
+from reasoning_data import load_lexicon
 from reasoning_task import (collate, encode_examples, load_examples,
                             score_example, tokenizer_for)
 from train import build_optimizer, format_duration, make_lr_lambda
@@ -108,6 +110,26 @@ class FinetuneConfig:
 
     seed: int = 42
     dtype: str = "fp16"
+
+    # Run 3: train on a worked answer ("<rationale> <therefore> <answer>")
+    # instead of the bare answer. See reasoning_data.py for the rationales.
+    use_rationale: bool = False
+
+    # Run 5: sample tasks under a curriculum that moves from easy to hard
+    # instead of uniformly. See common/curriculum.py.
+    curriculum: bool = False
+    easy_tasks: tuple = ("numeric_pair", "numeric_relation", "numeric_extreme")
+    hard_tasks: tuple = ("chain_pair", "chain_extreme", "chain_yesno")
+    curriculum_easy_start: float = 3.0
+    curriculum_easy_end: float = 1.0
+    curriculum_hard_start: float = 1.0
+    curriculum_hard_end: float = 3.0
+
+    # Run 4: use only the first N training examples. The whole 120,000 at
+    # run 3's schedule cost the model its language: test perplexity went
+    # from 13.8 to 6,709 (Model H) and 61.9 to 868,303 (Model L). Fewer
+    # examples and fewer steps are one of the two levers against that.
+    train_limit: int = None
 
     @classmethod
     def from_json(cls, path):
@@ -198,21 +220,46 @@ class Finetuner:
                 f"checkpoint expects {self.model_config.vocab_size}."
             )
 
+        self.therefore = (load_lexicon(self.language)["therefore"]
+                          if self.config.use_rationale else None)
+
         self.train_examples = encode_examples(
-            load_examples(self.data_dir / "train.jsonl"), self.tokenizer
+            load_examples(self.data_dir / "train.jsonl", limit=self.config.train_limit),
+            self.tokenizer, self.therefore
         )
         val = load_examples(self.data_dir / "validation.jsonl")
-        self.val_examples = encode_examples(val[: self.config.eval_examples], self.tokenizer)
+        self.val_examples = encode_examples(val[: self.config.eval_examples], self.tokenizer,
+                                            self.therefore)
 
-        self.sampler = PermutationSampler(
-            n_windows=len(self.train_examples),
-            batch_windows=self.config.batch_size * self.config.grad_accum,
-            seed=self.config.seed,
-        )
+        batch = self.config.batch_size * self.config.grad_accum
 
-        self.max_steps = self.config.max_steps or int(
-            math.ceil(self.config.epochs * self.sampler.batches_per_epoch)
-        )
+        if self.config.curriculum:
+            # max_steps has to be known before the sampler is built, since
+            # the weight schedule is defined over the length of the run.
+            self.max_steps = self.config.max_steps or int(
+                math.ceil(self.config.epochs * len(self.train_examples) / batch)
+            )
+            self.sampler = CurriculumSampler(
+                tasks=[e["task"] for e in self.train_examples],
+                batch_size=batch,
+                max_steps=self.max_steps,
+                easy_tasks=self.config.easy_tasks,
+                hard_tasks=self.config.hard_tasks,
+                easy_start=self.config.curriculum_easy_start,
+                easy_end=self.config.curriculum_easy_end,
+                hard_start=self.config.curriculum_hard_start,
+                hard_end=self.config.curriculum_hard_end,
+                seed=self.config.seed,
+            )
+        else:
+            self.sampler = PermutationSampler(
+                n_windows=len(self.train_examples),
+                batch_windows=batch,
+                seed=self.config.seed,
+            )
+            self.max_steps = self.config.max_steps or int(
+                math.ceil(self.config.epochs * self.sampler.batches_per_epoch)
+            )
 
     def _build_optimizer(self):
         self.optimizer, self.n_decay, self.n_no_decay = build_optimizer(
@@ -247,6 +294,7 @@ class Finetuner:
             "model_config": self.model_config.to_dict(),
             "train_config": self.config.to_dict(),
             "stage": "reasoning_finetune",
+            "therefore": self.therefore,
             "init_checkpoint": str(self.init_checkpoint),
             "init_step": self.init_step,
             "data_manifest": self.pretrain_manifest,
@@ -316,7 +364,8 @@ class Finetuner:
                 _, loss, _ = self.model(x, y)
             losses.append(loss.item())
 
-        results = [score_example(self.model, self.tokenizer, e, self.device)
+        results = [score_example(self.model, self.tokenizer, e, self.device,
+                                 therefore=self.therefore)
                    for e in self.val_examples]
 
         self.model.train()
@@ -443,6 +492,11 @@ class Finetuner:
         print(f"  train        : {len(self.train_examples):,} examples")
         print(f"  validation   : {len(self.val_examples):,} examples scored per eval")
         print(f"  batch        : {self.config.batch_size} x {self.config.grad_accum}")
+        if self.config.curriculum:
+            easy_first, hard_first = self.sampler.mix(0)
+            easy_last, hard_last = self.sampler.mix(self.max_steps - 1)
+            print(f"  curriculum   : easy {easy_first:.0%} -> {easy_last:.0%}, "
+                  f"hard {hard_first:.0%} -> {hard_last:.0%} of each batch")
         print(f"  steps        : {self.max_steps:,} "
               f"({self.max_steps * self.config.batch_size * self.config.grad_accum / len(self.train_examples):.2f} epochs)")
         print(f"  lr           : {self.config.learning_rate:.1e} -> {self.config.min_lr:.1e}, "
