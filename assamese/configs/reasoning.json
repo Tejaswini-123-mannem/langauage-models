@@ -25,6 +25,7 @@
 
   "prompt_prefix": "প্ৰশ্ন:",
   "answer_prefix": "উত্তৰ:",
+  "therefore": "গতিকে",
 
   "labels": {
     "more": "বেছি",

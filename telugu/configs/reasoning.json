@@ -27,6 +27,7 @@
 
   "prompt_prefix": "ప్రశ్న:",
   "answer_prefix": "సమాధానం:",
+  "therefore": "కాబట్టి",
 
   "labels": {
     "more": "ఎక్కువ",

@@ -214,6 +214,22 @@ class Renderer:
 
         return template.format(**self.slots(attribute, rng, a=a, b=b))
 
+    def stated(self, attribute, a, b, relation):
+        """
+        One step of a worked answer: 'a's attribute is <relation> than b's'.
+
+        Always the FIRST more/less template and never a random draw, for two
+        reasons. The rationale should be one fixed, predictable form, so the
+        model learns the reasoning steps rather than a choice among
+        paraphrases. And it must not consume the generator's random stream:
+        adding rationales then leaves every prompt, answer and split
+        byte-identical to the dataset the earlier runs were scored on.
+        """
+
+        template = self.templates["compare_more" if relation == "more" else "compare_less"][0]
+
+        return nfc(template.format(noun=attribute["noun"], than=attribute["than"], a=a, b=b))
+
     def question(self, key, attribute, rng, **names):
         return self.templates[key].format(**self.slots(attribute, rng, **names))
 
@@ -229,7 +245,8 @@ class Renderer:
 # TASK GENERATORS
 # =============================================================================
 #
-# Each returns (context_sentences, question, answer, choices, hops, n_entities)
+# Each returns (context_sentences, question, answer, choices, hops, n_entities,
+# rationale)
 # where `choices` is the closed set the answer is drawn from. The evaluator
 # uses it for likelihood-ranked accuracy, which is the only fair way to score
 # a pretrained model that has never seen the answer format.
@@ -251,7 +268,11 @@ def task_numeric_pair(render, attribute, entities, rng):
 
     answer = a if (va > vb) == ask_more else b
 
-    return context, question, answer, [a, b], 1, 2
+    # Worked answer: compare in context order (the step the relation task
+    # already teaches), then pick by the label just written.
+    rationale = [render.stated(attribute, a, b, "more" if va > vb else "less")]
+
+    return context, question, answer, [a, b], 1, 2, rationale
 
 
 def task_numeric_relation(render, attribute, entities, rng):
@@ -270,7 +291,8 @@ def task_numeric_relation(render, attribute, entities, rng):
     labels = render.labels
     choices = [labels["more"], labels["less"], labels["equal"]]
 
-    return context, question, labels[relation], choices, 1, 2
+    # The answer is itself the comparison, so there is nothing to work.
+    return context, question, labels[relation], choices, 1, 2, []
 
 
 def task_numeric_extreme(render, attribute, entities, rng):
@@ -284,7 +306,18 @@ def task_numeric_extreme(render, attribute, entities, rng):
     pick = max if ask_most else min
     answer = names[values.index(pick(values))]
 
-    return context, question, answer, list(names), 1, 3
+    # Worked answer: a running winner compared against each remaining name
+    # in context order, so every step is a two-way comparison.
+    rationale = []
+    best, best_value = names[0], values[0]
+    for name, value in zip(names[1:], values[1:]):
+        rationale.append(render.stated(attribute, best, name,
+                                       "more" if best_value > value else "less"))
+        if (value > best_value) == ask_most:
+            best, best_value = name, value
+    assert best == answer
+
+    return context, question, answer, list(names), 1, 3, rationale
 
 
 def chain_premises(render, attribute, ordered, rng):
@@ -303,6 +336,21 @@ def chain_premises(render, attribute, ordered, rng):
     rng.shuffle(premises)
 
     return premises
+
+
+def chain_rationale(render, attribute, ordered):
+    """
+    Worked answer for every chain task: the full order, greatest first,
+    one adjacent comparison per sentence in the canonical 'more' form.
+
+    Writing it out turns the multi-hop question into a sequence of single
+    retrievals -- find the premise where the last-written name is the
+    greater, write its lesser -- followed by a lookup in a short, ordered
+    list that the model has just produced itself.
+    """
+
+    return [render.stated(attribute, ordered[i], ordered[i + 1], "more")
+            for i in range(len(ordered) - 1)]
 
 
 def task_chain_pair(render, attribute, entities, rng):
@@ -328,7 +376,7 @@ def task_chain_pair(render, attribute, entities, rng):
 
     answer = greater if ask_more else lesser
 
-    return context, question, answer, pair, j - i, n
+    return context, question, answer, pair, j - i, n, chain_rationale(render, attribute, ordered)
 
 
 def task_chain_extreme(render, attribute, entities, rng):
@@ -342,7 +390,8 @@ def task_chain_extreme(render, attribute, entities, rng):
     answer = ordered[0] if ask_most else ordered[-1]
 
     # Reaching the top of a chain from its bottom takes n - 1 hops.
-    return context, question, answer, list(ordered), n - 1, n
+    return (context, question, answer, list(ordered), n - 1, n,
+            chain_rationale(render, attribute, ordered))
 
 
 def task_chain_yesno(render, attribute, entities, rng):
@@ -371,7 +420,8 @@ def task_chain_yesno(render, attribute, entities, rng):
     labels = render.labels
     answer = labels["yes"] if want_yes else labels["no"]
 
-    return context, question, answer, [labels["yes"], labels["no"]], j - i, n
+    return (context, question, answer, [labels["yes"], labels["no"]], j - i, n,
+            chain_rationale(render, attribute, ordered))
 
 
 GENERATORS = {
@@ -389,20 +439,26 @@ GENERATORS = {
 # =============================================================================
 
 
-def generate_split(render, lexicon, pools, split, n_examples, seed):
+def generate_split(render, lexicon, pools, split, n_examples, seed,
+                   pool_split=None, exclude=None):
     """
     n_examples for one split, balanced over tasks and attributes.
 
     Tasks are assigned round-robin rather than sampled, so every task has
     the same count to within one and per-task accuracy is measured on equal
     footing.
+
+    pool_split draws entities from another split's pool (test_seen uses the
+    training names), and `exclude` is a set of prompts that must not be
+    produced (test_seen excludes every training prompt).
     """
 
     rng = random.Random(f"{seed}-{split}")
     attributes = lexicon["attributes"]
+    pool_split = pool_split or split
 
     examples = []
-    seen = set()
+    seen = set(exclude or ())
     attempts = 0
 
     while len(examples) < n_examples:
@@ -415,10 +471,10 @@ def generate_split(render, lexicon, pools, split, n_examples, seed):
 
         task = TASKS[len(examples) % len(TASKS)]
         attribute = rng.choice(attributes)
-        pool = pools[attribute["kind"]][split]
+        pool = pools[attribute["kind"]][pool_split]
 
         entities = rng.sample(pool, 4)
-        context, question, answer, choices, hops, n_entities = GENERATORS[task](
+        context, question, answer, choices, hops, n_entities, rationale = GENERATORS[task](
             render, attribute, entities, rng
         )
 
@@ -443,6 +499,9 @@ def generate_split(render, lexicon, pools, split, n_examples, seed):
             "n_entities": n_entities,
             "prompt": prompt,
             "answer": nfc(answer),
+            # Worked answer used by run 3's finetune (use_rationale); the
+            # target is "<rationale> <therefore> <answer>".
+            "rationale": " ".join(rationale),
             "choices": [nfc(c) for c in choices],
         })
 
@@ -580,6 +639,30 @@ def main():
 
     check_leakage(examples_by_split, pools)
 
+    # ---- test_seen: training names, unseen prompts -------------------------
+    #
+    # A second test set, generated after and independently of the three
+    # splits above, so adding it leaves train/validation/test byte-identical.
+    #
+    # Why it exists: the held-out-name test set conflates two abilities.
+    # Run 2's finetuned models scored ~0 on every name-answer task there,
+    # yet on training-name examples the Telugu model reached 0.75 exact
+    # match on numeric_pair and 0.73 on 2-3 hop chain_pair. The model had
+    # learned to compare and to chain -- but bound to the name tokens it was
+    # trained on, not as a copy-any-name operation. Scoring both sets
+    # separates "can it reason about entities it knows" from "can it carry
+    # that reasoning over to entities it has never produced".
+    #
+    # Leakage control here is at the level of the whole example: every
+    # training prompt is excluded, and the assertion below re-checks it, so
+    # no test_seen question was ever answered in training. The same names
+    # recur in new facts, new chains and new questions.
+    train_prompts = {e["prompt"] for e in examples_by_split["train"]}
+    test_seen = generate_split(render, lexicon, pools, "test_seen", args.test, args.seed,
+                               pool_split="train", exclude=train_prompts)
+    assert not train_prompts & {e["prompt"] for e in test_seen}
+    examples_by_split["test_seen"] = test_seen
+
     for split, examples in examples_by_split.items():
         with open(out_dir / f"{split}.jsonl", "w", encoding="utf-8") as sink:
             for e in examples:
@@ -595,7 +678,7 @@ def main():
     print("=" * 78)
     print(f"REASONING DATA - {workspace.title}")
     print("=" * 78)
-    for split in SPLITS:
+    for split in examples_by_split:
         s = stats["splits"][split]
         print(f"  {split:<11} {s['examples']:>6,} examples, "
               f"mean prompt {s['mean_prompt_characters']:.0f} chars")

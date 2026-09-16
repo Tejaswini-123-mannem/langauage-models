@@ -81,12 +81,29 @@ def load_examples(path, limit=None):
     return examples
 
 
-def encode_examples(examples, tokenizer):
+def target_text(example, therefore=None):
+    """
+    What the model is trained to write after the prompt.
+
+    Without `therefore`, just the answer (runs 1 and 2). With it, the worked
+    answer of run 3: "<rationale> <therefore> <answer>", e.g.
+    "A's height is more than B's height. therefore A". The marker word is
+    what the scorer splits on to recover the final answer.
+    """
+
+    if therefore is None:
+        return example["answer"]
+
+    return " ".join(part for part in (example.get("rationale", ""), therefore,
+                                      example["answer"]) if part)
+
+
+def encode_examples(examples, tokenizer, therefore=None):
     """
     Attach token ids to each example, in place.
 
     prompt_ids  pieces of the prompt, ending at the answer prefix
-    answer_ids  pieces of the answer followed by EOS
+    answer_ids  pieces of the target (answer, or worked answer) plus EOS
     choice_ids  pieces of each candidate, without EOS
     """
 
@@ -94,7 +111,7 @@ def encode_examples(examples, tokenizer):
 
     for e in examples:
         e["prompt_ids"] = tokenizer.encode(e["prompt"])
-        e["answer_ids"] = tokenizer.encode(e["answer"]) + [eos]
+        e["answer_ids"] = tokenizer.encode(target_text(e, therefore)) + [eos]
         e["choice_ids"] = [tokenizer.encode(c) for c in e["choices"]]
 
     return examples
@@ -198,13 +215,29 @@ def normalise_answer(text):
     return text.strip().strip(".।?!,:;").strip()
 
 
+def find_subsequence(haystack, needle):
+    """Index just past the LAST occurrence of needle in haystack, or None."""
+
+    for start in range(len(haystack) - len(needle), -1, -1):
+        if haystack[start:start + len(needle)] == needle:
+            return start + len(needle)
+
+    return None
+
+
 def score_example(model, tokenizer, example, device, prompt_ids=None,
-                  generate=True):
+                  therefore=None):
     """
     Exact-match and choice results for one encoded example.
 
     prompt_ids overrides the example's own, which is how few-shot prompts
     are scored: the demonstrations are prepended, the choices are not.
+
+    With `therefore` (a run 3 model that writes a worked answer), the model
+    generates its rationale first. The final answer is the text after the
+    last marker word, and choice accuracy is scored conditioned on the
+    prompt PLUS the model's own generated rationale up to that marker --
+    never the gold rationale, which would hand it the answer.
     """
 
     prompt_ids = prompt_ids or example["prompt_ids"]
@@ -212,17 +245,28 @@ def score_example(model, tokenizer, example, device, prompt_ids=None,
               "hops": example["hops"], "attribute": example["attribute"],
               "answer": example["answer"]}
 
-    scores = choice_logprobs(model, prompt_ids, example["choice_ids"],
+    if therefore is None:
+        ids = greedy_answer(model, prompt_ids, tokenizer.eos_id(), device=device)
+        text = normalise_answer(tokenizer.decode(ids))
+        context_ids = prompt_ids
+    else:
+        ids = greedy_answer(model, prompt_ids, tokenizer.eos_id(),
+                            max_new_tokens=96, device=device)
+        decoded = tokenizer.decode(ids)
+        result["rationale_generated"] = decoded
+        text = normalise_answer(decoded.rsplit(therefore, 1)[-1])
+
+        cut = find_subsequence(ids, tokenizer.encode(therefore))
+        context_ids = prompt_ids + (ids[:cut] if cut is not None else ids)
+
+    result["generated"] = text
+    result["exact_match"] = text == example["answer"]
+
+    scores = choice_logprobs(model, context_ids, example["choice_ids"],
                              tokenizer.pad_id(), device)
     chosen = example["choices"][max(range(len(scores)), key=scores.__getitem__)]
     result["choice"] = chosen
     result["choice_correct"] = chosen == example["answer"]
-
-    if generate:
-        ids = greedy_answer(model, prompt_ids, tokenizer.eos_id(), device=device)
-        text = normalise_answer(tokenizer.decode(ids))
-        result["generated"] = text
-        result["exact_match"] = text == example["answer"]
 
     return result
 
