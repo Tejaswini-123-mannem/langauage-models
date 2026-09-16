@@ -68,6 +68,10 @@ so it can be opened without requesting access.
 | **Assamese** raw sources (1.6 GB) | `archive.zip` (3,034 book texts, 514 MB), 3 Sangraha parquet shards, `aswiki`/`aswikisource` dumps | https://drive.google.com/drive/folders/1jCZRV1bhe1N4cLPsXlMimj9AjBdkrZEs?usp=sharing |
 | **Telugu** checkpoints (Model H) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | https://drive.google.com/drive/folders/1QL21Wl45GYJA82YjVQyCQno366kZvgRY?usp=sharing |
 | **Assamese** checkpoints (Model L) | `best.pt`, `final.pt` (281 MB each), `train_log.jsonl`, `console.log` | https://drive.google.com/drive/folders/18n4tms8r80zPj5YZatLq3iOVMlKCm_VZ?usp=sharing |
+| **Telugu** finetuned (Model H, Phase 3) | `finetuned/best.pt`, `final.pt` (281 MB each), `finetune_log.jsonl` — inside the Telugu checkpoints folder above | https://drive.google.com/drive/folders/1QL21Wl45GYJA82YjVQyCQno366kZvgRY?usp=sharing |
+| **Assamese** finetuned (Model L, Phase 3) | `finetuned/best.pt`, `final.pt` (281 MB each), `finetune_log.jsonl` — inside the Assamese checkpoints folder above | https://drive.google.com/drive/folders/18n4tms8r80zPj5YZatLq3iOVMlKCm_VZ?usp=sharing |
+| **Telugu** reasoning data | `train.jsonl` (88 MB), `validation.jsonl`, `test.jsonl`, `test_seen.jsonl` | https://drive.google.com/drive/folders/1KL7-LHBWUaTuXmViherNUNruvC4ysHVy?usp=drive_link |
+| **Assamese** reasoning data | `train.jsonl` (81 MB), `validation.jsonl`, `test.jsonl`, `test_seen.jsonl` | https://drive.google.com/drive/folders/158EBBqGlXGmBO9_SLtM1Upg9g-AfP_ZT?usp=drive_link |
 
 
 
@@ -84,6 +88,10 @@ LMA_Individual_Project/
     tokenizer/<language>/sweep/           vocabulary-size candidates
     checkpoints/<language>/               best.pt, final.pt, train_log.jsonl,
                                           console.log                    (1.1 GB)
+    checkpoints/<language>/finetuned/     best.pt, final.pt,
+                                          finetune_log.jsonl             (1.1 GB)
+    data/processed/<language>/reasoning/  train, validation, test,
+                                          test_seen .jsonl               (180 MB)
 ```
 
 Raw sources were originally stored per *source type* (`data/raw/manual/`,
@@ -523,6 +531,144 @@ data-side asymmetry Phase 3 has to account for.
 
 ---
 
+## Phase 3: reasoning finetuning and attention analysis
+
+Each pretrained model is finetuned on its own synthetic comparative-reasoning
+dataset, in its own language, with its tokenizer and vocabulary unchanged.
+
+### The dataset
+
+`common/reasoning_data.py` generates it from per-language lexicons in
+[`telugu/configs/reasoning.json`](telugu/configs/reasoning.json) and
+[`assamese/configs/reasoning.json`](assamese/configs/reasoning.json): six task
+types over five attributes, 120,000 train / 1,200 validation / 2,400 test
+examples per language, with answer labels and answer positions balanced.
+
+| task | context | question | hops |
+|---|---|---|---|
+| numeric_pair | two stated values | who has more / less | 1 |
+| numeric_relation | two stated values | more, less or equal | 1 |
+| numeric_extreme | three stated values | who has most / least | 1 |
+| chain_pair | 2-3 comparisons, shuffled | of X and Y, who is more | 2-3 |
+| chain_extreme | 2-3 comparisons, shuffled | who has most / least | 2-3 |
+| chain_yesno | 2-3 comparisons, shuffled | is X more than Y | 2-3 |
+
+Names and items are partitioned into disjoint pools before generation, so
+**no test name or item appears in training** (110 / 23 / 23 names and 40 / 8 / 8
+items). A second test set, `test_seen`, uses the training names on prompts that
+never occur in training; the two separate reasoning from generalisation to
+unseen entities. Examples are in
+[`report/phase3/<language>/reasoning_samples.md`](report/phase3), statistics in
+`reasoning_dataset_stats.json`.
+
+### Finetuning
+
+`common/finetune.py` starts from that language's own Phase 2 `best.pt` and
+refuses a checkpoint from the other language. Loss is on the answer tokens
+only; checkpoints carry model, optimizer, scheduler, sampler position and RNG
+state, and `common/test_finetune_resume.py` shows a resumed run reproduces an
+uninterrupted one tensor for tensor.
+
+Five runs were made. The kept checkpoints are run 5
+([`<lang>/configs/finetune_{h,l}_curriculum.json`](telugu/configs/finetune_h_curriculum.json)):
+8,000 examples for 6,000 steps at peak 2e-5 with 20% warmup, sampled under a
+curriculum that moves from the numeric tasks to the chain tasks
+([`common/curriculum.py`](common/curriculum.py)). The earlier runs are kept under
+`report/phase3/<language>/run*/` with their logs, metrics and predictions,
+because what they measure is part of the result:
+
+| run | setup | outcome |
+|---|---|---|
+| 1 | 24k examples, 42 training names, 3,000 steps at 1e-4 | answered with memorised training names; 0 exact match on every name-answer task |
+| 2 | 120k examples, 110 names, 8,000 steps at 3e-4 | learned more/less/equal (0.95-0.97) but chose between names at chance |
+| 3 | as run 2, trained on worked answers | numeric tasks 0.79-0.998 on seen names, but test perplexity rose from 13.79 to 6,709 (H) and 61.94 to 868,303 (L) |
+| 4 | worked answers, 750 steps at 1e-4 and 1,500 at 5e-5 | perplexity roughly doubled rather than destroyed, but reasoning barely above chance (0.471 / 0.451) |
+| 5 (kept) | 6,000 steps at 2e-5, easy-to-hard curriculum | best on every axis: 0.706 / 0.656 on seen names, 0.493 / 0.388 on held-out names, and the *lowest* perplexity of any finetune |
+
+A worked answer states the comparison, or the whole ordering for a chain,
+before the final name: `<rationale> కాబట్టి <answer>` / `<rationale> গতিকে <answer>`.
+
+### Results
+
+Full tables in [`report/phase3/reasoning_summary.md`](report/phase3/reasoning_summary.md),
+figures in `report/phase3/figures/`, per-example predictions in
+`report/phase3/<language>/reasoning_*_predictions.jsonl`.
+
+Exact match, chance 0.410:
+
+| | Model H (Telugu) | Model L (Assamese) |
+|---|---|---|
+| pretrained, `test_seen` (choice accuracy) | 0.375 | 0.370 |
+| finetuned, `test_seen` overall | **0.706** | **0.656** |
+| finetuned, `test` (held-out names) overall | 0.493 | 0.388 |
+| numeric_pair, seen / held-out | 0.953 / 0.728 | 0.938 / 0.383 |
+| numeric_relation, seen / held-out | 0.910 / 0.915 | 0.845 / 0.850 |
+| chain_extreme, seen / held-out | 0.505 / 0.140 | 0.417 / 0.110 |
+
+The numeric tasks transfer to unseen names; the chain tasks do not, and on
+inspection the models write the correct chain in the wrong direction about half
+the time -- they link the names but mis-handle premises stated as "less than".
+
+Language modelling on the Phase 2 test split, which is the check that the
+finetune did not overwrite pretraining:
+
+| | pretrained | finetuned (run 5) | run 4 small | run 3 |
+|---|---|---|---|---|
+| Model H perplexity | 13.79 | 24.69 | 27.99 | 6,709 |
+| Model L perplexity | 61.94 | 129.19 | 141.69 | 868,303 |
+
+### Attention, pretrained vs finetuned
+
+`common/reasoning_attention.py` reuses the Phase 2 toolkit on reasoning
+prompts. Finetuning sharpens attention in the middle layers and raises how
+much the answer position attends to entity names in the late layers: Model H
+layer 9 goes from 0.320 to 0.782, Model L layer 11 from 0.594 to 0.915.
+Figures are in `report/phase3/<language>/figures/finetune_*.png`, per-head
+numbers in `attention_finetune_comparison.json`.
+
+### Reproducing Phase 3
+
+```bash
+# 1. the dataset (deterministic given the seed)
+python common/reasoning_data.py --language telugu
+python common/reasoning_data.py --language assamese
+
+# 2. finetune, from each language's own Phase 2 checkpoint
+python common/finetune.py --config telugu/configs/finetune_h_curriculum.json
+python common/finetune.py --config assamese/configs/finetune_l_curriculum.json
+python common/test_finetune_resume.py --language assamese      # resume proof
+
+# 3. reasoning accuracy, both test sets
+python common/reasoning_eval.py --checkpoint <finetuned best.pt> --label finetuned_curriculum
+python common/reasoning_eval.py --checkpoint <finetuned best.pt> --label finetuned_curriculum_seen --split test_seen
+python common/reasoning_eval.py --checkpoint <pretrained best.pt> --label pretrained --fewshot 3
+
+# 4. the language-model check, and attention
+python common/evaluate.py --checkpoint <finetuned best.pt> --split test --max-windows 600 --no-per-source
+python common/reasoning_attention.py --pretrained <best.pt> --finetuned <finetuned best.pt> --split test_seen
+
+# 5. figures and tables
+python common/reasoning_plots.py --runs telugu=report/phase3/telugu assamese=report/phase3/assamese
+```
+
+Training ran on Kaggle;
+[`notebooks/phase3_kaggle_finetune.py`](notebooks/phase3_kaggle_finetune.py) is
+the script that was pushed, so the run is reproducible from this branch.
+
+### Phase 3 deliverables
+
+| # | Deliverable | Where |
+|---|---|---|
+| 16 | Reasoning data generation | `common/reasoning_data.py`, `<lang>/configs/reasoning.json` |
+| 17 | Finetuning code and configs | `common/finetune.py`, `<lang>/configs/finetune_*.json` |
+| 18 | Finetuned checkpoints | Drive, see the links table |
+| 19 | Finetuning logs and metrics | `report/phase3/<lang>/finetune_log.jsonl`, `console.log`, and each earlier run's under `run*/` |
+| 20 | Reasoning results, qualitative examples | `report/phase3/reasoning_summary.md`, `<lang>/reasoning_*_examples.md` |
+| 21 | Pretrain vs finetune attention | `common/reasoning_attention.py`, `<lang>/figures/finetune_*.png` |
+| 22 | Error analysis | `<lang>/reasoning_*_predictions.jsonl` |
+
+---
+
 ## Status
 
 - **Phase 1, Model H (Telugu):** complete — 647,207,005 training tokens,
@@ -533,4 +679,8 @@ data-side asymmetry Phase 3 has to account for.
   over 648M tokens, test perplexity 32.76 at 0.5369 bits/byte.
 - **Phase 2, Model L (Assamese):** complete — 24.6M parameters, 9,110 steps
   over 560M tokens, test perplexity 48.71 at 0.6509 bits/byte.
-
+- **Phase 3, both models:** complete — 120,000-example synthetic reasoning
+  dataset per language, finetuned from each model's own checkpoint under an
+  easy-to-hard curriculum: 0.706 (H) and 0.656 (L) exact match on seen names
+  and 0.493 / 0.388 on held-out names, against a 0.410 chance rate, with test
+  perplexity 13.79 → 24.69 and 61.94 → 129.19.
