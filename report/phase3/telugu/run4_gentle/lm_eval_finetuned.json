@@ -1,0 +1,17 @@
+{
+  "language": "telugu",
+  "model": "model_h",
+  "checkpoint": "C:/lma_work/phase3_kaggle_run4/checkpoints/telugu/gentle/best.pt",
+  "step": 1500,
+  "split": "test",
+  "block_size": 512,
+  "parameters": 24562944,
+  "overall": {
+    "cross_entropy_nats_per_token": 3.311866,
+    "perplexity": 27.4363,
+    "bits_per_token": 4.778013,
+    "bits_per_byte": 0.532741,
+    "tokens": 307200,
+    "bytes": 2755196
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "language": "telugu",
+  "label": "finetuned_worked_seen",
+  "checkpoint": "/kaggle/working/repo/work/telugu/runs/model_h_reasoning_worked/best.pt",
+  "stage": "reasoning_finetune",
+  "step": 1000,
+  "split": "test_seen",
+  "worked_answers": true,
+  "zero_shot": {
+    "n": 2400,
+    "overall": {
+      "exact_match": 0.6742,
+      "choice_correct": 0.6787
+    },
+    "by_task": {
+      "chain_extreme": {
+        "n": 400,
+        "exact_match": 0.4875,
+        "choice_correct": 0.4875
+      },
+      "chain_pair": {
+        "n": 400,
+        "exact_match": 0.445,
+        "choice_correct": 0.4725
+      },
+      "chain_yesno": {
+        "n": 400,
+        "exact_match": 0.475,
+        "choice_correct": 0.475
+      },
+      "numeric_extreme": {
+        "n": 400,
+        "exact_match": 0.7875,
+        "choice_correct": 0.7875
+      },
+      "numeric_pair": {
+        "n": 400,
+        "exact_match": 0.955,
+        "choice_correct": 0.955
+      },
+      "numeric_relation": {
+        "n": 400,
+        "exact_match": 0.895,
+        "choice_correct": 0.895
+      }
+    },
+    "by_hops": {
+      "1": {
+        "n": 1200,
+        "exact_match": 0.8792,
+        "choice_correct": 0.8792
+      },
+      "2": {
+        "n": 889,
+        "exact_match": 0.4803,
+        "choice_correct": 0.4927
+      },
+      "3": {
+        "n": 311,
+        "exact_match": 0.4373,
+        "choice_correct": 0.4373
+      }
+    },
+    "by_attribute": {
+      "age": {
+        "n": 485,
+        "exact_match": 0.6598,
+        "choice_correct": 0.668
+      },
+      "height": {
+        "n": 469,
+        "exact_match": 0.6802,
+        "choice_correct": 0.6844
+      },
+      "marks": {
+        "n": 477,
+        "exact_match": 0.6981,
+        "choice_correct": 0.7044
+      },
+      "price": {
+        "n": 472,
+        "exact_match": 0.6208,
+        "choice_correct": 0.6229
+      },
+      "weight": {
+        "n": 497,
+        "exact_match": 0.7103,
+        "choice_correct": 0.7123
+      }
+    },
+    "chance_by_task": {
+      "numeric_pair": 0.5,
+      "numeric_relation": 0.3333,
+      "numeric_extreme": 0.3333,
+      "chain_pair": 0.5,
+      "chain_extreme": 0.2919,
+      "chain_yesno": 0.5
+    },
+    "chance_overall": 0.4098
+  }
+}

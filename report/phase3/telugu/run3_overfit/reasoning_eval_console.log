@@ -1,0 +1,62 @@
+==============================================================================
+REASONING EVAL - MODEL H (TELUGU) - finetuned_worked
+==============================================================================
+  checkpoint : /kaggle/working/repo/work/telugu/runs/model_h_reasoning_worked/best.pt (stage reasoning_finetune, step 1000)
+  examples   : 2,400 from test
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.190  choice 0.510  (34s)
+      400/2400  EM 0.207  choice 0.542  (68s)
+      600/2400  EM 0.222  choice 0.567  (102s)
+      800/2400  EM 0.225  choice 0.556  (135s)
+     1000/2400  EM 0.228  choice 0.563  (167s)
+     1200/2400  EM 0.236  choice 0.568  (201s)
+     1400/2400  EM 0.236  choice 0.567  (233s)
+     1600/2400  EM 0.236  choice 0.566  (266s)
+     1800/2400  EM 0.236  choice 0.560  (298s)
+     2000/2400  EM 0.235  choice 0.562  (332s)
+     2200/2400  EM 0.235  choice 0.565  (366s)
+     2400/2400  EM 0.237  choice 0.571  (398s)
+
+  RESULTS
+    zero_shot    EM 0.237  choice 0.571  (chance 0.410)
+      chain_extreme      EM 0.000  choice 0.290
+      chain_pair         EM 0.000  choice 0.505
+      chain_yesno        EM 0.550  choice 0.550
+      numeric_extreme    EM 0.000  choice 0.532
+      numeric_pair       EM 0.000  choice 0.672
+      numeric_relation   EM 0.875  choice 0.875
+
+  wrote /kaggle/working/report/phase3/telugu
+==============================================================================
+REASONING EVAL - MODEL H (TELUGU) - finetuned_worked_seen
+==============================================================================
+  checkpoint : /kaggle/working/repo/work/telugu/runs/model_h_reasoning_worked/best.pt (stage reasoning_finetune, step 1000)
+  examples   : 2,400 from test_seen
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.650  choice 0.660  (33s)
+      400/2400  EM 0.667  choice 0.677  (67s)
+      600/2400  EM 0.660  choice 0.668  (99s)
+      800/2400  EM 0.664  choice 0.670  (131s)
+     1000/2400  EM 0.661  choice 0.669  (163s)
+     1200/2400  EM 0.669  choice 0.677  (196s)
+     1400/2400  EM 0.670  choice 0.676  (228s)
+     1600/2400  EM 0.671  choice 0.677  (259s)
+     1800/2400  EM 0.671  choice 0.677  (292s)
+     2000/2400  EM 0.676  choice 0.681  (324s)
+     2200/2400  EM 0.671  choice 0.676  (356s)
+     2400/2400  EM 0.674  choice 0.679  (387s)
+
+  RESULTS
+    zero_shot    EM 0.674  choice 0.679  (chance 0.410)
+      chain_extreme      EM 0.487  choice 0.487
+      chain_pair         EM 0.445  choice 0.472
+      chain_yesno        EM 0.475  choice 0.475
+      numeric_extreme    EM 0.787  choice 0.787
+      numeric_pair       EM 0.955  choice 0.955
+      numeric_relation   EM 0.895  choice 0.895
+
+  wrote /kaggle/working/report/phase3/telugu

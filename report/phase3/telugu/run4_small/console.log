@@ -1,0 +1,125 @@
+  --resume auto: no checkpoint found, starting from the pretrained model
+==============================================================================
+FINETUNE - MODEL H (TELUGU) - model_h_reasoning_small
+==============================================================================
+  device       : cuda
+  precision    : fp16
+  init from    : /kaggle/input/datasets/teja123mannem/lma-checkpoints/model_h/best.pt (pretrain step 10550)
+  parameters   : 24,562,944
+  tokenizer    : 8,000 pieces (fixed)
+  train        : 8,000 examples
+  validation   : 200 examples scored per eval
+  batch        : 32 x 1
+  steps        : 750 (3.00 epochs)
+  lr           : 1.0e-04 -> 1.0e-05, 75 warmup, cosine
+  weight decay : 0.1
+  out          : /kaggle/working/repo/work/telugu/runs/model_h_reasoning_small
+  config       : {"name": "model_h_reasoning_small", "language": "telugu", "init_checkpoint": "C:/lma_work/telugu/checkpoints/best.pt", "data_dir": null, "out_dir": null, "batch_size": 32, "grad_accum": 1, "epochs": 4.0, "max_steps": 750, "learning_rate": 0.0001, "min_lr": 1e-05, "warmup_steps": 75, "weight_decay": 0.1, "beta1": 0.9, "beta2": 0.95, "grad_clip": 1.0, "log_every": 20, "eval_every": 250, "eval_examples": 200, "checkpoint_every": 250, "seed": 42, "dtype": "fp16", "use_rationale": true, "train_limit": 8000}
+==============================================================================
+  step      0  VAL loss 2.9073  EM 0.000  choice 0.400
+  step     20/750  loss 2.4086  lr 2.67e-05    41689 tok/s  eta 0:00:47
+  step     40/750  loss 1.0604  lr 5.33e-05    45953 tok/s  eta 0:00:39
+  step     60/750  loss 0.5959  lr 8.00e-05    45717 tok/s  eta 0:00:40
+  step     80/750  loss 0.4508  lr 1.00e-04    44736 tok/s  eta 0:00:38
+  step    100/750  loss 0.3640  lr 9.97e-05    44051 tok/s  eta 0:00:39
+  step    120/750  loss 0.3422  lr 9.91e-05    44976 tok/s  eta 0:00:36
+  step    140/750  loss 0.3035  lr 9.80e-05    44969 tok/s  eta 0:00:37
+  step    160/750  loss 0.2869  lr 9.66e-05    45459 tok/s  eta 0:00:34
+  step    180/750  loss 0.2899  lr 9.48e-05    44648 tok/s  eta 0:00:32
+  step    200/750  loss 0.2791  lr 9.27e-05    45370 tok/s  eta 0:00:32
+  step    220/750  loss 0.2545  lr 9.03e-05    45600 tok/s  eta 0:00:31
+  step    240/750  loss 0.2746  lr 8.75e-05    45698 tok/s  eta 0:00:30
+          VAL loss 0.5672  EM 0.315  choice 0.460   <- best
+  step    260/750  loss 0.2297  lr 8.45e-05     1447 tok/s  eta 0:15:27
+  step    280/750  loss 0.2175  lr 8.12e-05    46544 tok/s  eta 0:00:27
+  step    300/750  loss 0.2075  lr 7.77e-05    46145 tok/s  eta 0:00:25
+  step    320/750  loss 0.2164  lr 7.40e-05    46737 tok/s  eta 0:00:24
+  step    340/750  loss 0.2122  lr 7.01e-05    46637 tok/s  eta 0:00:23
+  step    360/750  loss 0.2100  lr 6.61e-05    46112 tok/s  eta 0:00:22
+  step    380/750  loss 0.2033  lr 6.20e-05    45627 tok/s  eta 0:00:21
+  step    400/750  loss 0.1974  lr 5.78e-05    45984 tok/s  eta 0:00:19
+  step    420/750  loss 0.1885  lr 5.36e-05    45394 tok/s  eta 0:00:19
+  step    440/750  loss 0.1797  lr 4.95e-05    46287 tok/s  eta 0:00:17
+  step    460/750  loss 0.1846  lr 4.53e-05    46056 tok/s  eta 0:00:16
+  step    480/750  loss 0.1746  lr 4.13e-05    46045 tok/s  eta 0:00:15
+  step    500/750  loss 0.1726  lr 3.74e-05    46131 tok/s  eta 0:00:14
+          VAL loss 0.6579  EM 0.315  choice 0.445
+  step    520/750  loss 0.1406  lr 3.36e-05     1415 tok/s  eta 0:07:20
+  step    540/750  loss 0.1435  lr 3.00e-05    46187 tok/s  eta 0:00:12
+  step    560/750  loss 0.1400  lr 2.66e-05    45875 tok/s  eta 0:00:11
+  step    580/750  loss 0.1387  lr 2.35e-05    45980 tok/s  eta 0:00:09
+  step    600/750  loss 0.1396  lr 2.07e-05    45619 tok/s  eta 0:00:08
+  step    620/750  loss 0.1281  lr 1.81e-05    46077 tok/s  eta 0:00:07
+  step    640/750  loss 0.1313  lr 1.59e-05    45620 tok/s  eta 0:00:06
+  step    660/750  loss 0.1294  lr 1.40e-05    45568 tok/s  eta 0:00:05
+  step    680/750  loss 0.1336  lr 1.24e-05    45731 tok/s  eta 0:00:04
+  step    700/750  loss 0.1316  lr 1.13e-05    46132 tok/s  eta 0:00:02
+  step    720/750  loss 0.1318  lr 1.05e-05    45073 tok/s  eta 0:00:01
+  step    740/750  loss 0.1273  lr 1.01e-05    45042 tok/s  eta 0:00:00
+          VAL loss 0.6053  EM 0.350  choice 0.495   <- best
+
+  finished 750 steps in 0:02:37
+  best validation exact match 0.350
+  checkpoints in /kaggle/working/repo/work/telugu/runs/model_h_reasoning_small
+==============================================================================
+REASONING EVAL - MODEL H (TELUGU) - finetuned_small_seen
+==============================================================================
+  checkpoint : /kaggle/working/repo/work/telugu/runs/model_h_reasoning_small/best.pt (stage reasoning_finetune, step 750)
+  examples   : 2,400 from test_seen
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.460  choice 0.470  (37s)
+      400/2400  EM 0.463  choice 0.468  (73s)
+      600/2400  EM 0.465  choice 0.478  (107s)
+      800/2400  EM 0.451  choice 0.464  (142s)
+     1000/2400  EM 0.464  choice 0.474  (178s)
+     1200/2400  EM 0.464  choice 0.473  (214s)
+     1400/2400  EM 0.465  choice 0.473  (248s)
+     1600/2400  EM 0.469  choice 0.476  (282s)
+     1800/2400  EM 0.471  choice 0.478  (317s)
+     2000/2400  EM 0.471  choice 0.478  (351s)
+     2200/2400  EM 0.467  choice 0.474  (385s)
+     2400/2400  EM 0.471  choice 0.478  (417s)
+
+  RESULTS
+    zero_shot    EM 0.471  choice 0.478  (chance 0.410)
+      chain_extreme      EM 0.380  choice 0.380
+      chain_pair         EM 0.453  choice 0.497
+      chain_yesno        EM 0.495  choice 0.495
+      numeric_extreme    EM 0.355  choice 0.355
+      numeric_pair       EM 0.522  choice 0.522
+      numeric_relation   EM 0.620  choice 0.620
+
+  wrote /kaggle/working/report/phase3/telugu
+==============================================================================
+REASONING EVAL - MODEL H (TELUGU) - finetuned_small
+==============================================================================
+  checkpoint : /kaggle/working/repo/work/telugu/runs/model_h_reasoning_small/best.pt (stage reasoning_finetune, step 750)
+  examples   : 2,400 from test
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.275  choice 0.475  (38s)
+      400/2400  EM 0.263  choice 0.455  (73s)
+      600/2400  EM 0.252  choice 0.433  (111s)
+      800/2400  EM 0.261  choice 0.441  (145s)
+     1000/2400  EM 0.258  choice 0.446  (183s)
+     1200/2400  EM 0.253  choice 0.447  (217s)
+     1400/2400  EM 0.253  choice 0.443  (252s)
+     1600/2400  EM 0.251  choice 0.434  (287s)
+     1800/2400  EM 0.249  choice 0.434  (323s)
+     2000/2400  EM 0.250  choice 0.438  (358s)
+     2200/2400  EM 0.254  choice 0.442  (394s)
+     2400/2400  EM 0.258  choice 0.445  (430s)
+
+  RESULTS
+    zero_shot    EM 0.258  choice 0.445  (chance 0.410)
+      chain_extreme      EM 0.087  choice 0.268
+      chain_pair         EM 0.090  choice 0.487
+      chain_yesno        EM 0.448  choice 0.460
+      numeric_extreme    EM 0.090  choice 0.338
+      numeric_pair       EM 0.175  choice 0.463
+      numeric_relation   EM 0.657  choice 0.657
+
+  wrote /kaggle/working/report/phase3/telugu

@@ -1,0 +1,62 @@
+==============================================================================
+REASONING EVAL - MODEL L (ASSAMESE) - finetuned_worked
+==============================================================================
+  checkpoint : /kaggle/working/repo/work/assamese/runs/model_l_reasoning_worked/best.pt (stage reasoning_finetune, step 6000)
+  examples   : 2,400 from test
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.255  choice 0.465  (42s)
+      400/2400  EM 0.240  choice 0.485  (82s)
+      600/2400  EM 0.235  choice 0.490  (121s)
+      800/2400  EM 0.240  choice 0.492  (160s)
+     1000/2400  EM 0.244  choice 0.507  (199s)
+     1200/2400  EM 0.247  choice 0.518  (237s)
+     1400/2400  EM 0.249  choice 0.529  (277s)
+     1600/2400  EM 0.247  choice 0.531  (317s)
+     1800/2400  EM 0.248  choice 0.531  (356s)
+     2000/2400  EM 0.249  choice 0.532  (395s)
+     2200/2400  EM 0.249  choice 0.532  (435s)
+     2400/2400  EM 0.249  choice 0.532  (476s)
+
+  RESULTS
+    zero_shot    EM 0.249  choice 0.532  (chance 0.410)
+      chain_extreme      EM 0.003  choice 0.292
+      chain_pair         EM 0.000  choice 0.522
+      chain_yesno        EM 0.497  choice 0.500
+      numeric_extreme    EM 0.000  choice 0.355
+      numeric_pair       EM 0.000  choice 0.527
+      numeric_relation   EM 0.995  choice 0.995
+
+  wrote /kaggle/working/report/phase3/assamese
+==============================================================================
+REASONING EVAL - MODEL L (ASSAMESE) - finetuned_worked_seen
+==============================================================================
+  checkpoint : /kaggle/working/repo/work/assamese/runs/model_l_reasoning_worked/best.pt (stage reasoning_finetune, step 6000)
+  examples   : 2,400 from test_seen
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.760  choice 0.760  (38s)
+      400/2400  EM 0.767  choice 0.767  (75s)
+      600/2400  EM 0.758  choice 0.758  (110s)
+      800/2400  EM 0.757  choice 0.757  (146s)
+     1000/2400  EM 0.751  choice 0.751  (181s)
+     1200/2400  EM 0.752  choice 0.752  (216s)
+     1400/2400  EM 0.750  choice 0.750  (252s)
+     1600/2400  EM 0.746  choice 0.746  (287s)
+     1800/2400  EM 0.742  choice 0.743  (324s)
+     2000/2400  EM 0.745  choice 0.746  (358s)
+     2200/2400  EM 0.746  choice 0.746  (393s)
+     2400/2400  EM 0.746  choice 0.746  (428s)
+
+  RESULTS
+    zero_shot    EM 0.746  choice 0.746  (chance 0.410)
+      chain_extreme      EM 0.470  choice 0.470
+      chain_pair         EM 0.530  choice 0.532
+      chain_yesno        EM 0.497  choice 0.497
+      numeric_extreme    EM 0.983  choice 0.983
+      numeric_pair       EM 0.998  choice 0.998
+      numeric_relation   EM 0.998  choice 0.998
+
+  wrote /kaggle/working/report/phase3/assamese

@@ -1,0 +1,17 @@
+{
+  "language": "assamese",
+  "model": "model_l",
+  "checkpoint": "C:/lma_work/phase3_kaggle_run4/checkpoints/assamese/small/best.pt",
+  "step": 750,
+  "split": "test",
+  "block_size": 512,
+  "parameters": 24562944,
+  "overall": {
+    "cross_entropy_nats_per_token": 4.95361,
+    "perplexity": 141.6856,
+    "bits_per_token": 7.146549,
+    "bits_per_byte": 0.897251,
+    "tokens": 307200,
+    "bytes": 2446829
+  }
+}

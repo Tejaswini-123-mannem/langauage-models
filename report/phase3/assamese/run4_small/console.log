@@ -1,0 +1,125 @@
+  --resume auto: no checkpoint found, starting from the pretrained model
+==============================================================================
+FINETUNE - MODEL L (ASSAMESE) - model_l_reasoning_small
+==============================================================================
+  device       : cuda
+  precision    : fp16
+  init from    : /kaggle/input/datasets/teja123mannem/lma-checkpoints/model_l/best.pt (pretrain step 9110)
+  parameters   : 24,562,944
+  tokenizer    : 8,000 pieces (fixed)
+  train        : 8,000 examples
+  validation   : 200 examples scored per eval
+  batch        : 32 x 1
+  steps        : 750 (3.00 epochs)
+  lr           : 1.0e-04 -> 1.0e-05, 75 warmup, cosine
+  weight decay : 0.1
+  out          : /kaggle/working/repo/work/assamese/runs/model_l_reasoning_small
+  config       : {"name": "model_l_reasoning_small", "language": "assamese", "init_checkpoint": "C:/lma_work/assamese/checkpoints/best.pt", "data_dir": null, "out_dir": null, "batch_size": 32, "grad_accum": 1, "epochs": 4.0, "max_steps": 750, "learning_rate": 0.0001, "min_lr": 1e-05, "warmup_steps": 75, "weight_decay": 0.1, "beta1": 0.9, "beta2": 0.95, "grad_clip": 1.0, "log_every": 20, "eval_every": 250, "eval_examples": 200, "checkpoint_every": 250, "seed": 42, "dtype": "fp16", "use_rationale": true, "train_limit": 8000}
+==============================================================================
+  step      0  VAL loss 2.5493  EM 0.000  choice 0.365
+  step     20/750  loss 2.0524  lr 2.67e-05    41330 tok/s  eta 0:00:51
+  step     40/750  loss 0.8774  lr 5.33e-05    44850 tok/s  eta 0:00:45
+  step     60/750  loss 0.5349  lr 8.00e-05    44948 tok/s  eta 0:00:44
+  step     80/750  loss 0.4239  lr 1.00e-04    44430 tok/s  eta 0:00:42
+  step    100/750  loss 0.3519  lr 9.97e-05    44377 tok/s  eta 0:00:42
+  step    120/750  loss 0.3014  lr 9.91e-05    44257 tok/s  eta 0:00:41
+  step    140/750  loss 0.2884  lr 9.80e-05    44133 tok/s  eta 0:00:41
+  step    160/750  loss 0.2496  lr 9.66e-05    44341 tok/s  eta 0:00:39
+  step    180/750  loss 0.2417  lr 9.48e-05    44557 tok/s  eta 0:00:38
+  step    200/750  loss 0.2353  lr 9.27e-05    44605 tok/s  eta 0:00:36
+  step    220/750  loss 0.2274  lr 9.03e-05    45069 tok/s  eta 0:00:34
+  step    240/750  loss 0.2208  lr 8.75e-05    43798 tok/s  eta 0:00:34
+          VAL loss 0.5251  EM 0.225  choice 0.405   <- best
+  step    260/750  loss 0.1983  lr 8.45e-05     1331 tok/s  eta 0:17:47
+  step    280/750  loss 0.1925  lr 8.12e-05    43269 tok/s  eta 0:00:32
+  step    300/750  loss 0.1836  lr 7.77e-05    43309 tok/s  eta 0:00:30
+  step    320/750  loss 0.1866  lr 7.40e-05    43723 tok/s  eta 0:00:28
+  step    340/750  loss 0.1811  lr 7.01e-05    43215 tok/s  eta 0:00:27
+  step    360/750  loss 0.1767  lr 6.61e-05    42731 tok/s  eta 0:00:27
+  step    380/750  loss 0.1699  lr 6.20e-05    42638 tok/s  eta 0:00:25
+  step    400/750  loss 0.1589  lr 5.78e-05    42615 tok/s  eta 0:00:24
+  step    420/750  loss 0.1619  lr 5.36e-05    42406 tok/s  eta 0:00:22
+  step    440/750  loss 0.1583  lr 4.95e-05    42598 tok/s  eta 0:00:21
+  step    460/750  loss 0.1567  lr 4.53e-05    41950 tok/s  eta 0:00:20
+  step    480/750  loss 0.1474  lr 4.13e-05    42274 tok/s  eta 0:00:18
+  step    500/750  loss 0.1446  lr 3.74e-05    40485 tok/s  eta 0:00:18
+          VAL loss 0.6276  EM 0.220  choice 0.440
+  step    520/750  loss 0.1247  lr 3.36e-05     1465 tok/s  eta 0:07:37
+  step    540/750  loss 0.1272  lr 3.00e-05    44593 tok/s  eta 0:00:13
+  step    560/750  loss 0.1245  lr 2.66e-05    44475 tok/s  eta 0:00:12
+  step    580/750  loss 0.1188  lr 2.35e-05    44327 tok/s  eta 0:00:10
+  step    600/750  loss 0.1257  lr 2.07e-05    44704 tok/s  eta 0:00:09
+  step    620/750  loss 0.1164  lr 1.81e-05    44147 tok/s  eta 0:00:08
+  step    640/750  loss 0.1227  lr 1.59e-05    44157 tok/s  eta 0:00:07
+  step    660/750  loss 0.1123  lr 1.40e-05    43790 tok/s  eta 0:00:06
+  step    680/750  loss 0.1169  lr 1.24e-05    43412 tok/s  eta 0:00:04
+  step    700/750  loss 0.1162  lr 1.13e-05    43560 tok/s  eta 0:00:03
+  step    720/750  loss 0.1091  lr 1.05e-05    44110 tok/s  eta 0:00:02
+  step    740/750  loss 0.1152  lr 1.01e-05    42902 tok/s  eta 0:00:00
+          VAL loss 0.6140  EM 0.230  choice 0.465   <- best
+
+  finished 750 steps in 0:02:51
+  best validation exact match 0.230
+  checkpoints in /kaggle/working/repo/work/assamese/runs/model_l_reasoning_small
+==============================================================================
+REASONING EVAL - MODEL L (ASSAMESE) - finetuned_small_seen
+==============================================================================
+  checkpoint : /kaggle/working/repo/work/assamese/runs/model_l_reasoning_small/best.pt (stage reasoning_finetune, step 750)
+  examples   : 2,400 from test_seen
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.445  choice 0.455  (42s)
+      400/2400  EM 0.435  choice 0.445  (82s)
+      600/2400  EM 0.435  choice 0.443  (121s)
+      800/2400  EM 0.427  choice 0.435  (159s)
+     1000/2400  EM 0.438  choice 0.446  (196s)
+     1200/2400  EM 0.445  choice 0.454  (234s)
+     1400/2400  EM 0.451  choice 0.460  (272s)
+     1600/2400  EM 0.446  choice 0.454  (310s)
+     1800/2400  EM 0.448  choice 0.456  (348s)
+     2000/2400  EM 0.453  choice 0.461  (384s)
+     2200/2400  EM 0.452  choice 0.460  (420s)
+     2400/2400  EM 0.451  choice 0.458  (456s)
+
+  RESULTS
+    zero_shot    EM 0.451  choice 0.458  (chance 0.410)
+      chain_extreme      EM 0.425  choice 0.425
+      chain_pair         EM 0.463  choice 0.507
+      chain_yesno        EM 0.515  choice 0.515
+      numeric_extreme    EM 0.302  choice 0.302
+      numeric_pair       EM 0.497  choice 0.497
+      numeric_relation   EM 0.502  choice 0.502
+
+  wrote /kaggle/working/report/phase3/assamese
+==============================================================================
+REASONING EVAL - MODEL L (ASSAMESE) - finetuned_small
+==============================================================================
+  checkpoint : /kaggle/working/repo/work/assamese/runs/model_l_reasoning_small/best.pt (stage reasoning_finetune, step 750)
+  examples   : 2,400 from test
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.240  choice 0.405  (44s)
+      400/2400  EM 0.245  choice 0.420  (84s)
+      600/2400  EM 0.252  choice 0.428  (124s)
+      800/2400  EM 0.244  choice 0.427  (164s)
+     1000/2400  EM 0.238  choice 0.424  (205s)
+     1200/2400  EM 0.238  choice 0.425  (245s)
+     1400/2400  EM 0.235  choice 0.421  (285s)
+     1600/2400  EM 0.244  choice 0.423  (325s)
+     1800/2400  EM 0.247  choice 0.429  (364s)
+     2000/2400  EM 0.246  choice 0.431  (403s)
+     2200/2400  EM 0.242  choice 0.427  (443s)
+     2400/2400  EM 0.242  choice 0.432  (482s)
+
+  RESULTS
+    zero_shot    EM 0.242  choice 0.432  (chance 0.410)
+      chain_extreme      EM 0.110  choice 0.287
+      chain_pair         EM 0.117  choice 0.492
+      chain_yesno        EM 0.497  choice 0.500
+      numeric_extreme    EM 0.077  choice 0.325
+      numeric_pair       EM 0.177  choice 0.512
+      numeric_relation   EM 0.475  choice 0.475
+
+  wrote /kaggle/working/report/phase3/assamese

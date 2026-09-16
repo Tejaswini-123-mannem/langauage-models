@@ -1,0 +1,74 @@
+==============================================================================
+REASONING EVAL - MODEL L (ASSAMESE) - pretrained
+==============================================================================
+  checkpoint : /kaggle/input/datasets/teja123mannem/lma-checkpoints/model_l/best.pt (stage pretrain, step 9110)
+  examples   : 2,400 from test
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.000  choice 0.360  (23s)
+      400/2400  EM 0.000  choice 0.388  (46s)
+      600/2400  EM 0.000  choice 0.382  (69s)
+      800/2400  EM 0.000  choice 0.379  (93s)
+     1000/2400  EM 0.000  choice 0.375  (116s)
+     1200/2400  EM 0.000  choice 0.388  (140s)
+     1400/2400  EM 0.000  choice 0.388  (164s)
+     1600/2400  EM 0.000  choice 0.389  (188s)
+     1800/2400  EM 0.000  choice 0.394  (211s)
+     2000/2400  EM 0.000  choice 0.390  (235s)
+     2200/2400  EM 0.000  choice 0.388  (259s)
+     2400/2400  EM 0.000  choice 0.390  (283s)
+
+  3-shot on 600 examples
+      200/600  EM 0.000  choice 0.415  (26s)
+      400/600  EM 0.000  choice 0.425  (51s)
+      600/600  EM 0.000  choice 0.433  (76s)
+
+  RESULTS
+    zero_shot    EM 0.000  choice 0.390  (chance 0.410)
+      chain_extreme      EM 0.000  choice 0.158
+      chain_pair         EM 0.000  choice 0.472
+      chain_yesno        EM 0.000  choice 0.532
+      numeric_extreme    EM 0.000  choice 0.307
+      numeric_pair       EM 0.000  choice 0.527
+      numeric_relation   EM 0.000  choice 0.345
+    few_shot_3   EM 0.000  choice 0.433  (chance 0.410)
+      chain_extreme      EM 0.000  choice 0.260
+      chain_pair         EM 0.000  choice 0.520
+      chain_yesno        EM 0.000  choice 0.580
+      numeric_extreme    EM 0.000  choice 0.350
+      numeric_pair       EM 0.000  choice 0.580
+      numeric_relation   EM 0.000  choice 0.310
+
+  wrote /kaggle/working/report/phase3/assamese
+==============================================================================
+REASONING EVAL - MODEL L (ASSAMESE) - finetuned
+==============================================================================
+  checkpoint : /kaggle/working/repo/work/assamese/runs/model_l_reasoning/best.pt (stage reasoning_finetune, step 8000)
+  examples   : 2,400 from test
+  device     : cuda
+
+  zero-shot
+      200/2400  EM 0.230  choice 0.440  (8s)
+      400/2400  EM 0.242  choice 0.485  (15s)
+      600/2400  EM 0.247  choice 0.500  (23s)
+      800/2400  EM 0.245  choice 0.502  (31s)
+     1000/2400  EM 0.245  choice 0.502  (39s)
+     1200/2400  EM 0.245  choice 0.508  (46s)
+     1400/2400  EM 0.244  choice 0.516  (53s)
+     1600/2400  EM 0.244  choice 0.522  (60s)
+     1800/2400  EM 0.244  choice 0.523  (68s)
+     2000/2400  EM 0.242  choice 0.520  (75s)
+     2200/2400  EM 0.241  choice 0.517  (83s)
+     2400/2400  EM 0.240  choice 0.517  (90s)
+
+  RESULTS
+    zero_shot    EM 0.240  choice 0.517  (chance 0.410)
+      chain_extreme      EM 0.000  choice 0.300
+      chain_pair         EM 0.000  choice 0.560
+      chain_yesno        EM 0.480  choice 0.480
+      numeric_extreme    EM 0.000  choice 0.302
+      numeric_pair       EM 0.003  choice 0.497
+      numeric_relation   EM 0.960  choice 0.960
+
+  wrote /kaggle/working/report/phase3/assamese

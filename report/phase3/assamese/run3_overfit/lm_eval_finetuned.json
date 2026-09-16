@@ -1,0 +1,17 @@
+{
+  "language": "assamese",
+  "model": "model_l",
+  "checkpoint": "C:/lma_work/assamese/finetuned/best.pt",
+  "step": 6000,
+  "split": "test",
+  "block_size": 512,
+  "parameters": 24562944,
+  "overall": {
+    "cross_entropy_nats_per_token": 13.674296,
+    "perplexity": 868303.0877,
+    "bits_per_token": 19.727839,
+    "bits_per_byte": 2.476835,
+    "tokens": 307200,
+    "bytes": 2446829
+  }
+}
